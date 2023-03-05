@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Codebreaker Game</title>
+</head>
+
+<body>
+    <script type="importmap">
+    {
+      "imports": {
+        "vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.js"
+      }
+    }
+    </script>
+
+    <!-- ui template -->
+    <div id="app">
+        {{ team1.word1 }}
+    </div>
+
+    <!-- code logic -->
+    <script type="module">
+        import { createApp } from 'vue'
+
+        createApp({
+            data() {
+                return {
+                    team1: {
+                        word1: "a",
+                        word2: "b",
+                        word3: "c",
+                        word4: "d"
+                    },
+                    team2: {
+                        word1: "e",
+                        word2: "f",
+                        word3: "g",
+                        word4: "h"
+                    }
+                }
+            }
+        }).mount('#app')
+    </script>
+</body>
+
+</html>

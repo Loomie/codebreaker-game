@@ -23,16 +23,28 @@
     <script type="module">
         import { createApp } from 'vue'
 
+        const GamePhase = {
+            ConstructCode: 1,
+            BreakCode: 2,
+        }
+
         createApp({
             data() {
                 return {
+                    phase: GamePhase.ConstructCode,
                     team1: {
+                        players: [
+                            "dummy one"
+                        ],
                         word1: "a",
                         word2: "b",
                         word3: "c",
                         word4: "d"
                     },
                     team2: {
+                        players: [
+                            "second dummy"
+                        ],
                         word1: "e",
                         word2: "f",
                         word3: "g",

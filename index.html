@@ -2,7 +2,15 @@
 <html>
 
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title>Codebreaker Game</title>
+    <style>
+        .wordsbox {
+            display: flex;
+        }
+    </style>
 </head>
 
 <body>
@@ -16,7 +24,45 @@
 
     <!-- ui template -->
     <div id="app">
-        {{ team1.word1 }}
+        <nav>
+            <a id="team-select-a" href="#">Team A</a>
+            <a id="team-select-a" href="#">Team B</a>
+        </nav>
+        <aside>
+            <h1 class="round-counter">Round {{ round }}</h1>
+            <h2>Team A</h2>
+            <ul>
+                <li v-for="player in team1.players">{{ player }} 🧑</li>
+            </ul>
+            <h2>Team B</h2>
+            <ul>
+                <li v-for="player in team2.players">{{ player }} 🔑</li>
+            </ul>
+        </aside>
+        <main>
+            <article>
+                <header>{{ team1.word1.real }} {{ team1.word2.real }} {{ team1.word3.real }} {{ team1.word4.real }}
+                </header>
+                <main>
+                    <div>
+                        <p v-for="code in team1.word1.codes">{{ code }}</p>
+                    </div>
+                    <div>
+                        <p v-for="code in team1.word2.codes">{{ code }}</p>
+                    </div>
+                    <div>
+                        <p v-for="code in team1.word3.codes">{{ code }}</p>
+                    </div>
+                    <div>
+                        <p v-for="code in team1.word4.codes">{{ code }}</p>
+                    </div>
+                </main>
+                <footer>
+                    <div>Wrong codes of the own team: O O</div>
+                    <div>Wrong codes of the enemy team: O O</div>
+                </footer>
+            </article>
+        </main>
     </div>
 
     <!-- code logic -->
@@ -31,24 +77,63 @@
         createApp({
             data() {
                 return {
+                    round: 1,
                     phase: GamePhase.ConstructCode,
                     team1: {
                         players: [
-                            "dummy one"
+                            "dummy one",
+                            "dumm three"
                         ],
-                        word1: "a",
-                        word2: "b",
-                        word3: "c",
-                        word4: "d"
+                        word1: {
+                            real: "Word 1",
+                            codes: [
+                                "Code 1",
+                                "Code 2",
+                                "Code 3"
+                            ]
+                        },
+                        word2: {
+                            real: "b",
+                            codes: [
+                                "Code 1",
+                                "Code 2"
+                            ]
+                        },
+                        word3: {
+                            real: "c",
+                            codes: [
+                                "Code 1",
+                                "Code 2",
+                                "Code 3"
+                            ]
+                        },
+                        word4: {
+                            real: "d",
+                            codes: [
+                                "Code 1"
+                            ]
+                        }
                     },
                     team2: {
                         players: [
                             "second dummy"
                         ],
-                        word1: "e",
-                        word2: "f",
-                        word3: "g",
-                        word4: "h"
+                        word1: {
+                            real: "e",
+                            codes: []
+                        },
+                        word2: {
+                            real: "f",
+                            codes: []
+                        },
+                        word3: {
+                            real: "g",
+                            codes: []
+                        },
+                        word4: {
+                            real: "h",
+                            codes: []
+                        }
                     }
                 }
             }

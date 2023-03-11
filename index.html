@@ -29,7 +29,7 @@
 
     <!-- ui template -->
     <div id="app" class="columns p-6">
-
+        <!-- Left section containing the team information -->
         <aside class="column is-one-fifth menu">
             <h1 class="title">Round {{ round }}</h1>
             <p class="menu-label">Team A</p>
@@ -41,6 +41,7 @@
                 <li v-for="player in team2.players">{{ player }} 🔑</li>
             </ul>
         </aside>
+        <!-- Middle section containing the code words -->
         <main class="column">
             <article class="container">
                 <header class="columns">
@@ -81,6 +82,10 @@
                 </ul>
             </nav>
         </main>
+        <!-- Right section containing the current code and its hints -->
+        <section class="column is-one-fifth">
+            <h1 class="title">Code</h1>
+        </section>
     </div>
 
     <!-- code logic -->

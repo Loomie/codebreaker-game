@@ -9,6 +9,33 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
 
     <style>
+        /* Background color */
+        body {
+            background-color: white;
+        }
+
+        /* Button */
+        .button-test {
+            display: inline-block;
+            min-width: 50%;
+            padding-top: 0.25em;
+            padding-bottom: 0.25em;
+            border: none;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            font-size: 1.25em;
+            font-weight: 600;
+            cursor: pointer;    /* Show hand icon while hovering over button */
+        }
+        .button-test:hover {
+            box-shadow: 5px 5px 50px grey;    /* 1: Horizontal offset, 2: Vertical offset, 3: Blur radius, 4: Colour */
+            background-color: yellow;
+            color: black; 
+            transition: 0.5s;
+        }
+
         .round-counter {
             color: palevioletred;
             font-size: x-large;
@@ -90,7 +117,13 @@
         </main>
         <!-- Right section containing the current code and its hints -->
         <section class="column is-one-fifth">
-            <h1 class="title">Code</h1>
+            <div class="panel">
+                <div class="panel-heading">{{ team1.word1.real }}</div>
+                <p class="panel-block">Hint 1</p>
+                <p class="panel-block">Hint 2</p>
+                <p class="panel-block">Hint 3</p>
+            </div>
+            <input type="button" class="button-test" value="Submit">
         </section>
     </div>
 

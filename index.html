@@ -163,8 +163,43 @@
                             real: "h",
                             hints: []
                         }
-                    }
+                    },
+                    wordlist: [
+                        "child",
+                        "company",
+                        "day",
+                        "eye",
+                        "fact",
+                        "government",
+                        "group",
+                        "hand",
+                        "life",
+                        "number",
+                        "person",
+                        "place",
+                        "point",
+                        "time",
+                        "way",
+                        "week",
+                        "work",
+                        "world",
+                        "year"]
                 }
+            },
+            methods: {
+                random_word() {
+                    return this.random_item(this.wordlist);
+                },
+
+                random_item(items) {
+                    return items[Math.floor(Math.random() * items.length)];
+                }
+            },
+            created() {
+                this.team1.word1.real = this.random_word()
+                this.team1.word2.real = this.random_word()
+                this.team1.word3.real = this.random_word()
+                this.team1.word4.real = this.random_word()
             }
         }).mount('#app')
     </script>

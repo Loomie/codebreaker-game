@@ -7,6 +7,15 @@
 
     <title>Codebreaker Game</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+
+    <style>
+        .round-counter {
+            color: palevioletred;
+            font-size: x-large;
+            font-weight: bolder;
+            border: 1px dashed red;
+        }
+    </style>
 </head>
 
 <body>
@@ -19,15 +28,10 @@
     </script>
 
     <!-- ui template -->
-    <div id="app" class="content">
-        <nav class="tabs is-centered">
-            <ul>
-                <li class="is-active"><a id="team-select-a" href="#">Team A</a></li>
-                <li><a id="team-select-b" href="#">Team B</a></li>
-            </ul>
-        </nav>
-        <aside class="menu">
-            <h1>Round {{ round }}</h1>
+    <div id="app" class="columns">
+
+        <aside class="column is-one-fifth menu">
+            <h1 class="title">Round {{ round }}</h1>
             <p class="menu-label">Team A</p>
             <ul class="menu-list">
                 <li v-for="player in team1.players">{{ player }} 🧑</li>
@@ -37,7 +41,7 @@
                 <li v-for="player in team2.players">{{ player }} 🔑</li>
             </ul>
         </aside>
-        <main>
+        <main class="column">
             <article class="container">
                 <header class="columns">
                     <div class="column title">{{ team1.word1.real }}</div>
@@ -60,10 +64,22 @@
                     </div>
                 </main>
                 <footer class="columns footer">
-                    <div class="column has-text-centered"><p>Wrong codes of the own team:</p><span id="wrong-self-1">X</span><span id="wrong-self-2">O</span></div>
-                    <div class="column has-text-centered"><p>Wrong codes of the enemy team:</p><span id="correct-others-1">O</span><span id="correct-others-2">O</span></div>
+                    <div class="column has-text-centered">
+                        <p>Wrong codes of the own team:</p><span id="wrong-self-1">X</span><span
+                            id="wrong-self-2">O</span>
+                    </div>
+                    <div class="column has-text-centered">
+                        <p>Wrong codes of the enemy team:</p><span id="correct-others-1">O</span><span
+                            id="correct-others-2">O</span>
+                    </div>
                 </footer>
             </article>
+            <nav class="tabs is-centered">
+                <ul>
+                    <li class="is-active"><a id="team-select-a" href="#">Team A</a></li>
+                    <li><a id="team-select-b" href="#">Team B</a></li>
+                </ul>
+            </nav>
         </main>
     </div>
 

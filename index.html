@@ -42,26 +42,32 @@
             </ul>
         </aside>
         <!-- Middle section containing the code words -->
-        <main class="column">
+        <main class="column" style="border-left: 1px solid #36363640; border-right: 1px solid #36363640;">
             <article class="container">
-                <header class="columns">
-                    <div class="column title">{{ team1.word1.real }}</div>
-                    <div class="column title">{{ team1.word2.real }}</div>
-                    <div class="column title">{{ team1.word3.real }}</div>
-                    <div class="column title">{{ team1.word4.real }}</div>
-                </header>
                 <main class="columns">
                     <div class="column">
-                        <p v-for="code in team1.word1.codes">{{ code }}</p>
+                        <div class="panel" style="height: 40ex;">
+                            <div class="panel-heading">{{ team1.word1.real }}</div>
+                            <p class="panel-block" v-for="code in team1.word1.codes">{{ code }}</p>
+                        </div>
                     </div>
                     <div class="column">
-                        <p v-for="code in team1.word2.codes">{{ code }}</p>
+                        <div class="panel" style="height: 40ex;">
+                            <div class="panel-heading">{{ team1.word2.real }}</div>
+                            <p class="panel-block" v-for="code in team1.word2.codes">{{ code }}</p>
+                        </div>
                     </div>
                     <div class="column">
-                        <p v-for="code in team1.word3.codes">{{ code }}</p>
+                        <div class="panel" style="height: 40ex;">
+                            <div class="panel-heading">{{ team1.word3.real }}</div>
+                            <p class="panel-block" v-for="code in team1.word3.codes">{{ code }}</p>
+                        </div>
                     </div>
                     <div class="column">
-                        <p v-for="code in team1.word4.codes">{{ code }}</p>
+                        <div class="panel" style="height: 40ex;">
+                            <div class="panel-heading">{{ team1.word4.real }}</div>
+                            <p class="panel-block" v-for="code in team1.word4.codes">{{ code }}</p>
+                        </div>
                     </div>
                 </main>
                 <footer class="columns footer">
@@ -75,7 +81,7 @@
                     </div>
                 </footer>
             </article>
-            <nav class="tabs is-centered">
+            <nav class="tabs is-toggle is-centered">
                 <ul>
                     <li class="is-active"><a id="team-select-a" href="#">Team A</a></li>
                     <li><a id="team-select-b" href="#">Team B</a></li>

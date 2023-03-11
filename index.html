@@ -6,11 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Codebreaker Game</title>
-    <style>
-        .wordsbox {
-            display: flex;
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
 </head>
 
 <body>
@@ -23,43 +19,49 @@
     </script>
 
     <!-- ui template -->
-    <div id="app">
-        <nav>
-            <a id="team-select-a" href="#">Team A</a>
-            <a id="team-select-a" href="#">Team B</a>
-        </nav>
-        <aside>
-            <h1 class="round-counter">Round {{ round }}</h1>
-            <h2>Team A</h2>
+    <div id="app" class="content">
+        <nav class="tabs is-centered">
             <ul>
+                <li class="is-active"><a id="team-select-a" href="#">Team A</a></li>
+                <li><a id="team-select-b" href="#">Team B</a></li>
+            </ul>
+        </nav>
+        <aside class="menu">
+            <h1>Round {{ round }}</h1>
+            <p class="menu-label">Team A</p>
+            <ul class="menu-list">
                 <li v-for="player in team1.players">{{ player }} 🧑</li>
             </ul>
-            <h2>Team B</h2>
-            <ul>
+            <p class="menu-label">Team B</p>
+            <ul class="menu-list">
                 <li v-for="player in team2.players">{{ player }} 🔑</li>
             </ul>
         </aside>
         <main>
-            <article>
-                <header>{{ team1.word1.real }} {{ team1.word2.real }} {{ team1.word3.real }} {{ team1.word4.real }}
+            <article class="container">
+                <header class="columns">
+                    <div class="column title">{{ team1.word1.real }}</div>
+                    <div class="column title">{{ team1.word2.real }}</div>
+                    <div class="column title">{{ team1.word3.real }}</div>
+                    <div class="column title">{{ team1.word4.real }}</div>
                 </header>
-                <main>
-                    <div>
+                <main class="columns">
+                    <div class="column">
                         <p v-for="code in team1.word1.codes">{{ code }}</p>
                     </div>
-                    <div>
+                    <div class="column">
                         <p v-for="code in team1.word2.codes">{{ code }}</p>
                     </div>
-                    <div>
+                    <div class="column">
                         <p v-for="code in team1.word3.codes">{{ code }}</p>
                     </div>
-                    <div>
+                    <div class="column">
                         <p v-for="code in team1.word4.codes">{{ code }}</p>
                     </div>
                 </main>
-                <footer>
-                    <div>Wrong codes of the own team: O O</div>
-                    <div>Wrong codes of the enemy team: O O</div>
+                <footer class="columns footer">
+                    <div class="column has-text-centered"><p>Wrong codes of the own team:</p><span id="wrong-self-1">X</span><span id="wrong-self-2">O</span></div>
+                    <div class="column has-text-centered"><p>Wrong codes of the enemy team:</p><span id="correct-others-1">O</span><span id="correct-others-2">O</span></div>
                 </footer>
             </article>
         </main>
@@ -93,14 +95,14 @@
                             ]
                         },
                         word2: {
-                            real: "b",
+                            real: "Word 2",
                             codes: [
                                 "Code 1",
                                 "Code 2"
                             ]
                         },
                         word3: {
-                            real: "c",
+                            real: "Word 3",
                             codes: [
                                 "Code 1",
                                 "Code 2",
@@ -108,7 +110,7 @@
                             ]
                         },
                         word4: {
-                            real: "d",
+                            real: "Word 4",
                             codes: [
                                 "Code 1"
                             ]

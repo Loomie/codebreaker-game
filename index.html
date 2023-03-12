@@ -34,8 +34,11 @@
         .button-submit {
             display: inline-block;
             min-width: 50%;
-            padding-top: 0.25em;
-            padding-bottom: 0.25em;
+            padding: 0.25em;
+            margin-left: 0px;
+            margin-top: 5px;
+            margin-right: 5px;
+            margin-bottom: 5px;
             border: none;
             border-radius: 5px;
             background-color: #93bfcf;
@@ -53,6 +56,58 @@
             background-color: #6096b4;
             color: #FFFFFF;
             transition: 0s;
+        }
+
+        /* Remove spinner for Chrome, Safari, Edge, Opera */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* Remove spinner for Firefox */
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+
+        /* Input fields */
+        input[type=number] {
+            /* Padding and border are within the size */
+            box-sizing: border-box;
+            width: 3em;
+            padding: 10px;
+            margin-left: 0px;
+            margin-top: 5px;
+            margin-right: 5px;
+            margin-bottom: 5px;
+            border: 2px solid #93bfcf;
+            border-radius: 5px;
+            text-align: center;
+            /* Do not highlight when clicked on */
+            outline: none;
+        }
+
+        input[type=number]:focus {
+            border: 2px solid pink;
+        }
+
+        input[type=text] {
+            /* Padding and border are within the size */
+            box-sizing: border-box;
+            padding: 10px;
+            margin-left: 0px;
+            margin-top: 5px;
+            margin-right: 5px;
+            margin-bottom: 5px;
+            border: 2px solid #93bfcf;
+            border-radius: 5px;
+            text-align: left;
+            /* Do not highlight when clicked on */
+            outline: none;
+        }
+
+        input[type=text]:focus {
+            border: 2px solid pink;
         }
 
         /* Tabs */
@@ -171,26 +226,23 @@
         <!-- Right section containing the current code and its hints -->
         <section class="column-15">
             <div class="panel">
+                <!-- Current 3-digit code -->
                 <h1>123</h1>
                 <div class="columns">
-                    <p class="column-70 left">Hint 1</p>
-                    <div class="column-15 center">
-                        <input id="hint1" type="number" min="1" max="4"></input>
+                    <!-- Sub-column where the hints are entered -->
+                    <div class="column-70 left">
+                        <input type="text" id="hint1"></input>
                     </div>
+                    <!-- Sub-column where the own team enters the code -->
                     <div class="column-15 center">
-                        <input id="hint2" type="number" min="1" max="4"></input>
+                        <input type="number" id="guess1" min="1" max="4"></input>
+                    </div>
+                    <!-- Sub-column where the enemy team enters the code -->
+                    <div class="column-15 center">
+                        <input type="number" id="guess2" min="1" max="4"></input>
                     </div>
                 </div>
-                <div class="columns">
-                    <p class="column-70 left">Hint 2</p>
-                    <p class="column-15 center">2</p>
-                    <p class="column-15 center">3</p>
-                </div>
-                <div class="columns">
-                    <p class="column-70 left">Hint 3</p>
-                    <p class="column-15 center">2</p>
-                    <p class="column-15 center">3</p>
-                </div>
+                <!-- Button to submit -->
                 <input type="button" class="button-submit" value="Submit">
             </div>
 

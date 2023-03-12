@@ -6,15 +6,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Codebreaker Game</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
 
     <style>
-        /* Background color */
         body {
+            /* Font */
+            font-family: Roboto, Helvetica, Arial, sans-serif;
+            color: dimgray;
+
+            /* Background color */
             background-color: white;
         }
 
-        /* Button */
+        /* Text alignment */
+        .left {
+            text-align: start;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .right {
+            text-align: end;
+        }
+
+        /* Button "Submit" */
         .button-submit {
             display: inline-block;
             min-width: 50%;
@@ -27,20 +43,57 @@
             text-align: center;
             font-size: 1.25em;
             font-weight: 600;
-            cursor: pointer;    /* Show hand icon while hovering over button */
+            /* Show hand icon while hovering over button */
+            cursor: pointer;
         }
+
         .button-submit:hover {
-            box-shadow: 5px 5px 10px grey;    /* 1: Horizontal offset, 2: Vertical offset, 3: Blur radius, 4: Colour */
+            /* 1: Horizontal offset, 2: Vertical offset, 3: Blur radius, 4: Colour */
+            box-shadow: 5px 5px 10px grey;
             background-color: #6096b4;
-            color: #FFFFFF; 
+            color: #FFFFFF;
             transition: 0s;
         }
 
-        .round-counter {
-            color: palevioletred;
-            font-size: x-large;
-            font-weight: bolder;
-            border: 1px dashed red;
+        /* Tabs */
+        .tabs li {
+            border-bottom: 2px solid grey;
+            min-width: 10em;
+            text-align: center;
+            list-style-type: none;
+            display: inline-block;
+            margin: 0.5em;
+        }
+
+        /* Column layout */
+        .columns {
+            display: flex;
+            justify-content: center;
+        }
+
+        .column-15 {
+            flex-basis: 15%;
+        }
+
+        .column-25 {
+            flex-basis: 25%;
+        }
+
+        .column-50 {
+            flex-basis: 50%;
+        }
+
+        .column-70 {
+            flex-basis: 70%;
+        }
+
+        /* Panel for a list of words */
+        .panel {
+            border: 1px solid gainsboro;
+            border-radius: 5px;
+            box-shadow: 5px 5px 10px grey;
+            margin: 1em;
+            padding: 1em;
         }
     </style>
 </head>
@@ -57,7 +110,7 @@
     <!-- ui template -->
     <div id="app" class="columns p-6">
         <!-- Left section containing the team information -->
-        <aside class="column is-one-fifth menu">
+        <aside class="column-15">
             <h1 class="title">Round {{ round }}</h1>
             <p class="menu-label">Team A</p>
             <ul class="menu-list">
@@ -69,46 +122,46 @@
             </ul>
         </aside>
         <!-- Middle section containing the code words -->
-        <main class="column" style="border-left: 1px solid #36363640; border-right: 1px solid #36363640;">
+        <main class="column-70" style="border-left: 1px solid #36363640; border-right: 1px solid #36363640;">
             <article class="container">
                 <main class="columns">
-                    <div class="column">
+                    <div class="column-25">
                         <div class="panel" style="height: 40ex;">
-                            <div class="panel-heading">{{ team1.word1.real }}</div>
+                            <h1>{{ team1.word1.real }}</h1>
                             <p class="panel-block" v-for="code in team1.word1.hints">{{ code }}</p>
                         </div>
                     </div>
-                    <div class="column">
+                    <div class="column-25">
                         <div class="panel" style="height: 40ex;">
-                            <div class="panel-heading">{{ team1.word2.real }}</div>
+                            <h1>{{ team1.word2.real }}</h1>
                             <p class="panel-block" v-for="code in team1.word2.hints">{{ code }}</p>
                         </div>
                     </div>
-                    <div class="column">
+                    <div class="column-25">
                         <div class="panel" style="height: 40ex;">
-                            <div class="panel-heading">{{ team1.word3.real }}</div>
+                            <h1>{{ team1.word3.real }}</h1>
                             <p class="panel-block" v-for="code in team1.word3.hints">{{ code }}</p>
                         </div>
                     </div>
-                    <div class="column">
+                    <div class="column-25">
                         <div class="panel" style="height: 40ex;">
-                            <div class="panel-heading">{{ team1.word4.real }}</div>
+                            <h1>{{ team1.word4.real }}</h1>
                             <p class="panel-block" v-for="code in team1.word4.hints">{{ code }}</p>
                         </div>
                     </div>
                 </main>
                 <footer class="columns footer">
-                    <div class="column has-text-centered">
+                    <div class="column-50 center">
                         <p>Wrong guesses of the own team:</p><span id="wrong-self-1">X</span><span
                             id="wrong-self-2">O</span>
                     </div>
-                    <div class="column has-text-centered">
+                    <div class="column-50 center">
                         <p>Correct guesses of the enemy team:</p><span id="correct-others-1">O</span><span
                             id="correct-others-2">O</span>
                     </div>
                 </footer>
             </article>
-            <nav class="tabs is-toggle is-centered">
+            <nav class="tabs center">
                 <ul>
                     <li class="is-active"><a id="team-select-a" href="#">Team A</a></li>
                     <li><a id="team-select-b" href="#">Team B</a></li>
@@ -116,14 +169,32 @@
             </nav>
         </main>
         <!-- Right section containing the current code and its hints -->
-        <section class="column is-one-fifth">
+        <section class="column-15">
             <div class="panel">
-                <div class="panel-heading">123</div>
-                <p class="panel-block">Hint 1</p>
-                <p class="panel-block">Hint 2</p>
-                <p class="panel-block">Hint 3</p>
+                <h1>123</h1>
+                <div class="columns">
+                    <p class="column-70 left">Hint 1</p>
+                    <div class="column-15 center">
+                        <input id="hint1" type="number" min="1" max="4"></input>
+                    </div>
+                    <div class="column-15 center">
+                        <input id="hint2" type="number" min="1" max="4"></input>
+                    </div>
+                </div>
+                <div class="columns">
+                    <p class="column-70 left">Hint 2</p>
+                    <p class="column-15 center">2</p>
+                    <p class="column-15 center">3</p>
+                </div>
+                <div class="columns">
+                    <p class="column-70 left">Hint 3</p>
+                    <p class="column-15 center">2</p>
+                    <p class="column-15 center">3</p>
+                </div>
+                <input type="button" class="button-submit" value="Submit">
             </div>
-            <input type="button" class="button-submit" value="Submit">
+
+
         </section>
     </div>
 

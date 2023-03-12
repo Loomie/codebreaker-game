@@ -88,7 +88,6 @@
         input[type=text] {
             /* Padding and border are within the size */
             box-sizing: border-box;
-            width: 10em;
             padding: 10px;
             margin: 5px;
             border: 2px solid #93bfcf;
@@ -225,6 +224,37 @@
             <div class="panel">
                 <!-- Current 3-digit code -->
                 <h1>123</h1>
+                <!-- 1st line of the 3-digit code -->
+                <div class="columns">
+                    <!-- Sub-column where the hints are entered -->
+                    <div class="column-70 left">
+                        <input type="text" id="hint1"></input>
+                    </div>
+                    <!-- Sub-column where the own team enters the code -->
+                    <div class="column-15 center">
+                        <input type="number" id="guess1" min="1" max="4"></input>
+                    </div>
+                    <!-- Sub-column where the enemy team enters the code -->
+                    <div class="column-15 center">
+                        <input type="number" id="guess2" min="1" max="4"></input>
+                    </div>
+                </div>
+                <!-- 2nd line of the 3-digit code -->
+                <div class="columns">
+                    <!-- Sub-column where the hints are entered -->
+                    <div class="column-70 left">
+                        <input type="text" id="hint1"></input>
+                    </div>
+                    <!-- Sub-column where the own team enters the code -->
+                    <div class="column-15 center">
+                        <input type="number" id="guess1" min="1" max="4"></input>
+                    </div>
+                    <!-- Sub-column where the enemy team enters the code -->
+                    <div class="column-15 center">
+                        <input type="number" id="guess2" min="1" max="4"></input>
+                    </div>
+                </div>
+                <!-- 3rd line of the 3-digit code -->
                 <div class="columns">
                     <!-- Sub-column where the hints are entered -->
                     <div class="column-70 left">

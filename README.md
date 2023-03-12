@@ -1,7 +1,7 @@
 # codebreaker-game
 Decrypto-like multiplayer online browser game
 
-It uses [Vue.js](https://vuejs.org/) for reactive pages and [Bulma](https://bulma.io/) for CSS.
+It uses [Vue.js](https://vuejs.org/) for reactive pages.
 
 The current page can be seen here: https://loomie.github.io/codebreaker-game/
 

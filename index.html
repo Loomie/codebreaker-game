@@ -131,24 +131,29 @@
         }
 
         .column-25 {
-            flex-basis: 25%;
+            flex-shrink: 1;
         }
 
         .column-50 {
-            flex-basis: 50%;
+            flex-grow: 1;
         }
 
         .column-70 {
             flex-basis: 70%;
         }
 
-        /* Panel for a list of words */
         .panel {
+            min-width: 15em;
+            min-height: 40ex;
             border: 1px solid gainsboro;
             border-radius: 5px;
             box-shadow: 5px 5px 10px grey;
             margin: 1em;
             padding: 1em;
+        }
+
+        .panel>h1 {
+            text-align: center;
         }
     </style>
 </head>
@@ -181,25 +186,25 @@
             <article class="container">
                 <main class="columns">
                     <div class="column-25">
-                        <div class="panel" style="height: 40ex;">
+                        <div class="panel">
                             <h1>{{ team1.word1.real }}</h1>
                             <p class="panel-block" v-for="code in team1.word1.hints">{{ code }}</p>
                         </div>
                     </div>
                     <div class="column-25">
-                        <div class="panel" style="height: 40ex;">
+                        <div class="panel">
                             <h1>{{ team1.word2.real }}</h1>
                             <p class="panel-block" v-for="code in team1.word2.hints">{{ code }}</p>
                         </div>
                     </div>
                     <div class="column-25">
-                        <div class="panel" style="height: 40ex;">
+                        <div class="panel">
                             <h1>{{ team1.word3.real }}</h1>
                             <p class="panel-block" v-for="code in team1.word3.hints">{{ code }}</p>
                         </div>
                     </div>
                     <div class="column-25">
-                        <div class="panel" style="height: 40ex;">
+                        <div class="panel">
                             <h1>{{ team1.word4.real }}</h1>
                             <p class="panel-block" v-for="code in team1.word4.hints">{{ code }}</p>
                         </div>

@@ -291,19 +291,37 @@
                 }
             },
             methods: {
+                /** @return a random word from the wordlist */
                 random_word() {
                     return this.random_item(this.wordlist);
                 },
 
+                /** @return a random item from the given array */
                 random_item(items) {
                     return items[Math.floor(Math.random() * items.length)];
+                },
+
+                /** @return a list with given count unique random words from the wordlist */
+                unique_random_words(count) {
+                    const randomWords = []
+                    let nextword;
+                    for (let i = 0; i < count; i++) {
+                        let maxTries = 10;
+                        do {
+                            nextword = this.random_word();
+                            maxTries--;
+                        } while (randomWords.includes(nextword) && maxTries > 0);
+                        randomWords[i] = nextword
+                    }
+                    return randomWords;
                 }
             },
             created() {
-                this.team1.word1.real = this.random_word()
-                this.team1.word2.real = this.random_word()
-                this.team1.word3.real = this.random_word()
-                this.team1.word4.real = this.random_word()
+                const randomWords = this.unique_random_words(4)
+                this.team1.word1.real = randomWords[0];
+                this.team1.word2.real = randomWords[1];
+                this.team1.word3.real = randomWords[2];
+                this.team1.word4.real = randomWords[3];
             }
         }).mount('#app')
     </script>

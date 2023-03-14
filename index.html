@@ -33,9 +33,12 @@
         /* Button "Submit" */
         .button-submit {
             display: inline-block;
-            min-width: 50%;
-            padding: 0.25em;
-            margin: 5px;
+            width: 7.5em;
+            padding: 10px;
+            margin-left: 0px;
+            margin-top: 5px;
+            margin-right: 0px;
+            margin-bottom: 5px;
             border: none;
             border-radius: 5px;
             background-color: #93bfcf;
@@ -72,8 +75,12 @@
             /* Padding and border are within the size */
             box-sizing: border-box;
             width: 3em;
+            height: 3em;
             padding: 10px;
-            margin: 5px;
+            margin-left: 5px;
+            margin-top: 5px;
+            margin-right: 0px;
+            margin-bottom: 5px;
             border: 2px solid #93bfcf;
             border-radius: 5px;
             text-align: center;
@@ -88,9 +95,13 @@
         input[type=text] {
             /* Padding and border are within the size */
             box-sizing: border-box;
-            width: 10em;
+            width: 11em;
+            height: 3em;
             padding: 10px;
-            margin: 5px;
+            margin-left: 0px;
+            margin-top: 5px;
+            margin-right: 0px;
+            margin-bottom: 5px;
             border: 2px solid #93bfcf;
             border-radius: 5px;
             text-align: left;
@@ -155,20 +166,30 @@
 
         .panel {
             min-width: 15em;
-            min-height: 40ex;
-            border: 1px solid gainsboro;
+            min-height: 50ex;
+            border: 1px solid #6096b4;
             border-radius: 5px;
             box-shadow: 5px 5px 10px grey;
             margin: 1em;
             padding: 1em;
+            /* Colouring background */
+            background: white;
+            /* Grey: gainsboro */
+            /* Blue: #6096b4 */
+            /* Red: #e97777 */
+            background-image: linear-gradient(#6096b4, #6096b4);
+            background-size: 100% 20%;
+            background-repeat: no-repeat;
         }
 
         .panel>h1 {
             text-align: center;
+            color: white;
         }
 
         .code {
             letter-spacing: 1em;
+            color: white;
         }
     </style>
 </head>
@@ -202,25 +223,25 @@
                 <main class="columns">
                     <div class="column-25">
                         <div class="panel">
-                            <h1>{{ team1.word1.real }}</h1>
+                            <h1 style="margin-bottom: 2em;">{{ team1.word1.real }}</h1>
                             <p class="panel-block" v-for="code in team1.word1.hints">{{ code }}</p>
                         </div>
                     </div>
                     <div class="column-25">
                         <div class="panel">
-                            <h1>{{ team1.word2.real }}</h1>
+                            <h1 style="margin-bottom: 2em;">{{ team1.word2.real }}</h1>
                             <p class="panel-block" v-for="code in team1.word2.hints">{{ code }}</p>
                         </div>
                     </div>
                     <div class="column-25">
                         <div class="panel">
-                            <h1>{{ team1.word3.real }}</h1>
+                            <h1 style="margin-bottom: 2em;">{{ team1.word3.real }}</h1>
                             <p class="panel-block" v-for="code in team1.word3.hints">{{ code }}</p>
                         </div>
                     </div>
                     <div class="column-25">
                         <div class="panel">
-                            <h1>{{ team1.word4.real }}</h1>
+                            <h1 style="margin-bottom: 2em;">{{ team1.word4.real }}</h1>
                             <p class="panel-block" v-for="code in team1.word4.hints">{{ code }}</p>
                         </div>
                     </div>
@@ -247,7 +268,8 @@
         <section class="column-15">
             <div class="panel">
                 <!-- Current 3-digit code -->
-                <h1 class="code">123</h1>
+                <h1 style="margin-bottom: 1em;" class="code">123</h1>
+                <br>
                 <!-- 1st line of the 3-digit code -->
                 <div class="columns">
                     <input type="text" id="hint1"></input>
@@ -298,7 +320,12 @@
                             hints: [
                                 "Code 1",
                                 "Code 2",
-                                "Code 3"
+                                "Code 3",
+                                "Code 4",
+                                "Code 5",
+                                "Code 6",
+                                "Code 7",
+                                "Code 8"
                             ]
                         },
                         word2: {

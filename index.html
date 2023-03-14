@@ -45,7 +45,7 @@
             color: #FFFFFF;
             text-align: center;
             font-size: 1.25em;
-            font-weight: 600;
+            font-weight: 700;
             /* Show hand icon while hovering over button */
             cursor: pointer;
         }
@@ -191,6 +191,11 @@
             letter-spacing: 1em;
             color: white;
         }
+
+        .menu-label {
+            font-size: 1.25;
+            font-weight: 700;
+        }
     </style>
 </head>
 
@@ -204,18 +209,22 @@
     </script>
 
     <!-- ui template -->
+    <h1 style="text-align: center;">Team A</h1>
     <div id="app" class="columns p-6">
         <!-- Left section containing the team information -->
         <aside class="column-15">
-            <h1 class="title">Round {{ round }}</h1>
-            <p class="menu-label">Team A</p>
+            <h1 class="title">Teams</h1>
+            <p class="menu-label" style="margin-left: 10px;">Blue:</p>
             <ul class="menu-list">
                 <li v-for="player in team1.players">{{ player }} 🧑</li>
             </ul>
-            <p class="menu-label">Team B</p>
+            <p class="menu-label" style="margin-left: 10px;">Red:</p>
             <ul class="menu-list">
                 <li v-for="player in team2.players">{{ player }} 🔑</li>
             </ul>
+            <br>
+            <h1 class="title">Status</h1>
+            <p class="menu-label" style="margin-left: 10px;">Round: {{ round }}</p>
         </aside>
         <!-- Middle section containing the code words -->
         <main class="column-70" style="border-left: 1px solid #36363640; border-right: 1px solid #36363640;">

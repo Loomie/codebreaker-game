@@ -284,25 +284,25 @@
                 <!-- Current 3-digit code -->
                 <h1 style="margin-bottom: 1em;" class="code">
                     <div>{{ team1.code.real[0] }}</div>
-                    <div>{{ team1.code.real[0] }}</div>
-                    <div>{{ team1.code.real[0] }}</div>
+                    <div>{{ team1.code.real[1] }}</div>
+                    <div>{{ team1.code.real[2] }}</div>
                 </h1>
                 <br>
                 <!-- 1st line of the 3-digit code -->
                 <div class="columns">
-                    <input type="text" id="hint1"></input>
+                    <input type="text" id="hint1" :placeholder="team1.word1.real"></input>
                     <input type="number" id="guess1" min="1" max="4"></input>
                     <input type="number" id="guessOthers1" min="1" max="4"></input>
                 </div>
                 <!-- 2nd line of the 3-digit code -->
                 <div class="columns">
-                    <input type="text" id="hint2"></input>
+                    <input type="text" id="hint2" :placeholder="team1.word2.real"></input>
                     <input type="number" id="guess2" min="1" max="4"></input>
                     <input type="number" id="guessOthers2" min="1" max="4"></input>
                 </div>
                 <!-- 3rd line of the 3-digit code -->
                 <div class="columns">
-                    <input type="text" id="hint3"></input>
+                    <input type="text" id="hint3" :placeholder="team1.word3.real"></input>
                     <input type="number" id="guess3" min="1" max="4"></input>
                     <input type="number" id="guessOthers3" min="1" max="4"></input>
                 </div>

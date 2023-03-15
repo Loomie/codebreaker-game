@@ -167,7 +167,8 @@
         .panel {
             min-width: 15em;
             min-height: 50ex;
-            border: 1px solid #6096b4;
+            /* border: 1px solid #6096b4; */
+            border: none;
             border-radius: 5px;
             box-shadow: 5px 5px 10px grey;
             margin: 1em;
@@ -188,9 +189,13 @@
         }
 
         .code {
-            letter-spacing: 1em;
+            display: flex;
+            justify-content: space-around;
+            padding-left: 30px;
+            padding-right: 30px;
             color: white;
         }
+
 
         .menu-label {
             font-size: 1.25;
@@ -277,7 +282,11 @@
         <section class="column-15">
             <div class="panel">
                 <!-- Current 3-digit code -->
-                <h1 style="margin-bottom: 1em;" class="code">123</h1>
+                <h1 style="margin-bottom: 1em;" class="code">
+                    <div>{{ team1.code.real[0] }}</div>
+                    <div>{{ team1.code.real[0] }}</div>
+                    <div>{{ team1.code.real[0] }}</div>
+                </h1>
                 <br>
                 <!-- 1st line of the 3-digit code -->
                 <div class="columns">
@@ -356,6 +365,13 @@
                             real: "Word 4",
                             hints: [
                                 "Code 1"
+                            ]
+                        },
+                        code: {
+                            real: [
+                                1,
+                                2,
+                                3
                             ]
                         }
                     },

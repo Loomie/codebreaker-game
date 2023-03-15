@@ -172,30 +172,38 @@
             border-radius: 5px;
             box-shadow: 5px 5px 10px grey;
             margin: 1em;
-            padding: 1em;
+            margin: 1em;
+            padding: 0em;
             /* Colouring background */
             background: white;
             /* Grey: gainsboro */
             /* Blue: #6096b4 */
             /* Red: #e97777 */
-            background-image: linear-gradient(#6096b4, #6096b4);
-            background-size: 100% 20%;
-            background-repeat: no-repeat;
         }
 
-        .panel>h1 {
+        .panel-head {
+            width: 100%;
+            border: none;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+            padding-top: 1em;
+            padding-bottom: 1em;
             text-align: center;
             color: white;
+            background-color: #6096b4;
+        }
+
+        .panel-block {
+            text-align: center;
+            line-height: 1.5em;
+            padding-left: 1em;
+            padding-right: 1em;
         }
 
         .code {
             display: flex;
             justify-content: space-around;
-            padding-left: 30px;
-            padding-right: 30px;
-            color: white;
         }
-
 
         .menu-label {
             font-size: 1.25;
@@ -216,7 +224,7 @@
     </script>
 
     <!-- ui template -->
-    <h1 style="text-align: center;">Team A</h1>
+    <h1 class="center">Team A</h1>
     <div id="app" class="columns p-6">
         <!-- Left section containing the team information -->
         <aside class="column-15">
@@ -235,29 +243,29 @@
         </aside>
         <!-- Middle section containing the code words -->
         <main class="column-70" style="border-left: 1px solid #36363640; border-right: 1px solid #36363640;">
-            <article class="container">
+            <article>
                 <main class="columns">
                     <div class="column-25">
                         <div class="panel">
-                            <h1 style="margin-bottom: 2em;">{{ team1.keywords[0] }}</h1>
+                            <h1 class="panel-head">{{ team1.keywords[0] }}</h1>
                             <p class="panel-block" v-for="code in team1.word1.hints">{{ code }}</p>
                         </div>
                     </div>
                     <div class="column-25">
                         <div class="panel">
-                            <h1 style="margin-bottom: 2em;">{{ team1.keywords[1] }}</h1>
+                            <h1 class="panel-head">{{ team1.keywords[1] }}</h1>
                             <p class="panel-block" v-for="code in team1.word2.hints">{{ code }}</p>
                         </div>
                     </div>
                     <div class="column-25">
                         <div class="panel">
-                            <h1 style="margin-bottom: 2em;">{{ team1.keywords[2] }}</h1>
+                            <h1 class="panel-head">{{ team1.keywords[2] }}</h1>
                             <p class="panel-block" v-for="code in team1.word3.hints">{{ code }}</p>
                         </div>
                     </div>
                     <div class="column-25">
                         <div class="panel">
-                            <h1 style="margin-bottom: 2em;">{{ team1.keywords[3] }}</h1>
+                            <h1 class="panel-head">{{ team1.keywords[3] }}</h1>
                             <p class="panel-block" v-for="code in team1.word4.hints">{{ code }}</p>
                         </div>
                     </div>
@@ -282,35 +290,38 @@
         </main>
         <!-- Right section containing the current code and its hints -->
         <section class="column-15">
-            <div class="panel">
-                <!-- Current 3-digit code -->
-                <h1 style="margin-bottom: 1em;" class="code">
-                    <div>{{ team1.code[0] }}</div>
-                    <div>{{ team1.code[1] }}</div>
-                    <div>{{ team1.code[2] }}</div>
-                </h1>
-                <br>
-                <!-- 1st line of the 3-digit code -->
-                <div class="columns">
-                    <input type="text" id="hint1" :placeholder="team1.keywords[team1.code[0] - 1]"></input>
-                    <input type="number" id="guess1" min="1" max="4"></input>
-                    <input type="number" id="guessOthers1" min="1" max="4"></input>
-                </div>
-                <!-- 2nd line of the 3-digit code -->
-                <div class="columns">
-                    <input type="text" id="hint2" :placeholder="team1.keywords[team1.code[1] - 1]"></input>
-                    <input type="number" id="guess2" min="1" max="4"></input>
-                    <input type="number" id="guessOthers2" min="1" max="4"></input>
-                </div>
-                <!-- 3rd line of the 3-digit code -->
-                <div class="columns">
-                    <input type="text" id="hint3" :placeholder="team1.keywords[team1.code[2] - 1]"></input>
-                    <input type="number" id="guess3" min="1" max="4"></input>
-                    <input type="number" id="guessOthers3" min="1" max="4"></input>
-                </div>
-                <!-- Button to submit -->
-                <div class="columns" style="justify-content: center">
-                    <input type="button" class="button-submit" value="Submit">
+            <div class="columns">
+                <div class="column-25">
+                    <div class="panel">
+                        <!-- Current 3-digit code -->
+                        <h1 class="panel-head code">
+                            <span>{{ team1.code[0] }}</span>
+                            <span>{{ team1.code[1] }}</span>
+                            <span>{{ team1.code[2] }}</span>
+                        </h1>
+                        <!-- 1st line of the 3-digit code -->
+                        <div class="panel-block">
+                            <input type="text" id="hint1" :placeholder="team1.keywords[team1.code[0] - 1]"></input>
+                            <input type="number" id="guess1" min="1" max="4"></input>
+                            <input type="number" id="guessOthers1" min="1" max="4"></input>
+                        </div>
+                        <!-- 2nd line of the 3-digit code -->
+                        <div class="panel-block">
+                            <input type="text" id="hint2" :placeholder="team1.keywords[team1.code[1] - 1]"></input>
+                            <input type="number" id="guess2" min="1" max="4"></input>
+                            <input type="number" id="guessOthers2" min="1" max="4"></input>
+                        </div>
+                        <!-- 3rd line of the 3-digit code -->
+                        <div class="panel-block">
+                            <input type="text" id="hint3" :placeholder="team1.keywords[team1.code[2] - 1]"></input>
+                            <input type="number" id="guess3" min="1" max="4"></input>
+                            <input type="number" id="guessOthers3" min="1" max="4"></input>
+                        </div>
+                        <!-- Button to submit -->
+                        <div class="panel-block">
+                            <input type="button" class="button-submit" value="Submit">
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -343,9 +354,9 @@
                             real: "Word 1",
                             hints: [
                                 "Code 1",
-                                "Code 2",
-                                "Code 3",
-                                "Code 4",
+                                "Haus",
+                                "Kreuzfahrtschiff",
+                                "Grübeln",
                                 "Code 5",
                                 "Code 6",
                                 "Code 7",

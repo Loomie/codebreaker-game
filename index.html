@@ -237,25 +237,25 @@
                 <main class="columns">
                     <div class="column-25">
                         <div class="panel">
-                            <h1 style="margin-bottom: 2em;">{{ team1.word1.real }}</h1>
+                            <h1 style="margin-bottom: 2em;">{{ team1.keywords[0] }}</h1>
                             <p class="panel-block" v-for="code in team1.word1.hints">{{ code }}</p>
                         </div>
                     </div>
                     <div class="column-25">
                         <div class="panel">
-                            <h1 style="margin-bottom: 2em;">{{ team1.word2.real }}</h1>
+                            <h1 style="margin-bottom: 2em;">{{ team1.keywords[1] }}</h1>
                             <p class="panel-block" v-for="code in team1.word2.hints">{{ code }}</p>
                         </div>
                     </div>
                     <div class="column-25">
                         <div class="panel">
-                            <h1 style="margin-bottom: 2em;">{{ team1.word3.real }}</h1>
+                            <h1 style="margin-bottom: 2em;">{{ team1.keywords[2] }}</h1>
                             <p class="panel-block" v-for="code in team1.word3.hints">{{ code }}</p>
                         </div>
                     </div>
                     <div class="column-25">
                         <div class="panel">
-                            <h1 style="margin-bottom: 2em;">{{ team1.word4.real }}</h1>
+                            <h1 style="margin-bottom: 2em;">{{ team1.keywords[3] }}</h1>
                             <p class="panel-block" v-for="code in team1.word4.hints">{{ code }}</p>
                         </div>
                     </div>
@@ -283,26 +283,26 @@
             <div class="panel">
                 <!-- Current 3-digit code -->
                 <h1 style="margin-bottom: 1em;" class="code">
-                    <div>{{ team1.code.real[0] }}</div>
-                    <div>{{ team1.code.real[1] }}</div>
-                    <div>{{ team1.code.real[2] }}</div>
+                    <div>{{ team1.code[0] }}</div>
+                    <div>{{ team1.code[1] }}</div>
+                    <div>{{ team1.code[2] }}</div>
                 </h1>
                 <br>
                 <!-- 1st line of the 3-digit code -->
                 <div class="columns">
-                    <input type="text" id="hint1" :placeholder="team1.word1.real"></input>
+                    <input type="text" id="hint1" :placeholder="team1.keywords[team1.code[0] - 1]"></input>
                     <input type="number" id="guess1" min="1" max="4"></input>
                     <input type="number" id="guessOthers1" min="1" max="4"></input>
                 </div>
                 <!-- 2nd line of the 3-digit code -->
                 <div class="columns">
-                    <input type="text" id="hint2" :placeholder="team1.word2.real"></input>
+                    <input type="text" id="hint2" :placeholder="team1.keywords[team1.code[1] - 1]"></input>
                     <input type="number" id="guess2" min="1" max="4"></input>
                     <input type="number" id="guessOthers2" min="1" max="4"></input>
                 </div>
                 <!-- 3rd line of the 3-digit code -->
                 <div class="columns">
-                    <input type="text" id="hint3" :placeholder="team1.word3.real"></input>
+                    <input type="text" id="hint3" :placeholder="team1.keywords[team1.code[2] - 1]"></input>
                     <input type="number" id="guess3" min="1" max="4"></input>
                     <input type="number" id="guessOthers3" min="1" max="4"></input>
                 </div>
@@ -332,6 +332,8 @@
                         players: [
                             "dummy one",
                             "dumm three"
+                        ],
+                        keywords: [
                         ],
                         word1: {
                             real: "Word 1",
@@ -367,18 +369,17 @@
                                 "Code 1"
                             ]
                         },
-                        code: {
-                            real: [
-                                1,
-                                2,
-                                3
-                            ]
-                        }
+                        code: [
+                            1,
+                            2,
+                            3
+                        ]
                     },
                     team2: {
                         players: [
                             "second dummy"
                         ],
+                        keywords: [],
                         word1: {
                             real: "e",
                             hints: []
@@ -394,7 +395,8 @@
                         word4: {
                             real: "h",
                             hints: []
-                        }
+                        },
+                        code: []
                     },
                     wordlist: [
                         "child",
@@ -442,14 +444,19 @@
                         randomWords[i] = nextword
                     }
                     return randomWords;
+                },
+
+                /** @return three numbers in random order of the set one to four */
+                random_code() {
+                    const randomNumbers = [1, 2, 3, 4].sort(function () { return 0.5 - Math.random() })
+                    return randomNumbers.slice(0, 3)
                 }
             },
             created() {
-                const randomWords = this.unique_random_words(4)
-                this.team1.word1.real = randomWords[0];
-                this.team1.word2.real = randomWords[1];
-                this.team1.word3.real = randomWords[2];
-                this.team1.word4.real = randomWords[3];
+                this.team1.keywords = this.unique_random_words(4)
+                this.team2.keywords = this.unique_random_words(4)
+                this.team1.code = this.random_code()
+                this.team2.code = this.random_code()
             }
         }).mount('#app')
     </script>

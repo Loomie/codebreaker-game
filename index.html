@@ -24,20 +24,7 @@
     <h1 class="center">Team A</h1>
     <div id="app" class="columns p-6">
         <!-- Left section containing the team information -->
-        <aside class="column-15">
-            <h1 class="title">Teams</h1>
-            <p class="menu-label">Blue:</p>
-            <ul class="menu-list">
-                <li v-for="player in team1.players">{{ player }} 🧑</li>
-            </ul>
-            <p class="menu-label">Red:</p>
-            <ul class="menu-list">
-                <li v-for="player in team2.players">{{ player }} 🔑</li>
-            </ul>
-            <br>
-            <h1 class="title">Status</h1>
-            <p class="menu-label">Round: {{ round }}</p>
-        </aside>
+        <teaminformation :team1="team1" :team2="team2" :round="round"></teaminformation>
         <!-- Middle section containing the code words -->
         <main class="column-70" style="border-left: 1px solid #36363640; border-right: 1px solid #36363640;">
             <article>
@@ -129,6 +116,7 @@
     <!-- code logic -->
     <script type="module">
         import { createApp } from 'vue'
+        import teaminformation from './team-information.js'
 
         const GamePhase = {
             ConstructCode: 1,
@@ -136,6 +124,9 @@
         }
 
         createApp({
+            components: {
+                teaminformation
+            },
             data() {
                 return {
                     round: 1,

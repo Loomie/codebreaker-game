@@ -26,17 +26,17 @@
         <!-- Left section containing the team information -->
         <teaminformation :team1="team1" :team2="team2" :round="round"></teaminformation>
         <!-- Middle section containing the code words -->
-        <codewords :team1="team1"></codewords>
+        <keywords :team1="team1"></keywords>
         <!-- Right section containing the current code and its hints -->
-        <hints-guesses :team1="team1"></hints-guesses>
+        <hints-code :team1="team1"></hints-code>
     </div>
 
     <!-- code logic -->
     <script type="module">
         import { createApp } from 'vue'
         import teaminformation from './team-information.js'
-        import codewords from './codewords.js'
-        import HintsGuesses from './hints-guesses.js'
+        import keywords from './keywords.js'
+        import HintsCode from './hints-code.js'
 
         const GamePhase = {
             ConstructCode: 1,
@@ -46,8 +46,8 @@
         createApp({
             components: {
                 teaminformation,
-                codewords,
-                HintsGuesses
+                keywords,
+                HintsCode
             },
             data() {
                 return {

@@ -193,6 +193,8 @@ a:active {
 .code {
     display: flex;
     justify-content: space-around;
+    padding-left: 2em;
+    padding-right: 2em;
 }
 
 .menu-label {

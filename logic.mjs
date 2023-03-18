@@ -21,6 +21,7 @@ createApp({
             phase: GamePhase.ConstructCode,
             myTeamId: TeamId.FirstTeam,
             team1: {
+                name: "Blue",
                 players: [
                     "dummy one",
                     "dumm three"
@@ -66,6 +67,7 @@ createApp({
                 }
             },
             team2: {
+                name: "Red",
                 players: [
                     "second dummy"
                 ],
@@ -74,13 +76,18 @@ createApp({
                 current_hints: [
                 ],
                 word1: {
-                    hints: []
+                    hints: [
+                        "Dummy"
+                    ]
                 },
                 word2: {
                     hints: []
                 },
                 word3: {
-                    hints: []
+                    hints: [
+                        "Something",
+                        "Word"
+                    ]
                 },
                 word4: {
                     hints: []
@@ -139,6 +146,13 @@ createApp({
 
     /** functions that do something */
     methods: {
+        moveToTeam1() {
+            this.myTeamId = TeamId.FirstTeam;
+        },
+        moveToTeam2() {
+            this.myTeamId = TeamId.SecondTeam;
+        },
+
         /** @return a random word from the wordlist */
         random_word() {
             return this.random_item(this.wordlist);

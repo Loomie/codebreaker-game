@@ -154,6 +154,7 @@ input[type=text] {
     list-style-type: none;
     display: inline-block;
     margin: 0.5em;
+    padding: 1ex;
 }
 
 .tabs li.is-active {
@@ -163,16 +164,7 @@ input[type=text] {
 
 /* Links */
 a {
-    color: gray;
     text-decoration: none;
-}
-
-a:hover {
-    color: silver;
-}
-
-a:active {
-    color: dimgray;
 }
 
 /* Column layout */

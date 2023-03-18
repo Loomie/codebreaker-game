@@ -103,34 +103,7 @@ body {
     transition: 0s;
 }
 
-/* Remove spinner for Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
-/* Remove spinner for Firefox */
-input[type=number] {
-    -moz-appearance: textfield;
-}
-
-/* Input fields */
-input[type=number] {
-    /* Padding and border are within the size */
-    box-sizing: border-box;
-    width: 3em;
-    height: 3em;
-    padding: 10px;
-    margin-left: 5px;
-    margin-top: 5px;
-    margin-right: 0px;
-    margin-bottom: 5px;
-    text-align: center;
-    /* Do not highlight when clicked on */
-    outline: none;
-}
-
+/* Input field for text */
 input[type=text] {
     /* Padding and border are within the size */
     box-sizing: border-box;

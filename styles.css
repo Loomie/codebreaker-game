@@ -7,6 +7,65 @@ body {
     background-color: white;
 }
 
+/* team styling */
+.team1-fill {
+    color: white;
+    background-color: #6096b4;
+}
+
+.team1-fill-action {
+    color: white;
+    background-color: #93bfcf;
+}
+
+.team1-fill-action:hover {
+    color: white;
+    background-color: #6096b4;
+}
+
+.team1-fill-action:active {
+    color: black;
+    background-color: #c5dce5;
+}
+
+.team1-border {
+    border: 2px solid #93bfcf;
+    border-radius: 5px;
+}
+
+.team1-border:focus {
+    border: 2px solid pink;
+}
+
+.team2-fill {
+    color: white;
+    background-color: #ad5f7e;
+}
+
+.team2-fill-action {
+    color: white;
+    background-color: #ce94b0;
+}
+
+.team2-fill-action:hover {
+    color: white;
+    background-color: #ad5f7e;
+}
+
+.team2-fill-action:active {
+    color: black;
+    background-color: #e5c5d4;
+}
+
+.team2-border {
+    border: 2px solid #ce94b0;
+    border-radius: 5px;
+}
+
+.team2-border:focus {
+    border: 2px solid lightcyan;
+}
+
 /* Text alignment */
 .left {
     text-align: start;
@@ -31,8 +90,6 @@ body {
     margin-bottom: 5px;
     border: none;
     border-radius: 5px;
-    background-color: #93bfcf;
-    color: #FFFFFF;
     text-align: center;
     font-size: 1.25em;
     font-weight: 700;
@@ -43,8 +100,6 @@ body {
 .button-submit:hover {
     /* 1: Horizontal offset, 2: Vertical offset, 3: Blur radius, 4: Colour */
     box-shadow: 5px 5px 10px grey;
-    background-color: #6096b4;
-    color: #FFFFFF;
     transition: 0s;
 }
 
@@ -71,15 +126,9 @@ input[type=number] {
     margin-top: 5px;
     margin-right: 0px;
     margin-bottom: 5px;
-    border: 2px solid #93bfcf;
-    border-radius: 5px;
     text-align: center;
     /* Do not highlight when clicked on */
     outline: none;
-}
-
-input[type=number]:focus {
-    border: 2px solid pink;
 }
 
 input[type=text] {
@@ -92,15 +141,9 @@ input[type=text] {
     margin-top: 5px;
     margin-right: 0px;
     margin-bottom: 5px;
-    border: 2px solid #93bfcf;
-    border-radius: 5px;
     text-align: left;
     /* Do not highlight when clicked on */
     outline: none;
-}
-
-input[type=text]:focus {
-    border: 2px solid pink;
 }
 
 /* Tabs */
@@ -179,8 +222,6 @@ a:active {
     padding-top: 1em;
     padding-bottom: 1em;
     text-align: center;
-    color: white;
-    background-color: #6096b4;
 }
 
 .panel-block {
@@ -219,8 +260,6 @@ select {
     margin-bottom: 5px;
     border: none;
     border-radius: 5px;
-    background-color: #93bfcf;
-    color: #FFFFFF;
     text-align: center;
     font-weight: 700;
     /* Show hand icon while hovering over button */

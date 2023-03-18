@@ -123,6 +123,17 @@ createApp({
                 return this.team1;
             }
             return this.team2;
+        },
+
+        /** name of a CSS class for current team */
+        teamFillClass() {
+            return (this.myTeamId == TeamId.FirstTeam) ? "team1-fill" : "team2-fill";
+        },
+        teamFillActionClass() {
+            return (this.myTeamId == TeamId.FirstTeam) ? "team1-fill-action" : "team2-fill-action";
+        },
+        teamBorderClass() {
+            return (this.myTeamId == TeamId.FirstTeam) ? "team1-border" : "team2-border";
         }
     },
 

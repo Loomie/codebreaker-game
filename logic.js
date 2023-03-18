@@ -17,8 +17,14 @@ createApp({
                 ],
                 keywords: [
                 ],
+                code: [
+                    1,
+                    2,
+                    3
+                ],
+                current_hints: [
+                ],
                 word1: {
-                    real: "Word 1",
                     hints: [
                         "Code 1",
                         "Haus",
@@ -31,14 +37,12 @@ createApp({
                     ]
                 },
                 word2: {
-                    real: "Word 2",
                     hints: [
                         "Code 1",
                         "Code 2"
                     ]
                 },
                 word3: {
-                    real: "Word 3",
                     hints: [
                         "Code 1",
                         "Code 2",
@@ -46,39 +50,31 @@ createApp({
                     ]
                 },
                 word4: {
-                    real: "Word 4",
                     hints: [
                         "Code 1"
                     ]
-                },
-                code: [
-                    1,
-                    2,
-                    3
-                ]
+                }
             },
             team2: {
                 players: [
                     "second dummy"
                 ],
                 keywords: [],
+                code: [],
+                current_hints: [
+                ],
                 word1: {
-                    real: "e",
                     hints: []
                 },
                 word2: {
-                    real: "f",
                     hints: []
                 },
                 word3: {
-                    real: "g",
                     hints: []
                 },
                 word4: {
-                    real: "h",
                     hints: []
-                },
-                code: []
+                }
             },
             wordlist: [
                 "child",

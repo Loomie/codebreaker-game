@@ -5,7 +5,7 @@ export default {
     template: `
 <main class="column-70" style="border-left: 1px solid #36363640; border-right: 1px solid #36363640;">
 <article>
-    <main class="columns">
+    <section class="columns">
         <div class="column-25">
             <div class="panel">
                 <h1 class="panel-head">{{ team1.keywords[0] }}</h1>
@@ -30,7 +30,7 @@ export default {
                 <p class="panel-block" v-for="code in team1.word4.hints">{{ code }}</p>
             </div>
         </div>
-    </main>
+    </section>
     <footer class="columns footer">
         <div class="column-50 center">
             <p>Wrong guesses of the own team:</p><span id="wrong-self-1">X</span><span

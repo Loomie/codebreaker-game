@@ -85,7 +85,7 @@ input[type=number]:focus {
 input[type=text] {
     /* Padding and border are within the size */
     box-sizing: border-box;
-    width: 11em;
+    width: 7em;
     height: 3em;
     padding: 10px;
     margin-left: 0px;
@@ -194,11 +194,35 @@ a:active {
     display: flex;
     justify-content: space-around;
     padding-left: 2em;
+    padding-top: 0em;
     padding-right: 2em;
+    padding-bottom: 0em;
 }
 
 .menu-label {
     font-size: 1.25em;
     font-weight: 700;
     margin-left: 10px;
+}
+
+select {
+    /* Remove default drop down arrow */
+    appearance: none;
+    /* Padding and border are within the size */
+    box-sizing: border-box;
+    width: 3em;
+    height: 3em;
+    padding: 5px;
+    margin-left: 5px;
+    margin-top: 5px;
+    margin-right: 0px;
+    margin-bottom: 5px;
+    border: none;
+    border-radius: 5px;
+    background-color: #93bfcf;
+    color: #FFFFFF;
+    text-align: center;
+    font-weight: 700;
+    /* Show hand icon while hovering over button */
+    cursor: pointer;
 }

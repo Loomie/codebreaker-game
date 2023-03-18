@@ -96,20 +96,64 @@
                         <!-- 1st line of the 3-digit code -->
                         <div class="panel-block">
                             <input type="text" id="hint1" :placeholder="myTeam.keywords[myTeam.code[0] - 1]">
-                            <input type="number" id="guess1" min="1" max="4">
-                            <input type="number" id="guessOthers1" min="1" max="4">
+                            <!-- <input type="number" id="guess1" min="1" max="4">
+                            <input type="number" id="guessOthers1" min="1" max="4"> -->
+                            <!-- Dropdown for guess of own team -->
+                            <select id="guess1">
+                                <option value="">&#9660</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                            </select>
+                            <!-- Dropdown for guess of enemy team -->
+                            <select id="guessOthers1">
+                                <option value="">?</option>
+                                <option value="1" disabled>1</option>
+                                <option value="2" disabled>2</option>
+                                <option value="3" disabled>3</option>
+                                <option value="4" disabled>4</option>
+                            </select>
                         </div>
                         <!-- 2nd line of the 3-digit code -->
                         <div class="panel-block">
                             <input type="text" id="hint2" :placeholder="myTeam.keywords[myTeam.code[1] - 1]">
-                            <input type="number" id="guess2" min="1" max="4">
-                            <input type="number" id="guessOthers2" min="1" max="4">
+                            <!-- Dropdown for guess of own team -->
+                            <select id="guess2">
+                                <option value="">&#9660</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                            </select>
+                            <!-- Dropdown for guess of enemy team -->
+                            <select id="guessOthers2">
+                                <option value="">?</option>
+                                <option value="1" disabled>1</option>
+                                <option value="2" disabled>2</option>
+                                <option value="3" disabled>3</option>
+                                <option value="4" disabled>4</option>
+                            </select>
                         </div>
                         <!-- 3rd line of the 3-digit code -->
                         <div class="panel-block">
                             <input type="text" id="hint3" :placeholder="myTeam.keywords[myTeam.code[2] - 1]">
-                            <input type="number" id="guess3" min="1" max="4">
-                            <input type="number" id="guessOthers3" min="1" max="4">
+                            <!-- Dropdown for guess of own team -->
+                            <select id="guess3">
+                                <option value="">&#9660</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                            </select>
+                            <!-- Dropdown for guess of enemy team -->
+                            <select id="guessOthers2">
+                                <option value="">?</option>
+                                <option value="1" disabled>1</option>
+                                <option value="2" disabled>2</option>
+                                <option value="3" disabled>3</option>
+                                <option value="4" disabled>4</option>
+                            </select>
                         </div>
                         <!-- Button to submit -->
                         <div class="panel-block">

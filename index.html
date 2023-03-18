@@ -26,19 +26,113 @@
     <h1 class="center">Team A</h1>
     <div id="app" class="columns p-6">
         <!-- Left section containing the team information -->
-        <teaminformation :team1="team1" :team2="team2" :round="round"></teaminformation>
+        <aside class="column-15">
+            <h1 class="title">Teams</h1>
+            <p class="menu-label">Blue:</p>
+            <ul class="menu-list">
+                <li v-for="player in team1.players">{{ player }} 🧑</li>
+            </ul>
+            <p class="menu-label">Red:</p>
+            <ul class="menu-list">
+                <li v-for="player in team2.players">{{ player }} 🔑</li>
+            </ul>
+            <br>
+            <h1 class="title">Status</h1>
+            <p class="menu-label">Round: {{ round }}</p>
+        </aside>
         <!-- Middle section containing the code words -->
-        <keywords :team1="team1"></keywords>
+        <main class="column-70" style="border-left: 1px solid #36363640; border-right: 1px solid #36363640;">
+            <article>
+                <section class="columns">
+                    <div class="column-25">
+                        <div class="panel">
+                            <h1 class="panel-head">{{ team1.keywords[0] }}</h1>
+                            <p class="panel-block" v-for="code in team1.word1.hints">{{ code }}</p>
+                        </div>
+                    </div>
+                    <div class="column-25">
+                        <div class="panel">
+                            <h1 class="panel-head">{{ team1.keywords[1] }}</h1>
+                            <p class="panel-block" v-for="code in team1.word2.hints">{{ code }}</p>
+                        </div>
+                    </div>
+                    <div class="column-25">
+                        <div class="panel">
+                            <h1 class="panel-head">{{ team1.keywords[2] }}</h1>
+                            <p class="panel-block" v-for="code in team1.word3.hints">{{ code }}</p>
+                        </div>
+                    </div>
+                    <div class="column-25">
+                        <div class="panel">
+                            <h1 class="panel-head">{{ team1.keywords[3] }}</h1>
+                            <p class="panel-block" v-for="code in team1.word4.hints">{{ code }}</p>
+                        </div>
+                    </div>
+                </section>
+                <footer class="columns footer">
+                    <div class="column-50 center">
+                        <p>Wrong guesses of the own team:</p><span id="wrong-self-1">X</span><span
+                            id="wrong-self-2">O</span>
+                    </div>
+                    <div class="column-50 center">
+                        <p>Correct guesses of the enemy team:</p><span id="correct-others-1">O</span><span
+                            id="correct-others-2">O</span>
+                    </div>
+                </footer>
+            </article>
+            <nav class="tabs center">
+                <ul>
+                    <li class="is-active"><a id="team-select-a" href="#">Team A</a></li>
+                    <li><a id="team-select-b" href="#">Team B</a></li>
+                </ul>
+            </nav>
+        </main>
         <!-- Right section containing the current code and its hints -->
-        <hints-code :team1="team1"></hints-code>
+        <section class="column-15">
+            <div class="columns">
+                <div class="column-25">
+                    <div class="panel">
+                        <!-- Current 3-digit code -->
+                        <h1 class="panel-head">
+                            <div class="code">
+                                <span>{{ team1.code[0] }}</span>
+                                <span>{{ team1.code[1] }}</span>
+                                <span>{{ team1.code[2] }}</span>
+                            </div>
+                        </h1>
+                        <!-- 1st line of the 3-digit code -->
+                        <div class="panel-block">
+                            <input type="text" id="hint1" :placeholder="team1.keywords[team1.code[0] - 1]">
+                            <input type="number" id="guess1" min="1" max="4">
+                            <input type="number" id="guessOthers1" min="1" max="4">
+                        </div>
+                        <!-- 2nd line of the 3-digit code -->
+                        <div class="panel-block">
+                            <input type="text" id="hint2" :placeholder="team1.keywords[team1.code[1] - 1]">
+                            <input type="number" id="guess2" min="1" max="4">
+                            <input type="number" id="guessOthers2" min="1" max="4">
+                        </div>
+                        <!-- 3rd line of the 3-digit code -->
+                        <div class="panel-block">
+                            <input type="text" id="hint3" :placeholder="team1.keywords[team1.code[2] - 1]">
+                            <input type="number" id="guess3" min="1" max="4">
+                            <input type="number" id="guessOthers3" min="1" max="4">
+                        </div>
+                        <!-- Button to submit -->
+                        <div class="panel-block">
+                            <input type="button" class="button-submit" value="Submit">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </section>
     </div>
 
     <!-- code logic -->
     <script type="module">
         import { createApp } from 'vue'
-        import teaminformation from './team-information.js'
-        import keywords from './keywords.js'
-        import HintsCode from './hints-code.js'
 
         const GamePhase = {
             ConstructCode: 1,
@@ -46,11 +140,6 @@
         }
 
         createApp({
-            components: {
-                teaminformation,
-                keywords,
-                HintsCode
-            },
             data() {
                 return {
                     round: 1,

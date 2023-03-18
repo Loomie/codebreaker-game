@@ -101,9 +101,7 @@
                             <!-- 1st line of the 3-digit code -->
                             <div class="panel-block">
                                 <input type="text" :class="teamBorderClass" id="hint1"
-                                    :placeholder="myTeam.keywords[myTeam.code[0] - 1]">
-                                <!-- <input type="number" id="guess1" min="1" max="4">
-                            <input type="number" id="guessOthers1" min="1" max="4"> -->
+                                    :placeholder="'Encrypt &quot' + myTeam.keywords[myTeam.code[0] - 1] + '&quot'">
                                 <!-- Dropdown for guess of own team -->
                                 <select id="guess1" :class="teamFillActionClass">
                                     <option value="">&#9660</option>
@@ -124,7 +122,7 @@
                             <!-- 2nd line of the 3-digit code -->
                             <div class="panel-block">
                                 <input type="text" :class="teamBorderClass" id="hint2"
-                                    :placeholder="myTeam.keywords[myTeam.code[1] - 1]">
+                                    :placeholder="'Encrypt &quot' + myTeam.keywords[myTeam.code[1] - 1] + '&quot'">
                                 <!-- Dropdown for guess of own team -->
                                 <select id="guess2" :class="teamFillActionClass">
                                     <option value="">&#9660</option>
@@ -145,7 +143,7 @@
                             <!-- 3rd line of the 3-digit code -->
                             <div class="panel-block">
                                 <input type="text" :class="teamBorderClass" id="hint3"
-                                    :placeholder="myTeam.keywords[myTeam.code[2] - 1]">
+                                    :placeholder="'Encrypt &quot' + myTeam.keywords[myTeam.code[2] - 1] + '&quot'">
                                 <!-- Dropdown for guess of own team -->
                                 <select id="guess3" :class="teamFillActionClass">
                                     <option value="">&#9660</option>

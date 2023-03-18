@@ -107,7 +107,7 @@ body {
 input[type=text] {
     /* Padding and border are within the size */
     box-sizing: border-box;
-    width: 7em;
+    width: 9em;
     height: 3em;
     padding: 10px;
     margin-left: 0px;

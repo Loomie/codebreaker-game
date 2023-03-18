@@ -39,26 +39,26 @@
                 <section class="columns">
                     <div class="column-25">
                         <div class="panel">
-                            <h1 class="panel-head">{{ team1.keywords[0] }}</h1>
-                            <p class="panel-block" v-for="code in team1.word1.hints">{{ code }}</p>
+                            <h1 class="panel-head">{{ myTeam.keywords[0] }}</h1>
+                            <p class="panel-block" v-for="code in myTeam.word1.hints">{{ code }}</p>
                         </div>
                     </div>
                     <div class="column-25">
                         <div class="panel">
-                            <h1 class="panel-head">{{ team1.keywords[1] }}</h1>
-                            <p class="panel-block" v-for="code in team1.word2.hints">{{ code }}</p>
+                            <h1 class="panel-head">{{ myTeam.keywords[1] }}</h1>
+                            <p class="panel-block" v-for="code in myTeam.word2.hints">{{ code }}</p>
                         </div>
                     </div>
                     <div class="column-25">
                         <div class="panel">
-                            <h1 class="panel-head">{{ team1.keywords[2] }}</h1>
-                            <p class="panel-block" v-for="code in team1.word3.hints">{{ code }}</p>
+                            <h1 class="panel-head">{{ myTeam.keywords[2] }}</h1>
+                            <p class="panel-block" v-for="code in myTeam.word3.hints">{{ code }}</p>
                         </div>
                     </div>
                     <div class="column-25">
                         <div class="panel">
-                            <h1 class="panel-head">{{ team1.keywords[3] }}</h1>
-                            <p class="panel-block" v-for="code in team1.word4.hints">{{ code }}</p>
+                            <h1 class="panel-head">{{ myTeam.keywords[3] }}</h1>
+                            <p class="panel-block" v-for="code in myTeam.word4.hints">{{ code }}</p>
                         </div>
                     </div>
                 </section>
@@ -88,26 +88,26 @@
                         <!-- Current 3-digit code -->
                         <h1 class="panel-head">
                             <div class="code">
-                                <span>{{ team1.code[0] }}</span>
-                                <span>{{ team1.code[1] }}</span>
-                                <span>{{ team1.code[2] }}</span>
+                                <span>{{ myTeam.code[0] }}</span>
+                                <span>{{ myTeam.code[1] }}</span>
+                                <span>{{ myTeam.code[2] }}</span>
                             </div>
                         </h1>
                         <!-- 1st line of the 3-digit code -->
                         <div class="panel-block">
-                            <input type="text" id="hint1" :placeholder="team1.keywords[team1.code[0] - 1]">
+                            <input type="text" id="hint1" :placeholder="myTeam.keywords[myTeam.code[0] - 1]">
                             <input type="number" id="guess1" min="1" max="4">
                             <input type="number" id="guessOthers1" min="1" max="4">
                         </div>
                         <!-- 2nd line of the 3-digit code -->
                         <div class="panel-block">
-                            <input type="text" id="hint2" :placeholder="team1.keywords[team1.code[1] - 1]">
+                            <input type="text" id="hint2" :placeholder="myTeam.keywords[myTeam.code[1] - 1]">
                             <input type="number" id="guess2" min="1" max="4">
                             <input type="number" id="guessOthers2" min="1" max="4">
                         </div>
                         <!-- 3rd line of the 3-digit code -->
                         <div class="panel-block">
-                            <input type="text" id="hint3" :placeholder="team1.keywords[team1.code[2] - 1]">
+                            <input type="text" id="hint3" :placeholder="myTeam.keywords[myTeam.code[2] - 1]">
                             <input type="number" id="guess3" min="1" max="4">
                             <input type="number" id="guessOthers3" min="1" max="4">
                         </div>

@@ -5,11 +5,17 @@ const GamePhase = {
     BreakCode: 2,
 }
 
+const TeamId = {
+    FirstTeam: 1,
+    SecondTeam: 2
+}
+
 createApp({
     data() {
         return {
             round: 1,
             phase: GamePhase.ConstructCode,
+            myTeamId: TeamId.FirstTeam,
             team1: {
                 players: [
                     "dummy one",
@@ -98,6 +104,25 @@ createApp({
                 "year"]
         }
     },
+
+    /** computed values based on data */
+    computed: {
+        myTeam() {
+            if (this.myTeamId == TeamId.SecondTeam) {
+                return this.team2;
+            }
+            return this.team1;
+        },
+
+        otherTeam() {
+            if (this.myTeamId == TeamId.SecondTeam) {
+                return this.team1;
+            }
+            return this.team2;
+        }
+    },
+
+    /** functions that do something */
     methods: {
         /** @return a random word from the wordlist */
         random_word() {
@@ -130,10 +155,13 @@ createApp({
             return randomNumbers.slice(0, 3)
         }
     },
+
+    /** lifecycle hooks for initialization */
     created() {
         this.team1.keywords = this.unique_random_words(4)
-        this.team2.keywords = this.unique_random_words(4)
         this.team1.code = this.random_code()
+
+        this.team2.keywords = this.unique_random_words(4)
         this.team2.code = this.random_code()
     }
 }).mount('#app')

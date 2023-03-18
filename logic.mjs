@@ -1,5 +1,7 @@
 import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
 
+/** define sets of fixed values to have defined options from which to choose instead of "any number" */
+
 const GamePhase = {
     ConstructCode: 1,
     BreakCode: 2,
@@ -10,7 +12,9 @@ const TeamId = {
     SecondTeam: 2
 }
 
+/** construct Vue Application */
 createApp({
+    /** data which holds the state of the game */
     data() {
         return {
             round: 1,

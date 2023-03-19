@@ -187,10 +187,12 @@ createApp({
 
     /** lifecycle hooks for initialization */
     created() {
-        this.team1.keywords = this.unique_random_words(4)
+        const randomKeywords = this.unique_random_words(8)
+
+        this.team1.keywords = randomKeywords.slice(0, 4)
         this.team1.code = this.random_code()
 
-        this.team2.keywords = this.unique_random_words(4)
+        this.team2.keywords = randomKeywords.slice(4, 8)
         this.team2.code = this.random_code()
     }
 }).mount('#app')

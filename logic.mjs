@@ -1,5 +1,5 @@
 import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
-import { io } from "https://cdn.socket.io/4.3.2/socket.io.esm.min.js"
+import { io } from "https://unpkg.com/socket.io@4/client-dist/socket.io.esm.min.js"
 
 /** define sets of fixed values to have defined options from which to choose instead of "any number" */
 

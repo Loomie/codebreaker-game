@@ -1,4 +1,5 @@
 import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
+import { io } from "https://cdn.socket.io/4.3.2/socket.io.esm.min.js"
 
 /** define sets of fixed values to have defined options from which to choose instead of "any number" */
 
@@ -121,91 +122,92 @@ createApp({
     computed: {
         myTeam() {
             if (this.myTeamId == TeamId.SecondTeam) {
-                return this.team2;
+                return this.team2
             }
-            return this.team1;
+            return this.team1
         },
 
         otherTeam() {
             if (this.myTeamId == TeamId.SecondTeam) {
-                return this.team1;
+                return this.team1
             }
-            return this.team2;
+            return this.team2
         },
 
         /** name of a CSS class for current team */
         teamFillClass() {
-            return (this.myTeamId == TeamId.FirstTeam) ? "team1-fill" : "team2-fill";
+            return (this.myTeamId == TeamId.FirstTeam) ? "team1-fill" : "team2-fill"
         },
         teamFillActionClass() {
-            return (this.myTeamId == TeamId.FirstTeam) ? "team1-fill-action" : "team2-fill-action";
+            return (this.myTeamId == TeamId.FirstTeam) ? "team1-fill-action" : "team2-fill-action"
         },
         teamBorderClass() {
-            return (this.myTeamId == TeamId.FirstTeam) ? "team1-border" : "team2-border";
+            return (this.myTeamId == TeamId.FirstTeam) ? "team1-border" : "team2-border"
         }
     },
 
     /** functions that do something */
     methods: {
         moveToTeam1() {
-            this.myTeamId = TeamId.FirstTeam;
+            this.myTeamId = TeamId.FirstTeam
         },
         moveToTeam2() {
-            this.myTeamId = TeamId.SecondTeam;
+            this.myTeamId = TeamId.SecondTeam
         },
 
         /** @return a random word from the wordlist */
         random_word() {
-            return this.random_item(this.wordlist);
+            return this.random_item(this.wordlist)
         },
 
         /** @return a random item from the given array */
         random_item(items) {
-            return items[Math.floor(Math.random() * items.length)];
+            return items[Math.floor(Math.random() * items.length)]
         },
 
         /** @return a list with given count unique random words from the wordlist */
         unique_random_words(count) {
-            const randomWords = [];
-            let nextword;
+            const randomWords = []
+            let nextword
             for (let i = 0; i < count; i++) {
-                let maxTries = 10;
+                let maxTries = 10
                 do {
-                    nextword = this.random_word();
-                    maxTries--;
-                } while (randomWords.includes(nextword) && maxTries > 0);
-                randomWords[i] = nextword;
+                    nextword = this.random_word()
+                    maxTries--
+                } while (randomWords.includes(nextword) && maxTries > 0)
+                randomWords[i] = nextword
             }
-            return randomWords;
+            return randomWords
         },
 
         /** @return three numbers in random order of the set one to four */
         random_code() {
-            const randomNumbers = [1, 2, 3, 4].sort(function () { return 0.5 - Math.random() });
-            return randomNumbers.slice(0, 3);
+            const randomNumbers = [1, 2, 3, 4].sort(function () { return 0.5 - Math.random() })
+            return randomNumbers.slice(0, 3)
         }
     },
 
     /** lifecycle hooks for initialization */
     created() {
-        const randomKeywords = this.unique_random_words(8);
+        const randomKeywords = this.unique_random_words(8)
 
-        this.team1.keywords = randomKeywords.slice(0, 4);
-        this.team1.code = this.random_code();
+        this.team1.keywords = randomKeywords.slice(0, 4)
+        this.team1.code = this.random_code()
 
-        this.team2.keywords = randomKeywords.slice(4, 8);
-        this.team2.code = this.random_code();
+        this.team2.keywords = randomKeywords.slice(4, 8)
+        this.team2.code = this.random_code()
     },
 
     mounted() {
         // init networking
-        const team1InScope = this.team1;
+        const socket = io()
+        const team1 = this.team1
         socket.on('players', function (currentPlayers) {
-            team1InScope.players = currentPlayers;
-        });
+            team1.players = currentPlayers
+        })
 
         // init data
-        this.playerName = prompt("What's your name?", this.playerName);
-        socket.emit("player join", this.playerName);
+        this.playerName = prompt("What's your name?", this.playerName)
+        socket.emit("player join", this.playerName)
     }
 }).mount('#app')

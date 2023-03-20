@@ -17,6 +17,7 @@ createApp({
     /** data which holds the state of the game */
     data() {
         return {
+            playerName: "your name",
             round: 1,
             phase: GamePhase.ConstructCode,
             myTeamId: TeamId.FirstTeam,
@@ -165,7 +166,7 @@ createApp({
 
         /** @return a list with given count unique random words from the wordlist */
         unique_random_words(count) {
-            const randomWords = []
+            const randomWords = [];
             let nextword;
             for (let i = 0; i < count; i++) {
                 let maxTries = 10;
@@ -173,26 +174,38 @@ createApp({
                     nextword = this.random_word();
                     maxTries--;
                 } while (randomWords.includes(nextword) && maxTries > 0);
-                randomWords[i] = nextword
+                randomWords[i] = nextword;
             }
             return randomWords;
         },
 
         /** @return three numbers in random order of the set one to four */
         random_code() {
-            const randomNumbers = [1, 2, 3, 4].sort(function () { return 0.5 - Math.random() })
-            return randomNumbers.slice(0, 3)
+            const randomNumbers = [1, 2, 3, 4].sort(function () { return 0.5 - Math.random() });
+            return randomNumbers.slice(0, 3);
         }
     },
 
     /** lifecycle hooks for initialization */
     created() {
-        const randomKeywords = this.unique_random_words(8)
+        const randomKeywords = this.unique_random_words(8);
 
-        this.team1.keywords = randomKeywords.slice(0, 4)
-        this.team1.code = this.random_code()
+        this.team1.keywords = randomKeywords.slice(0, 4);
+        this.team1.code = this.random_code();
 
-        this.team2.keywords = randomKeywords.slice(4, 8)
-        this.team2.code = this.random_code()
+        this.team2.keywords = randomKeywords.slice(4, 8);
+        this.team2.code = this.random_code();
+    },
+
+    mounted() {
+        // init networking
+        const team1InScope = this.team1;
+        socket.on('players', function (currentPlayers) {
+            team1InScope.players = currentPlayers;
+        });
+
+        // init data
+        this.playerName = prompt("What's your name?", this.playerName);
+        socket.emit("player join", this.playerName);
     }
 }).mount('#app')

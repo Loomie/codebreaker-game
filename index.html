@@ -17,18 +17,18 @@
 
     <!-- ui template -->
     <div id="app">
-        <h1 class="center">{{ myTeam.name }}</h1>
+        <h1 class="center">{{ myTeam.team.name }}</h1>
         <div class="columns p-6">
             <!-- Left section containing the team information -->
             <aside class="column-15">
                 <h1 class="title">Teams</h1>
-                <p class="menu-label">{{ team1.name }}:</p>
+                <p class="menu-label">{{ team1.team.name }}:</p>
                 <ul class="menu-list">
-                    <li v-for="player in team1.players">{{ player }} 🧑</li>
+                    <li v-for="player in team1.team.members">{{ player.playerName }} 🧑</li>
                 </ul>
-                <p class="menu-label">{{ team2.name }}:</p>
+                <p class="menu-label">{{ team2.team.name }}:</p>
                 <ul class="menu-list">
-                    <li v-for="player in team2.players">{{ player }} 🔑</li>
+                    <li v-for="player in team2.team.members">{{ player.playerName }} 🔑</li>
                 </ul>
                 <br>
                 <h1 class="title">Status</h1>
@@ -77,10 +77,10 @@
                 <nav class="tabs center">
                     <ul>
                         <li :class="{'is-active': myTeamId == 1}"><a class="team1-fill-action" id="team-select-a"
-                                @click="moveToTeam1">{{ team1.name }}</a>
+                                @click="moveToTeam1">{{ team1.team.name }}</a>
                         </li>
                         <li :class="{'is-active': myTeamId == 2}"><a class="team2-fill-action" id="team-select-a"
-                                @click="moveToTeam2">{{ team2.name }}</a>
+                                @click="moveToTeam2">{{ team2.team.name }}</a>
                         </li>
                     </ul>
                 </nav>

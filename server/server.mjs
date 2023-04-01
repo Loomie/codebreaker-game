@@ -1,4 +1,4 @@
-import { GamePhase, TeamId } from "./model.mjs"
+import { GamePhase, TeamId, Team, Player } from "./model.mjs"
 import express from 'express'
 import http from 'http'
 import { Server } from "socket.io"
@@ -14,8 +14,7 @@ const data = {
     round: 1,
     phase: GamePhase.ConstructCode,
     team1: {
-        name: "Blue",
-        players: [],
+        team: new Team(TeamId.FirstTeam, "Blue"),
         keywords: [
         ],
         code: [
@@ -57,8 +56,7 @@ const data = {
         }
     },
     team2: {
-        name: "Red",
-        players: [],
+        team: new Team(TeamId.SecondTeam, "Red"),
         keywords: [],
         code: [],
         current_hints: [
@@ -106,19 +104,24 @@ const data = {
 app.use(express.static('..', { index: 'index.html' }))
 
 io.on('connection', (socket) => {
-    var player
+    var player = null
     console.log('a user connected')
+
     socket.on('player join', (playerName) => {
         console.log('joined: ' + playerName)
-        player = playerName
-        data.team1.players.push(playerName)
-        io.emit("players", data.team1.players)
+        player = new Player(playerName)
+        data.team1.team.addPlayer(player)
+        io.emit("players", data.team1.team.members)
     })
+
     socket.on('disconnect', () => {
-        console.log('disconnected: ' + (player ? player : 'user'))
-        const playerIndex = data.team1.players.indexOf(player)
-        data.team1.players.splice(playerIndex, 1)
-        io.emit("players", data.team1.players)
+        console.log('disconnected: ' + (player ? player.playerName : 'user'))
+        if (player) {
+            data.team1.team.removePlayer(player)
+            io.emit("players", data.team1.team.members)
+            player.destroy()
+            player = null
+        }
     })
 })
 

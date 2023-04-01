@@ -171,7 +171,15 @@ export class EncodingGame {
 }
 
 class PhaseListener {
-    constructor()
+    constructor(callback) {
+        if (typeof callback === "function") {
+            this.callback = callback
+        } else {
+            throw "callback must be a function that accepts a GamePhase"
+        }
+    }
 
-    onPhase(gamePhase)
+    onPhase(gamePhase) {
+        this.callback(gamePhase)
+    }
 }

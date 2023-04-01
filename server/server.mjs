@@ -1,24 +1,13 @@
-const express = require('express')
+import { GamePhase, TeamId } from "./model.mjs"
+import express from 'express'
+import http from 'http'
+import { Server } from "socket.io"
+
 const app = express()
-const http = require('http')
 const server = http.createServer(app)
-const path = require('path')
-const { Server } = require("socket.io")
 const io = new Server(server, {
     serveClient: false
 })
-
-/** define sets of fixed values to have defined options from which to choose instead of "any number" */
-
-const GamePhase = {
-    ConstructCode: 1,
-    BreakCode: 2,
-}
-
-const TeamId = {
-    FirstTeam: 1,
-    SecondTeam: 2
-}
 
 /** game state */
 const data = {

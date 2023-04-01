@@ -27,3 +27,40 @@ Keyword
 
 Round
 : The game is played in multiple _rounds_. Each _round_ consists of multiple steps that are went through: A _code_ is generated for each team, _Encoder_ gives _hints_ for that _code_ to her team, each team _guesses_ the _code_ based on the _hints_ for both teams, the original _code_ is revealed and compared to the _guesses_ and finally the result is checked if the game ends or continues with the next _round_.
+
+# Installation
+
+To run the game a central server is needed. It hosts the web pages and connects the players.
+
+## Requirements
+For the server part [node.js](https://nodejs.org/) must be installed. For the development version `git` is recommended. But the files can be downloaded directly form GitHub.
+
+## Setup
+To setup the server just clone the git repository. Change to the folder `server` and initialize the project:
+
+## Start
+
+To run the process in the foreground:
+
+    cd codebreaker-game/server
+    node server.mjs
+
+The server runs on port 12034. So point your browser to `http://<yourserver>:12034/`
+
+## Stop
+
+To stop the foreground server press CTRL + C.
+
+## Recommendation
+Use a separate user to run the process. For linux create a system user without a login. You need to start the server with a privileged user who changes to the dedicated system user.
+
+    # create system user
+    adduser --system codebreakeruser
+    # download game
+    su -s /bin/sh -c 'git clone https://github.com/Loomie/codebreaker-game.git' - codebreakeruser
+    # initialize
+    su -s /bin/sh -c 'cd codebreaker-game/server && npm install' - codebreakeruser
+    # start the server
+    su -s /bin/sh -c 'cd codebreaker-game/server && node server.mjs' - codebreakeruser
+
+Instead of calling `su` for each step you can get an interactive shell with `su -s /bin/bash - codebreakeruser`

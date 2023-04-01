@@ -13,18 +13,59 @@ export const TeamId = {
 }
 
 export class Team {
-    constructor(teamId) {
+    constructor(teamId, name) {
         this.id = teamId
+        this.name = name
         this.members = []
         this.correctOtherEncodings = 0
         this.failedOwnDecodings = 0
     }
+
+    addPlayer(player) {
+        if (player instanceof Player) {
+            this.members.push(player)
+        } else {
+            throw "team members must be Players!"
+        }
+    }
+
+    removePlayer(player) {
+        if (player instanceof Player) {
+            const playerIndex = this.members.indexOf(player)
+            if (0 <= playerIndex && playerIndex < this.members.length) {
+                this.members.splice(playerIndex, 1)
+            }
+        } else {
+            throw "team members must be Players!"
+        }
+    }
 }
 
+const _playerIds = []
 export class Player {
     constructor(playerName) {
-        this.id = crypto.randomUUID()
+        this.id = this.generateId()
         this.playerName = playerName
+    }
+
+    generateId() {
+        var newId
+        do {
+            newId = Math.floor(Math.random() * Number.MAX_SAFE_INTEGER)
+        } while (_playerIds.indexOf(newId) !== -1)
+        _playerIds.push(newId)
+        console.debug("created player id " + newId)
+        return newId
+    }
+
+    destroy() {
+        const idIndex = _playerIds.indexOf(this.id)
+        if (0 <= idIndex && idIndex < _playerIds.length) {
+            const removed = _playerIds.splice(idIndex, 1)
+            console.debug("removed player id " + removed)
+        }
+        this.id = undefined
+        this.playerName = undefined
     }
 }
 

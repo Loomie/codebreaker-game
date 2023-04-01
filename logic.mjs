@@ -1,6 +1,6 @@
 import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
 import { io } from "https://unpkg.com/socket.io@4/client-dist/socket.io.esm.min.js"
-import { GamePhase, TeamId } from "./server/model.mjs"
+import { GamePhase, TeamId, Team, Player, Code, EncodingState } from "./server/model.mjs"
 
 /** construct Vue Application */
 createApp({
@@ -12,11 +12,7 @@ createApp({
             phase: GamePhase.ConstructCode,
             myTeamId: TeamId.FirstTeam,
             team1: {
-                name: "Blue",
-                players: [
-                    "dummy one",
-                    "dumm three"
-                ],
+                team: new Team(TeamId.FirstTeam, "Blue"),
                 keywords: [
                 ],
                 code: [
@@ -58,10 +54,7 @@ createApp({
                 }
             },
             team2: {
-                name: "Red",
-                players: [
-                    "second dummy"
-                ],
+                team: new Team(TeamId.SecondTeam, "Red"),
                 keywords: [],
                 code: [],
                 current_hints: [
@@ -180,6 +173,10 @@ createApp({
     created() {
         const randomKeywords = this.unique_random_words(8)
 
+        // dummy values
+        this.team1.team.members = [new Player("dummy one"), new Player("dummy three")]
+        this.team2.team.members = [new Player("second dummy")]
+
         this.team1.keywords = randomKeywords.slice(0, 4)
         this.team1.code = this.random_code()
 
@@ -192,7 +189,7 @@ createApp({
         const socket = io()
         const team1 = this.team1
         socket.on('players', function (currentPlayers) {
-            team1.players = currentPlayers
+            team1.team.members = currentPlayers
         })
 
         // init data

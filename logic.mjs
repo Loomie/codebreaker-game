@@ -1,17 +1,6 @@
 import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
 import { io } from "https://unpkg.com/socket.io@4/client-dist/socket.io.esm.min.js"
-
-/** define sets of fixed values to have defined options from which to choose instead of "any number" */
-
-const GamePhase = {
-    ConstructCode: 1,
-    BreakCode: 2,
-}
-
-const TeamId = {
-    FirstTeam: 1,
-    SecondTeam: 2
-}
+import { GamePhase, TeamId } from "./server/model.mjs"
 
 /** construct Vue Application */
 createApp({

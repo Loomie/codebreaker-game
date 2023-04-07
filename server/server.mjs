@@ -106,19 +106,27 @@ app.use(express.static('..', { index: 'index.html' }))
 io.on('connection', (socket) => {
     var player = null
     console.log('a user connected')
+    socket.emit('teamChanged', data.team1.team)
+    socket.emit('teamChanged', data.team2.team)
 
     socket.on('player join', (playerName) => {
         console.log('joined: ' + playerName)
         player = new Player(playerName)
-        data.team1.team.addPlayer(player)
-        io.emit("players", data.team1.team.members)
+
+        const teamForPlayer = getTeamWithLessPlayers()
+        teamForPlayer.addPlayer(player)
+        io.emit("teamChanged", teamForPlayer)
     })
 
     socket.on('disconnect', () => {
         console.log('disconnected: ' + (player ? player.playerName : 'user'))
         if (player) {
-            data.team1.team.removePlayer(player)
-            io.emit("players", data.team1.team.members)
+            if (data.team1.team.removePlayer(player)) {
+                io.emit("teamChanged", data.team1.team)
+            }
+            if (data.team2.team.removePlayer(player)) {
+                io.emit("teamChanged", data.team2.team)
+            }
             player.destroy()
             player = null
         }
@@ -128,3 +136,13 @@ io.on('connection', (socket) => {
 server.listen(12034, () => {
     console.log('listening on *:12034')
 })
+
+function getTeamWithLessPlayers() {
+    const team1 = data.team1.team
+    const team2 = data.team2.team
+    if (team1.members.length <= team2.members.length) {
+        return team1
+    } else {
+        return team2
+    }
+}

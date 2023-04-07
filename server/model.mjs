@@ -29,12 +29,15 @@ export class Team {
         }
     }
 
+    /** @returns true if the player was removed from this team, false if it was not a member */
     removePlayer(player) {
         if (player instanceof Player) {
             const playerIndex = this.members.indexOf(player)
             if (0 <= playerIndex && playerIndex < this.members.length) {
                 this.members.splice(playerIndex, 1)
+                return true
             }
+            return false
         } else {
             throw "team members must be Players!"
         }

@@ -188,8 +188,13 @@ createApp({
         // init networking
         const socket = io()
         const team1 = this.team1
-        socket.on('players', function (currentPlayers) {
-            team1.team.members = currentPlayers
+        const team2 = this.team2
+        socket.on('teamChanged', function (changedTeam) {
+            if (changedTeam.id === TeamId.FirstTeam) {
+                team1.team = changedTeam
+            } else if (changedTeam.id === TeamId.SecondTeam) {
+                team2.team = changedTeam
+            }
         })
 
         // init data

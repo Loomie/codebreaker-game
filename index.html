@@ -24,11 +24,11 @@
                 <h1 class="title">Teams</h1>
                 <p class="menu-label">{{ team1.team.name }}:</p>
                 <ul class="menu-list">
-                    <li v-for="player in team1.team.members">{{ player.playerName }} 🧑</li>
+                    <li v-for="player in team1.team.members">{{ player.avatar }}&nbsp;{{ player.playerName }} 🧑</li>
                 </ul>
                 <p class="menu-label">{{ team2.team.name }}:</p>
                 <ul class="menu-list">
-                    <li v-for="player in team2.team.members">{{ player.playerName }} 🔑</li>
+                    <li v-for="player in team2.team.members">{{ player.avatar }}&nbsp;{{ player.playerName }} 🔑</li>
                 </ul>
                 <br>
                 <h1 class="title">Status</h1>

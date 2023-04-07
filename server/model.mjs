@@ -1,4 +1,5 @@
 /** define sets of fixed values to have defined options from which to choose instead of "any number" */
+import { avatars } from "./avatars.mjs"
 
 export const GamePhase = {
     Init: 0,
@@ -49,6 +50,7 @@ export class Player {
     constructor(playerName) {
         this.id = this.generateId()
         this.playerName = playerName
+        this.avatar = avatars.forName(playerName)
     }
 
     generateId() {

@@ -1,10 +1,14 @@
 import { GamePhase, TeamId, Team, Player } from "./model.mjs"
 import express from 'express'
-import http from 'http'
+import { readFileSync } from 'fs'
+import { createServer } from 'https'
 import { Server } from "socket.io"
 
 const app = express()
-const server = http.createServer(app)
+const server = createServer({
+    key: readFileSync("key.pem"),
+    cert: readFileSync("cert.pem")
+}, app)
 const io = new Server(server, {
     serveClient: false
 })

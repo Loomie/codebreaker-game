@@ -102,3 +102,7 @@ dist
 
 # TernJS port file
 .tern-port
+
+# certificate and key files
+server/*.pem
+server/*.xdb

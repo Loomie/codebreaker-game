@@ -38,6 +38,10 @@ For the server part [node.js](https://nodejs.org/) must be installed. For the de
 ## Setup
 To setup the server just clone the git repository. Change to the folder `server` and initialize the project:
 
+    npm install
+
+You need a TLS (SSL) certificate for HTTP/2 (HTTPS). Put a link to your certificate chain and key file as `cert.pem` and `key.pem` in the folder `server/`.
+
 ## Start
 
 To run the process in the foreground:
@@ -55,7 +59,7 @@ To stop the foreground server press CTRL + C.
 Use a separate user to run the process. For linux create a system user without a login. You need to start the server with a privileged user who changes to the dedicated system user.
 
     # create system user
-    adduser --system codebreakeruser
+    adduser --system --group codebreakeruser
     # download game
     su -s /bin/sh -c 'git clone https://github.com/Loomie/codebreaker-game.git' - codebreakeruser
     # initialize
@@ -64,3 +68,13 @@ Use a separate user to run the process. For linux create a system user without a
     su -s /bin/sh -c 'cd codebreaker-game/server && node server.mjs' - codebreakeruser
 
 Instead of calling `su` for each step you can get an interactive shell with `su -s /bin/bash - codebreakeruser`
+
+Use a free HTTPS certificate from [Let's Encrypt](https://letsencrypt.org/) by using [`certbot`](https://certbot.eff.org/) on your server. Because the game runs as a separate user you have to give it access to the private key. You have to change the group of the key file to your codebreakeruser (primary) group.
+
+    # change group of private key and certificate files if your domain is 'example.com'
+    chgrp -R codebreakeruser /etc/letsencrypt/archive/example.com
+    # allow the group to read the private key
+    chmod g+r /etc/letsencrypt/archive/example.com/privkey1.pem
+    # tell codebreaker to use the letsencrypt files
+    su -s /bin/sh -c 'cd codebreaker-game/server && ln -s /etc/letsencrypt/live/example.com/chain.pem cert.pem' - codebreakeruser
+    su -s /bin/sh -c 'cd codebreaker-game/server && ln -s /etc/letsencrypt/live/outstare.de/privkey.pem key.pem' - codebreakeruser

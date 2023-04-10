@@ -6,7 +6,7 @@ import { Server } from "socket.io"
 
 const app = express()
 const server = createServer({
-    key: readFileSync("key.pem"),
+    key: readFileSync("privkey.pem"),
     cert: readFileSync("cert.pem")
 }, app)
 const io = new Server(server, {

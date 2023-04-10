@@ -76,5 +76,5 @@ Use a free HTTPS certificate from [Let's Encrypt](https://letsencrypt.org/) by u
     # allow the group to read the private key
     chmod g+r /etc/letsencrypt/archive/example.com/privkey1.pem
     # tell codebreaker to use the letsencrypt files
-    su -s /bin/sh -c 'cd codebreaker-game/server && ln -s /etc/letsencrypt/live/example.com/chain.pem cert.pem' - codebreakeruser
-    su -s /bin/sh -c 'cd codebreaker-game/server && ln -s /etc/letsencrypt/live/outstare.de/privkey.pem key.pem' - codebreakeruser
+    su -s /bin/sh -c 'cd codebreaker-game/server && ln -s /etc/letsencrypt/live/example.com/cert.pem cert.pem' - codebreakeruser
+    su -s /bin/sh -c 'cd codebreaker-game/server && ln -s /etc/letsencrypt/live/outstare.de/privkey.pem privkey.pem' - codebreakeruser

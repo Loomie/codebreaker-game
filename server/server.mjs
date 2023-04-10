@@ -1,4 +1,5 @@
-import { GamePhase, TeamId, Team, Player } from "./model.mjs"
+import { GamePhase } from "./model-game.mjs"
+import { TeamId, Team, Player } from "./model-team.mjs"
 import express from 'express'
 import { readFileSync } from 'fs'
 import { createServer } from 'https'

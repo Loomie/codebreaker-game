@@ -52,7 +52,7 @@ export class Player {
             newId = Math.floor(Math.random() * Number.MAX_SAFE_INTEGER)
         } while (_playerIds.indexOf(newId) !== -1)
         _playerIds.push(newId)
-        console.debug("created player id " + newId)
+        // console.debug("created player id " + newId)
         return newId
     }
 
@@ -60,7 +60,7 @@ export class Player {
         const idIndex = _playerIds.indexOf(this.id)
         if (0 <= idIndex && idIndex < _playerIds.length) {
             const removed = _playerIds.splice(idIndex, 1)
-            console.debug("removed player id " + removed)
+            // console.debug("removed player id " + removed)
         }
         this.id = undefined
         this.playerName = undefined

@@ -1,5 +1,4 @@
-import { GamePhase } from "./model-game.mjs"
-import { TeamId, Team, Player } from "./model-team.mjs"
+import { GamePhase, TeamId, Team } from "./model.mjs"
 
 /** game state */
 export const data = {

@@ -1,7 +1,6 @@
 import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
 import { io } from "https://unpkg.com/socket.io@4/client-dist/socket.io.esm.min.js"
-import { GamePhase, Code, EncodingState } from "./server/model-game.mjs"
-import { TeamId, Team, Player } from "./server/model-team.mjs"
+import { GamePhase, TeamId, Team, Player } from "./server/model.mjs"
 
 /** construct Vue Application */
 createApp({

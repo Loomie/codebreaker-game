@@ -1,4 +1,4 @@
-import { avatars } from "./avatars.mjs"
+import { avatars } from "../avatars.mjs"
 
 /** define sets of fixed values to have defined options from which to choose instead of "any number" */
 export const TeamId = {

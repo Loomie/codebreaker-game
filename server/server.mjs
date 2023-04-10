@@ -1,5 +1,5 @@
 import { data } from "./game.mjs"
-import { Player } from "./model-team.mjs"
+import { Player } from "./model.mjs"
 import express from 'express'
 import { readFileSync } from 'fs'
 import { createServer } from 'https'

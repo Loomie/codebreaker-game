@@ -51,6 +51,10 @@ To run the process in the foreground:
 
 The server runs on port 12034. So point your browser to `http://<yourserver>:12034/`
 
+To run the process in the background just append an ampersand. To read the output redirect it into a log file:
+
+    node server.mjs >server.log &
+
 ## Stop
 
 To stop the foreground server press CTRL + C.
@@ -65,7 +69,7 @@ Use a separate user to run the process. For linux create a system user without a
     # initialize
     su -s /bin/sh -c 'cd codebreaker-game/server && npm install' - codebreakeruser
     # start the server
-    su -s /bin/sh -c 'cd codebreaker-game/server && node server.mjs' - codebreakeruser
+    su -s /bin/sh -c 'cd codebreaker-game/server && node server.mjs >server.log &' - codebreakeruser
 
 Instead of calling `su` for each step you can get an interactive shell with `su -s /bin/bash - codebreakeruser`
 

@@ -1,9 +1,7 @@
 function range(from, to) {
     const chars = []
-    let current = from
-    const count = to - from
+    // const count = to - from
     // console.debug("count " + count + " for 0x" + from.toString(16) + " to 0x" + to.toString(16))
-    let i = 0
     for (let current = from; current <= to; current++) {
         chars.push(String.fromCodePoint(current))
     }
@@ -20,13 +18,14 @@ export const avatars = {
         range(0x1F4F8, 0x1F4FF), // camera with flash..prayer beads
         range(0x1F525, 0x1F531), // fire..trident emblem
         range(0x1F980, 0x1F9C0), // crab..cheese wedge
-        range(0x1F9D9, 0x1F9E6))
-    ,
+        range(0x1F9D9, 0x1F9E6)
+    ),
 
     forName(playerName) {
         const hashValue = this.hashCode(playerName)
         // console.debug("count of emojis: " + this.emojiList.length + ", player hash: " + hashValue)
-        return this.emojiList[Math.abs(hashValue) % this.emojiList.length]
+        const emojiIndex = Math.abs(hashValue) % this.emojiList.length
+        return this.emojiList[emojiIndex]
     },
 
     // from https://gist.github.com/hyamamoto/fd435505d29ebfa3d9716fd2be8d42f0?permalink_comment_id=2775538#gistcomment-2775538

@@ -8,11 +8,7 @@ export const data = {
         team: new Team(TeamId.FirstTeam, "Blue"),
         keywords: [
         ],
-        code: [
-            1,
-            2,
-            3
-        ],
+        code: null,
         current_hints: [
         ],
         word1: {
@@ -49,7 +45,7 @@ export const data = {
     team2: {
         team: new Team(TeamId.SecondTeam, "Red"),
         keywords: [],
-        code: [],
+        code: null,
         current_hints: [
         ],
         word1: {

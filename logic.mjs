@@ -1,6 +1,6 @@
 import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
 import { io } from "https://unpkg.com/socket.io@4/client-dist/socket.io.esm.min.js"
-import { GamePhase, TeamId, Team, Player } from "./server/model.mjs"
+import { Code, GamePhase, TeamId, Team, Player } from "./server/model.mjs"
 
 /** construct Vue Application */
 createApp({
@@ -15,11 +15,7 @@ createApp({
                 team: new Team(TeamId.FirstTeam, "Blue"),
                 keywords: [
                 ],
-                code: [
-                    1,
-                    2,
-                    3
-                ],
+                code: null,
                 current_hints: [
                 ],
                 word1: {
@@ -56,7 +52,7 @@ createApp({
             team2: {
                 team: new Team(TeamId.SecondTeam, "Red"),
                 keywords: [],
-                code: [],
+                code: null,
                 current_hints: [
                 ],
                 word1: {
@@ -160,12 +156,6 @@ createApp({
                 randomWords[i] = nextword
             }
             return randomWords
-        },
-
-        /** @return three numbers in random order of the set one to four */
-        random_code() {
-            const randomNumbers = [1, 2, 3, 4].sort(function () { return 0.5 - Math.random() })
-            return randomNumbers.slice(0, 3)
         }
     },
 
@@ -178,10 +168,10 @@ createApp({
         this.team2.team.members = [new Player("second dummy")]
 
         this.team1.keywords = randomKeywords.slice(0, 4)
-        this.team1.code = this.random_code()
+        this.team1.code = new Code()
 
         this.team2.keywords = randomKeywords.slice(4, 8)
-        this.team2.code = this.random_code()
+        this.team2.code = new Code()
     },
 
     mounted() {

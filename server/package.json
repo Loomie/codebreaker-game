@@ -2,7 +2,7 @@
   "name": "codebreaker-game-server",
   "version": "1.0.0",
   "description": "Server part of the multiplayer game Codebreaker",
-  "main": "server.js",
+  "main": "server.mjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -15,7 +15,7 @@
     "game",
     "codebreaker"
   ],
-  "author": "Loomie",
+  "author": "Loomie, ManquQhapaq",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Loomie/codebreaker-game/issues"

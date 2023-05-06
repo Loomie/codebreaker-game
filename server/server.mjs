@@ -24,7 +24,7 @@ io.on('connection', (socket) => {
     socket.emit('teamChanged', data.team2.team)
 
     socket.on('player join', (playerName) => {
-        console.log('joined: ' + playerName)
+        console.log(`joined: ${playerName}`)
         player = new Player(playerName)
 
         const teamForPlayer = getTeamWithLessPlayers()
@@ -36,7 +36,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('disconnect', () => {
-        console.log('disconnected: ' + (player ? player.playerName : 'user'))
+        console.log(`disconnected: ${player ? player.playerName : 'user'}`)
         if (player) {
             if (data.team1.team.removePlayer(player)) {
                 io.emit("teamChanged", data.team1.team)

@@ -1,11 +1,11 @@
 function range(from, to) {
     const chars = []
     // const count = to - from
-    // console.debug("count " + count + " for 0x" + from.toString(16) + " to 0x" + to.toString(16))
+    // console.debug(`count ${count} for 0x${from.toString(16)} to 0x${to.toString(16)}`)
     for (let current = from; current <= to; current++) {
         chars.push(String.fromCodePoint(current))
     }
-    // console.debug("result: " + chars)
+    // console.debug(`result: ${chars}`)
     return chars
 }
 
@@ -23,7 +23,7 @@ export const avatars = {
 
     forName(playerName) {
         const hashValue = this.hashCode(playerName)
-        // console.debug("count of emojis: " + this.emojiList.length + ", player hash: " + hashValue)
+        // console.debug(`count of emojis: ${this.emojiList.length}, player hash: ${hashValue}`)
         const emojiIndex = Math.abs(hashValue) % this.emojiList.length
         return this.emojiList[emojiIndex]
     },

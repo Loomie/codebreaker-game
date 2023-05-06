@@ -29,7 +29,10 @@ io.on('connection', (socket) => {
 
         const teamForPlayer = getTeamWithLessPlayers()
         teamForPlayer.addPlayer(player)
+        // tell all players that a new player joined
         io.emit("teamChanged", teamForPlayer)
+        // tell player what team she joined
+        socket.emit('joinedTeam', teamForPlayer)
     })
 
     socket.on('disconnect', () => {

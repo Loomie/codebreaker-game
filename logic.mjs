@@ -177,6 +177,7 @@ createApp({
     mounted() {
         // init networking
         const socket = io()
+        const data = this
         const team1 = this.team1
         const team2 = this.team2
         socket.on('teamChanged', function (changedTeam) {
@@ -185,6 +186,10 @@ createApp({
             } else if (changedTeam.id === TeamId.SecondTeam) {
                 team2.team = changedTeam
             }
+        })
+        socket.on('joinedTeam', function (myTeam) {
+            console.info(data.playerName + ' joined team ' + myTeam.id)
+            data.myTeamId = myTeam.id
         })
 
         // init data

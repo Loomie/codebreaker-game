@@ -65,25 +65,5 @@ export const data = {
         word4: {
             hints: []
         }
-    },
-    wordlist: [
-        "child",
-        "company",
-        "day",
-        "eye",
-        "fact",
-        "government",
-        "group",
-        "hand",
-        "life",
-        "number",
-        "person",
-        "place",
-        "point",
-        "time",
-        "way",
-        "week",
-        "work",
-        "world",
-        "year"]
+    }
 }

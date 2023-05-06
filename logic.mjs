@@ -1,6 +1,7 @@
 import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
 import { io } from "https://unpkg.com/socket.io@4/client-dist/socket.io.esm.min.js"
 import { Code, GamePhase, TeamId, Team, Player } from "./server/model.mjs"
+import { wordlist } from "./server/wordlist.mjs"
 
 /** construct Vue Application */
 createApp({
@@ -72,27 +73,7 @@ createApp({
                 word4: {
                     hints: []
                 }
-            },
-            wordlist: [
-                "child",
-                "company",
-                "day",
-                "eye",
-                "fact",
-                "government",
-                "group",
-                "hand",
-                "life",
-                "number",
-                "person",
-                "place",
-                "point",
-                "time",
-                "way",
-                "week",
-                "work",
-                "world",
-                "year"]
+            }
         }
     },
 
@@ -135,7 +116,7 @@ createApp({
 
         /** @return a random word from the wordlist */
         random_word() {
-            return this.random_item(this.wordlist)
+            return this.random_item(wordlist)
         },
 
         /** @return a random item from the given array */

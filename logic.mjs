@@ -116,6 +116,19 @@ createApp({
             return this.visibleTeam.team.name
         },
 
+        hintPlaceholder() {
+            if (this.isOwnTeam) {
+                const placeholders = []
+                for (let index = 0; index < this.myTeam.code.value.length; index++) {
+                    const codePart = this.myTeam.code.value[index]
+                    const placeholder = `Encrypt "${this.myTeam.keywords[codePart - 1]}"`
+                    placeholders.push(placeholder)
+                }
+                return placeholders
+            }
+            return ["", "", ""].fill("Wait for hint")
+        },
+
         /** name of a CSS class for current team */
         teamFillClass() {
             return (this.visibleTeamId == TeamId.FirstTeam) ? "team1-fill" : "team2-fill"

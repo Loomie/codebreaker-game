@@ -5,7 +5,7 @@ export const data = {
     round: 1,
     phase: GamePhase.ConstructCode,
     team1: {
-        team: new Team(TeamId.FirstTeam, "Blue"),
+        team: new Team(TeamId.FirstTeam, "A very Blue Team name"),
         keywords: [
         ],
         code: null,

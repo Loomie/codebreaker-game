@@ -74,13 +74,13 @@
                         </div>
                     </footer>
                 </article>
-                <nav class="tabs center">
+                <nav class="center">
                     <ul>
-                        <li :class="{'is-active': myTeamId == 1}"><a class="team1-fill-action" id="team-select-a"
-                                @click="moveToTeam1">{{ team1.team.name }}</a>
+                        <li class="team1-fill-action" :class="{'is-active': myTeamId == 1}" id="team-select-a"
+                            @click="moveToTeam1">{{ team1.team.name }}
                         </li>
-                        <li :class="{'is-active': myTeamId == 2}"><a class="team2-fill-action" id="team-select-a"
-                                @click="moveToTeam2">{{ team2.team.name }}</a>
+                        <li class="team2-fill-action" :class="{'is-active': myTeamId == 2}" id="team-select-a"
+                            @click="moveToTeam2">{{ team2.team.name }}
                         </li>
                     </ul>
                 </nav>

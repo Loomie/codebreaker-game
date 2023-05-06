@@ -119,19 +119,24 @@ input[type=text] {
     outline: none;
 }
 
-/* Tabs */
-.tabs li {
-    border-bottom: 1px solid grey;
+/* Navigation */
+nav li {
+    border-bottom: 0px solid grey;
+    border-radius: 5px;
     min-width: 10em;
     text-align: center;
     list-style-type: none;
     display: inline-block;
     margin: 0.5em;
     padding: 1ex;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    /* Show hand icon while hovering over button */
+    cursor: pointer;
 }
 
-.tabs li.is-active {
-    border-width: 2px;
+nav li.is-active {
+    border-width: 4px;
     font-weight: bold;
 }
 

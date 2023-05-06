@@ -17,7 +17,7 @@
 
     <!-- ui template -->
     <div id="app">
-        <h1 class="center">{{ myTeam.team.name }}</h1>
+        <h1 class="center">{{ visibleTeamName }}</h1>
         <div class="columns p-6">
             <!-- Left section containing the team information -->
             <aside class="column-15">
@@ -40,26 +40,26 @@
                     <section class="columns">
                         <div class="column-25">
                             <div class="panel">
-                                <h1 class="panel-head" :class="teamFillClass">{{ myTeam.keywords[0] }}</h1>
-                                <p class="panel-block" v-for="code in myTeam.word1.hints">{{ code }}</p>
+                                <h1 class="panel-head" :class="teamFillClass">{{ visibleKeywords[0] }}</h1>
+                                <p class="panel-block" v-for="code in visibleTeam.word1.hints">{{ code }}</p>
                             </div>
                         </div>
                         <div class="column-25">
                             <div class="panel">
-                                <h1 class="panel-head" :class="teamFillClass">{{ myTeam.keywords[1] }}</h1>
-                                <p class="panel-block" v-for="code in myTeam.word2.hints">{{ code }}</p>
+                                <h1 class="panel-head" :class="teamFillClass">{{ visibleKeywords[1] }}</h1>
+                                <p class="panel-block" v-for="code in visibleTeam.word2.hints">{{ code }}</p>
                             </div>
                         </div>
                         <div class="column-25">
                             <div class="panel">
-                                <h1 class="panel-head" :class="teamFillClass">{{ myTeam.keywords[2] }}</h1>
-                                <p class="panel-block" v-for="code in myTeam.word3.hints">{{ code }}</p>
+                                <h1 class="panel-head" :class="teamFillClass">{{ visibleKeywords[2] }}</h1>
+                                <p class="panel-block" v-for="code in visibleTeam.word3.hints">{{ code }}</p>
                             </div>
                         </div>
                         <div class="column-25">
                             <div class="panel">
-                                <h1 class="panel-head" :class="teamFillClass">{{ myTeam.keywords[3] }}</h1>
-                                <p class="panel-block" v-for="code in myTeam.word4.hints">{{ code }}</p>
+                                <h1 class="panel-head" :class="teamFillClass">{{ visibleKeywords[3] }}</h1>
+                                <p class="panel-block" v-for="code in visibleTeam.word4.hints">{{ code }}</p>
                             </div>
                         </div>
                     </section>
@@ -76,11 +76,11 @@
                 </article>
                 <nav class="center">
                     <ul>
-                        <li class="team1-fill-action" :class="{'is-active': myTeamId == 1}" id="team-select-a"
-                            @click="moveToTeam1">{{ team1.team.name }}
+                        <li class="team1-fill-action" :class="{'is-active': visibleTeamId == 1}" id="team-select-a"
+                            @click="showTeam1">{{ team1.team.name }}
                         </li>
-                        <li class="team2-fill-action" :class="{'is-active': myTeamId == 2}" id="team-select-a"
-                            @click="moveToTeam2">{{ team2.team.name }}
+                        <li class="team2-fill-action" :class="{'is-active': visibleTeamId == 2}" id="team-select-a"
+                            @click="showTeam2">{{ team2.team.name }}
                         </li>
                     </ul>
                 </nav>
@@ -93,9 +93,9 @@
                             <!-- Current 3-digit code -->
                             <h1 class="panel-head" :class="teamFillClass">
                                 <div class="code">
-                                    <span>{{ myTeam.code.value[0] }}</span>
-                                    <span>{{ myTeam.code.value[1] }}</span>
-                                    <span>{{ myTeam.code.value[2] }}</span>
+                                    <span>{{ visibleCode[0] }}</span>
+                                    <span>{{ visibleCode[1] }}</span>
+                                    <span>{{ visibleCode[2] }}</span>
                                 </div>
                             </h1>
                             <!-- 1st line of the 3-digit code -->
@@ -168,7 +168,6 @@
                         </div>
                     </div>
                 </div>
-
 
             </section>
         </div>

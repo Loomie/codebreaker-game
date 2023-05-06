@@ -12,6 +12,7 @@ createApp({
             round: 1,
             phase: GamePhase.ConstructCode,
             myTeamId: TeamId.FirstTeam,
+            visibleTeamId: this.myTeamId,
             team1: {
                 team: new Team(TeamId.FirstTeam, "Blue"),
                 keywords: [
@@ -86,32 +87,54 @@ createApp({
             return this.team1
         },
 
-        otherTeam() {
-            if (this.myTeamId == TeamId.SecondTeam) {
-                return this.team1
+        isOwnTeam() {
+            return this.visibleTeamId === this.myTeamId
+        },
+
+        visibleTeam() {
+            if (this.visibleTeamId == TeamId.SecondTeam) {
+                return this.team2
             }
-            return this.team2
+            return this.team1
+        },
+
+        visibleCode() {
+            if (this.isOwnTeam) {
+                return this.visibleTeam.code.value
+            }
+            return ["?", "?", "?"]
+        },
+
+        visibleKeywords() {
+            if (this.isOwnTeam) {
+                return this.visibleTeam.keywords
+            }
+            return ["****", "****", "****", "****"]
+        },
+
+        visibleTeamName() {
+            return this.visibleTeam.team.name
         },
 
         /** name of a CSS class for current team */
         teamFillClass() {
-            return (this.myTeamId == TeamId.FirstTeam) ? "team1-fill" : "team2-fill"
+            return (this.visibleTeamId == TeamId.FirstTeam) ? "team1-fill" : "team2-fill"
         },
         teamFillActionClass() {
-            return (this.myTeamId == TeamId.FirstTeam) ? "team1-fill-action" : "team2-fill-action"
+            return (this.visibleTeamId == TeamId.FirstTeam) ? "team1-fill-action" : "team2-fill-action"
         },
         teamBorderClass() {
-            return (this.myTeamId == TeamId.FirstTeam) ? "team1-border" : "team2-border"
+            return (this.visibleTeamId == TeamId.FirstTeam) ? "team1-border" : "team2-border"
         }
     },
 
     /** functions that do something */
     methods: {
-        moveToTeam1() {
-            this.myTeamId = TeamId.FirstTeam
+        showTeam1() {
+            this.visibleTeamId = TeamId.FirstTeam
         },
-        moveToTeam2() {
-            this.myTeamId = TeamId.SecondTeam
+        showTeam2() {
+            this.visibleTeamId = TeamId.SecondTeam
         },
 
         /** @return a random word from the wordlist */
@@ -172,6 +195,7 @@ createApp({
             console.info(`${myPlayer.id} ${myPlayer.playerName} joined team ${myTeam.id}`)
             data.player = myPlayer
             data.myTeamId = myTeam.id
+            data.visibleTeamId = data.myTeamId
         })
 
         // init data

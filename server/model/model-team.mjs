@@ -8,8 +8,8 @@ export const TeamId = {
 
 export class Team {
     constructor(teamId, name) {
-        this.id = teamId
-        this.name = name
+        this.id = (teamId) ? teamId : TeamId.FirstTeam
+        this.name = (name) ? name : "Team"
         this.members = []
         this.correctOtherEncodings = 0
         this.failedOwnDecodings = 0
@@ -42,8 +42,8 @@ const _playerIds = []
 export class Player {
     constructor(playerName) {
         this.id = this.generateId()
-        this.playerName = playerName
-        this.avatar = avatars.forName(playerName)
+        this.playerName = (playerName) ? playerName : "Player"
+        this.avatar = avatars.forName(this.playerName)
     }
 
     generateId() {

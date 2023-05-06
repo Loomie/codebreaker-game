@@ -7,7 +7,7 @@ createApp({
     /** data which holds the state of the game */
     data() {
         return {
-            playerName: "your name",
+            player: null,
             round: 1,
             phase: GamePhase.ConstructCode,
             myTeamId: TeamId.FirstTeam,
@@ -187,13 +187,14 @@ createApp({
                 team2.team = changedTeam
             }
         })
-        socket.on('joinedTeam', function (myTeam) {
-            console.info(data.playerName + ' joined team ' + myTeam.id)
+        socket.on('updateSelf', function (myPlayer, myTeam) {
+            console.info(`${myPlayer.id} ${myPlayer.playerName} joined team ${myTeam.id}`)
+            data.player = myPlayer
             data.myTeamId = myTeam.id
         })
 
         // init data
-        this.playerName = prompt("What's your name?", this.playerName)
-        socket.emit("player join", this.playerName)
+        const playerName = prompt("What's your name?", "your name")
+        socket.emit("player join", playerName)
     }
 }).mount('#app')

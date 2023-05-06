@@ -31,8 +31,8 @@ io.on('connection', (socket) => {
         teamForPlayer.addPlayer(player)
         // tell all players that a new player joined
         io.emit("teamChanged", teamForPlayer)
-        // tell player what team she joined
-        socket.emit('joinedTeam', teamForPlayer)
+        // tell player who she is and what team he joined
+        socket.emit('updateSelf', player, teamForPlayer)
     })
 
     socket.on('disconnect', () => {

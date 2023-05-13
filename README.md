@@ -44,6 +44,21 @@ You need a TLS (SSL) certificate for HTTP/2 (HTTPS). Put a link to your certific
 
 ## Start
 
+It is recommended to manage the service with systemd. A template service file is included. You need to create a copy and modify the path and maybe user name.
+
+    cd codebreaker-game/server
+    cp codebreaker.service.template codebreaker.service
+    nano codebreaker.service
+    sudo ln -s codebreaker.service /etc/systemd/system/
+    sudo systemctl daemon-reload
+    # autostart on boot
+    sudo systemctl enable codebreaker
+
+Afterwards you can start and stop the service with
+
+    sudo systemctl start codebreaker
+    sudo systemctl stop codebreaker
+
 To run the process in the foreground:
 
     cd codebreaker-game/server

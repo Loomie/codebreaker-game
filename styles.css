@@ -155,8 +155,8 @@ section.columns {
     flex-wrap: wrap;
 }
 
-.column-15 {
-    flex-basis: 15%;
+.column-17 {
+    flex-basis: 17%;
 }
 
 .column-25 {
@@ -167,8 +167,8 @@ section.columns {
     flex-grow: 1;
 }
 
-.column-70 {
-    flex-basis: 70%;
+.column-66 {
+    flex-basis: 66%;
 }
 
 .panel {

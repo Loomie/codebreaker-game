@@ -8,10 +8,10 @@ After=network.target
 [Service]
 Type=simple
 # adapt to your user name
-User=codebreaker-game
+User=codebreakeruser
 # adapt to your directory
 WorkingDirectory=/path/to/codebreaker-game/server/
-Environment="NODE_ENV=production" "PORT=12034"
+Environment="NODE_ENV=production" "CODEBREAKER_PORT=12034"
 # adapt path to node.js if not installed globally
 ExecStartPre=/usr/bin/npm install
 ExecStart=/usr/bin/node server.mjs

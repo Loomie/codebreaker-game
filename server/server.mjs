@@ -50,8 +50,9 @@ io.on('connection', (socket) => {
     })
 })
 
-server.listen(12034, () => {
-    console.log('listening on *:12034')
+const port = process.env.CODEBREAKER_PORT || 12034
+server.listen(port, () => {
+    console.log(`listening on *:${port}`)
 })
 
 function getTeamWithLessPlayers() {

@@ -42,7 +42,13 @@ To setup the server just clone the git repository. Change to the folder `server`
 
 You need a TLS (SSL) certificate for HTTP/2 (HTTPS). Put a link to your certificate chain and key file as `cert.pem` and `key.pem` in the folder `server/`.
 
+You can configure on which port the server runs with the environment variable `CODEBREAKER_PORT` (default: 12034).
+
 ## Start
+
+The server runs on port 12034 by default. So point your browser to `https://<yourserver>:12034/`. You can change the port by setting the environment variable `CODEBREAKER_PORT`.
+
+### Background service (daemon)
 
 It is recommended to manage the service with systemd. A template service file is included. You need to create a copy and modify the path and maybe user name.
 
@@ -59,12 +65,14 @@ Afterwards you can start and stop the service with
     sudo systemctl start codebreaker
     sudo systemctl stop codebreaker
 
+### Foreground
+
 To run the process in the foreground:
 
     cd codebreaker-game/server
     node server.mjs
 
-The server runs on port 12034. So point your browser to `http://<yourserver>:12034/`
+### Background one shot
 
 To run the process in the background just append an ampersand. To read the output redirect it into a log file:
 
@@ -72,19 +80,18 @@ To run the process in the background just append an ampersand. To read the outpu
 
 ## Stop
 
-To stop the foreground server press CTRL + C.
+To stop the service run `sudo systemctl stop codebreaker`. To stop the foreground server press CTRL + C.
 
 ## Recommendation
-Use a separate user to run the process. For linux create a system user without a login. You need to start the server with a privileged user who changes to the dedicated system user.
+Use a separate user to run the process. For linux create a system user without a login (needs root privileges). You need to start the server with a privileged user who changes to the dedicated system user. That is what systemd does for you.
 
     # create system user
     adduser --system --group codebreakeruser
     # download game
     su -s /bin/sh -c 'git clone https://github.com/Loomie/codebreaker-game.git' - codebreakeruser
-    # initialize
-    su -s /bin/sh -c 'cd codebreaker-game/server && npm install' - codebreakeruser
-    # start the server
-    su -s /bin/sh -c 'cd codebreaker-game/server && node server.mjs >server.log &' - codebreakeruser
+    # setup service as described above with the created user
+    # start the server in background (one shot)
+    systemctl start codebreaker
 
 Instead of calling `su` for each step you can get an interactive shell with `su -s /bin/bash - codebreakeruser`
 

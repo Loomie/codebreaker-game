@@ -107,7 +107,7 @@ body {
 input[type=text] {
     /* Padding and border are within the size */
     box-sizing: border-box;
-    width: 9em;
+    min-width: 9em;
     height: 3em;
     padding: 10px;
     margin-left: 0px;
@@ -149,6 +149,10 @@ a {
 .columns {
     display: flex;
     justify-content: center;
+}
+
+section.columns {
+    flex-wrap: wrap;
 }
 
 .column-15 {

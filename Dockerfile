@@ -1,12 +1,15 @@
 # based on https://nodejs.org/en/docs/guides/nodejs-docker-webapp
 FROM node:lts
 
+ENV CODEBREAKER_PORT=12034
+ENV NODE_ENV=production
+
 # Create app directory
-WORKDIR /usr/src/app
+WORKDIR /usr/games/codebreaker/server
 
 # Install app dependencies
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
-COPY package*.json ./
+COPY server/package*.json ./
 
 RUN npm install
 
@@ -14,7 +17,9 @@ RUN npm install
 RUN npm ci --omit=dev
 
 # Bundle app source
+WORKDIR /usr/games/codebreaker
 COPY . .
 
-EXPOSE 12034
+WORKDIR /usr/games/codebreaker/server
+EXPOSE ${CODEBREAKER_PORT}
 CMD [ "node", "server.mjs" ]

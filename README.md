@@ -35,6 +35,8 @@ To run the game a central server is needed. It hosts the web pages and connects 
 ## Requirements
 For the server part [node.js](https://nodejs.org/) must be installed. For the development version `git` is recommended. But the files can be downloaded directly form GitHub.
 
+As an alternate the server can be run with Docker. You need docker to be installed in this case. See below for instructions to run the game server.
+
 ## Setup
 To setup the server just clone the git repository. Change to the folder `server` and initialize the project:
 
@@ -104,3 +106,25 @@ Use a free HTTPS certificate from [Let's Encrypt](https://letsencrypt.org/) by u
     # tell codebreaker to use the letsencrypt files
     su -s /bin/sh -c 'cd codebreaker-game/server && ln -s /etc/letsencrypt/live/example.com/cert.pem cert.pem' - codebreakeruser
     su -s /bin/sh -c 'cd codebreaker-game/server && ln -s /etc/letsencrypt/live/outstare.de/privkey.pem privkey.pem' - codebreakeruser
+
+## Docker
+
+All the setup is done in a Docker container. It needs a certificate and private key for secure connections (HTTPS) as stated in the section "Setup".
+
+To build the docker image locally run the following after your setup is done (in main folder of this project):
+
+    docker build --rm -t codebreakergame:latest .
+
+To run the docker image in a container you need to provide the certificate and key file. Also set a local port where the game is reachable, like 4321 below:
+
+    docker run --init -d -v <your/path/to/privkey.pem>:/usr/games/codebreaker/server/privkey.pem -v <your/path/to/cert.pem>:/usr/games/codebreaker/server/cert.pem -p 4321:12034 --name codebreakergame codebreakergame:latest
+
+Access the game on your machine like https://localhost:4321
+
+To stop the so started container run
+
+    docker stop codebreakergame
+
+To start again:
+
+    docker start codebreakergame

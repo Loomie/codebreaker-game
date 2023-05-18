@@ -5,6 +5,8 @@ import { readFileSync } from 'fs'
 import { createServer } from 'https'
 import { Server } from "socket.io"
 
+const DEFAULT_PORT = 12034
+
 const app = express()
 app.use(express.static('..', { index: 'index.html' }))
 // HTTPS server
@@ -50,7 +52,7 @@ io.on('connection', (socket) => {
     })
 })
 
-const port = process.env.CODEBREAKER_PORT || 12034
+const port = process.env.CODEBREAKER_PORT || DEFAULT_PORT
 server.listen(port, () => {
     console.log(`listening on *:${port}`)
 })

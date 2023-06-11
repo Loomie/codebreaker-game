@@ -19,6 +19,7 @@ createApp({
                 ],
                 code: null,
                 current_hints: [
+                    '', '', ''
                 ],
                 word1: {
                     hints: [
@@ -105,6 +106,10 @@ createApp({
             return ["?", "?", "?"]
         },
 
+        visibleHints() {
+            return this.visibleTeam.current_hints
+        },
+
         visibleKeywords() {
             if (this.isOwnTeam) {
                 return this.visibleTeam.keywords
@@ -173,6 +178,11 @@ createApp({
                 randomWords[i] = nextword
             }
             return randomWords
+        },
+
+        submit_hints() {
+            console.log(`submitted hints: ${this.visibleHints}`)
+            // TODO send to server
         }
     },
 

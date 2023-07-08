@@ -1,4 +1,4 @@
-import { GamePhase, TeamId, Team } from "./model.mjs"
+import { GamePhase, TeamId, Team, EncodingGame } from "./model.mjs"
 
 /** game state */
 export const data = {
@@ -6,11 +6,7 @@ export const data = {
     phase: GamePhase.ConstructCode,
     team1: {
         team: new Team(TeamId.FirstTeam, "A very Blue Team name"),
-        keywords: [
-        ],
-        code: null,
-        current_hints: [
-        ],
+        encoding: new EncodingGame(['Auto', 'Haus', 'Schiff', 'Fenster'], this.team),
         word1: {
             hints: [
                 "Code 1",
@@ -44,10 +40,7 @@ export const data = {
     },
     team2: {
         team: new Team(TeamId.SecondTeam, "Red"),
-        keywords: [],
-        code: null,
-        current_hints: [
-        ],
+        encoding: new EncodingGame(['Baum', 'Fluss', 'Wolke', 'Bank'], this.team),
         word1: {
             hints: [
                 "Dummy"

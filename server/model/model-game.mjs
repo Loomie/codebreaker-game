@@ -22,7 +22,7 @@ export class Code {
 }
 
 /**
- * This is state holds all values about the encoding. These fields are visible for each player and used in the server (not necesseraly the same object). It is solely a data class without logic.
+ * This state holds all values about the encoding. These fields are visible for each player and used in the server (not necesseraly the same object). It is solely a data class without logic.
  */
 export class EncodingState {
     constructor(keyWords) {

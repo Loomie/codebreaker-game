@@ -1,4 +1,6 @@
+- random keywords on server side!
 - remember and sync hints from previous rounds
 - sync guess on change to whole team
 - calculate results and remember black/white marks
 - read-only hint input fields when not encoder
+- localized word list

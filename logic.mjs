@@ -14,7 +14,7 @@ createApp({
             visibleTeamId: this.myTeamId,
             team1: {
                 team: new Team(TeamId.FirstTeam, "Blue"),
-                phase: GamePhase.ConstructCode,
+                phase: GamePhase.Init,
                 keywords: [
                 ],
                 code: null,
@@ -22,6 +22,7 @@ createApp({
                 current_hints: [
                     '', '', ''
                 ],
+                encoder: null,
                 word1: {
                     hints: [
                         "Code 1",
@@ -55,12 +56,13 @@ createApp({
             },
             team2: {
                 team: new Team(TeamId.SecondTeam, "Red"),
-                phase: GamePhase.ConstructCode,
+                phase: GamePhase.Init,
                 keywords: [],
                 code: null,
                 guess: [],
                 current_hints: [
                 ],
+                encoder: null,
                 word1: {
                     hints: [
                         "Dummy"
@@ -108,8 +110,8 @@ createApp({
         },
 
         visibleCode() {
-            if (this.isOwnTeam) {
-                return (this.visibleTeam.code) ? this.visibleTeam.code.value : ['', '', '']
+            if (this.isEncoder && this.isOwnTeam) {
+                return (this.myTeam.code) ? this.myTeam.code.value : ['E', 'R', 'R']
             }
             return ["?", "?", "?"]
         },
@@ -157,6 +159,39 @@ createApp({
 
         visibleTeamName() {
             return this.visibleTeam.team.name
+        },
+
+        isEncoder() {
+            return this.myTeam.encoder?.id == this.player?.id
+        },
+
+        submit_text() {
+            switch (this.visibleTeam.phase) {
+                case GamePhase.BreakCode:
+                    return 'Guess Code'
+                case GamePhase.ConstructCode:
+                    return 'Give Hints'
+                case GamePhase.Results:
+                    return 'Confirm Result'
+                case GamePhase.Init:
+                default:
+                    return 'Wait'
+            }
+        },
+
+        /** @returns true if the submit button is disabled */
+        is_submit_disabled() {
+            switch (this.visibleTeam.phase) {
+                case GamePhase.BreakCode:
+                    return this.isEncoder
+                case GamePhase.ConstructCode:
+                    return !this.isEncoder
+                case GamePhase.Results:
+                    return false
+                case GamePhase.Init:
+                default:
+                    return true
+            }
         },
 
         hintPlaceholder() {
@@ -305,7 +340,9 @@ createApp({
 
 function copyState(localTeam, remoteTeam) {
     localTeam.phase = remoteTeam.phase
-    localTeam.current_hints = (remoteTeam.hints) ? remoteTeam.hints : []
+    localTeam.current_hints = (remoteTeam.hints) ?? []
     localTeam.code = remoteTeam.code
     localTeam.keywords = remoteTeam.keyWords
+    localTeam.encoder = remoteTeam.encoder
+    localTeam.guess = remoteTeam.guess ?? []
 }

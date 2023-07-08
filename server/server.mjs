@@ -35,6 +35,11 @@ io.on('connection', (socket) => {
         io.emit("teamChanged", teamForPlayer)
         // tell player who she is and what team he joined
         socket.emit('updateSelf', player, teamForPlayer)
+
+        if (data.team1.encoding !== null) {
+            // late join receives current game state if already running
+            socket.emit('initGame', data)
+        }
     })
 
     socket.on('disconnect', () => {

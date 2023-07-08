@@ -18,6 +18,7 @@ createApp({
                 keywords: [
                 ],
                 code: null,
+                guess: [],
                 current_hints: [
                     '', '', ''
                 ],
@@ -57,6 +58,7 @@ createApp({
                 phase: GamePhase.ConstructCode,
                 keywords: [],
                 code: null,
+                guess: [],
                 current_hints: [
                 ],
                 word1: {
@@ -110,6 +112,36 @@ createApp({
                 return (this.visibleTeam.code) ? this.visibleTeam.code.value : ['', '', '']
             }
             return ["?", "?", "?"]
+        },
+
+        visibleGuess1: {
+            get() {
+                return this.visibleTeam.guess[0]
+            },
+
+            set(newValue) {
+                this.visibleTeam.guess[0] = newValue
+            }
+        },
+
+        visibleGuess2: {
+            get() {
+                return this.visibleTeam.guess[1]
+            },
+
+            set(newValue) {
+                this.visibleTeam.guess[1] = newValue
+            }
+        },
+
+        visibleGuess3: {
+            get() {
+                return this.visibleTeam.guess[2]
+            },
+
+            set(newValue) {
+                this.visibleTeam.guess[2] = newValue
+            }
         },
 
         visibleHints() {
@@ -190,8 +222,24 @@ createApp({
             this.sendGameEvent('initGame')
         },
 
+        submit() {
+            switch (this.visibleTeam.phase) {
+                case GamePhase.BreakCode:
+                    this.submit_guess()
+                    break
+                case GamePhase.ConstructCode:
+                    this.submit_hints()
+                    break
+            }
+        },
+
+        submit_guess() {
+            // TODO send visible team guess for guessing other teams code
+            this.sendGameEvent('guess', this.myTeam.guess)
+            console.log(`submitted guess: ${this.myTeam.guess}`)
+        },
+
         submit_hints() {
-            // TODO send visible team hints for guessing other teams code
             this.sendGameEvent('hints', this.myTeam.current_hints)
             console.log(`submitted hints: ${this.myTeam.current_hints}`)
         },

@@ -1,4 +1,4 @@
-import { TeamId, Team, EncodingGame, GamePhase, PhaseListener } from "./model.mjs"
+import { TeamId, Team, Code, EncodingGame, GamePhase, PhaseListener } from "./model.mjs"
 
 /** game state */
 export const data = {
@@ -88,6 +88,26 @@ export function receiveHints(player, hints) {
             encoding2.nextPhase()
         } else {
             console.log(`received hints ${hints} but current player is not encoder or wrong phase`)
+        }
+    }
+}
+
+export function receiveGuess(player, guess) {
+    const guessNumbers = guess.map((value) => parseInt(value))
+    const guessCode = new Code(guessNumbers)
+    const encoding1 = data.team1.encoding
+    if (encoding1.state.phase == GamePhase.BreakCode && data.team1.team.hasPlayer(player)) {
+        console.log(`received new guess ${guess} from player ${player.playerName} for team1`)
+        encoding1.state.guess = guessCode
+        encoding1.nextPhase()
+    } else {
+        const encoding2 = data.team2.encoding
+        if (encoding2.state.phase == GamePhase.BreakCode && data.team2.team.hasPlayer(player)) {
+            console.log(`received new guess ${guess} from player ${player.playerName} for team2`)
+            encoding2.state.guess = guessCode
+            encoding2.nextPhase()
+        } else {
+            console.log(`received guess ${guess} but wrong phase`)
         }
     }
 }

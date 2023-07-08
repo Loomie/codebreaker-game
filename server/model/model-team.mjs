@@ -36,6 +36,16 @@ export class Team {
             throw "team members must be Players!"
         }
     }
+
+    /** @returns true if the given player is a memeber of this Team */
+    hasPlayer(player) {
+        if (player instanceof Player) {
+            const playerIndex = this.members.indexOf(player)
+            return playerIndex != -1
+
+        }
+        return false
+    }
 }
 
 const _playerIds = []

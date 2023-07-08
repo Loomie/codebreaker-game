@@ -10,8 +10,18 @@ export const GamePhase = {
 
 const codeLength = 3
 export class Code {
-    constructor() {
-        this.value = this.random_code()
+
+    constructor(userCode) {
+        if (userCode === undefined) {
+            // called without parameter
+            this.value = this.random_code()
+        } else if (userCode instanceof Array && userCode.length === codeLength && userCode.every((value) => { return Number.isSafeInteger(value) })) {
+            // called with array as parameter that contains only integers
+            this.value = [...userCode] // create new array as clone/copy
+        } else {
+            // called with any other value as parameter
+            throw `Invalid value for a Code: ${userCode}`
+        }
     }
 
     /** @return three numbers in random order of the set one to four */

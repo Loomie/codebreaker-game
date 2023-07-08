@@ -7,52 +7,29 @@ export const data = {
         team: new Team(TeamId.FirstTeam, "A very Blue Team name"),
         encoding: null,
         word1: {
-            hints: [
-                "Code 1",
-                "Haus",
-                "Kreuzfahrtschiff",
-                "Grübeln",
-                "Code 5",
-                "Code 6",
-                "Code 7",
-                "Code 8"
-            ]
+            hints: []
         },
         word2: {
-            hints: [
-                "Code 1",
-                "Code 2"
-            ]
+            hints: []
         },
         word3: {
-            hints: [
-                "Code 1",
-                "Code 2",
-                "Code 3"
-            ]
+            hints: []
         },
         word4: {
-            hints: [
-                "Code 1"
-            ]
+            hints: []
         }
     },
     team2: {
         team: new Team(TeamId.SecondTeam, "Red"),
         encoding: null,
         word1: {
-            hints: [
-                "Dummy"
-            ]
+            hints: []
         },
         word2: {
             hints: []
         },
         word3: {
-            hints: [
-                "Something",
-                "Word"
-            ]
+            hints: []
         },
         word4: {
             hints: []
@@ -116,15 +93,42 @@ export function nextRound(player) {
     const encoding1 = data.team1.encoding
     if (encoding1.state.phase == GamePhase.Results && data.team1.team.hasPlayer(player)) {
         console.log(`next round from player ${player.playerName} for team1`)
+        copyHints(encoding1, data.team1)
         encoding1.nextPhase()
     } else {
         const encoding2 = data.team2.encoding
         if (encoding2.state.phase == GamePhase.Results && data.team2.team.hasPlayer(player)) {
             console.log(`next round from player ${player.playerName} for team2`)
+            copyHints(encoding2, data.team2)
             encoding2.nextPhase()
         } else {
             console.log(`next round but wrong phase`)
         }
+    }
+}
+
+function copyHints(encoding, dataTeam) {
+    for (let index = 0; index < encoding.state.code.value; index++) {
+        const codeDigit = encoding.state.code.value[index]
+        const hint = encoding.state.hints[index]
+        let hints
+        switch (codeDigit) {
+            case 1:
+                hints = dataTeam.word1.hints
+                break
+            case 2:
+                hints = dataTeam.word2.hints
+                break
+            case 3:
+                hints = dataTeam.word3.hints
+                break
+            case 4:
+                hints = dataTeam.word4.hints
+                break
+            default:
+                throw `unexpected part of code: ${codeDigit}`
+        }
+        hints.push(hint)
     }
 }
 

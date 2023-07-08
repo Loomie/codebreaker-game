@@ -18,7 +18,7 @@ body {
     background-color: #93bfcf;
 }
 
-.team1-fill-action:hover {
+.team1-fill-action:hover:enabled {
     color: white;
     background-color: #6096b4;
 }
@@ -47,7 +47,7 @@ body {
     background-color: #ce94b0;
 }
 
-.team2-fill-action:hover {
+.team2-fill-action:hover:enabled {
     color: white;
     background-color: #ad5f7e;
 }
@@ -97,7 +97,11 @@ body {
     cursor: pointer;
 }
 
-.button-submit:hover {
+.button-submit:disabled {
+    cursor: not-allowed;
+}
+
+.button-submit:hover:enabled {
     /* 1: Horizontal offset, 2: Vertical offset, 3: Blur radius, 4: Colour */
     box-shadow: 5px 5px 10px grey;
     transition: 0s;

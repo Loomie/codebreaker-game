@@ -4,3 +4,6 @@
 - calculate results and remember black/white marks
 - read-only hint input fields when not encoder
 - localized word list
+- let users edit team name
+- lobbies to enter player name and join teams
+- parallel games (rooms) with codes to join

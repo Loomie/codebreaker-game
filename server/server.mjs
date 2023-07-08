@@ -1,5 +1,5 @@
 import { data, getTeamWithLessPlayers, initGame, receiveHints } from "./game.mjs"
-import { Player } from "./model.mjs"
+import { PhaseListener, Player } from "./model.mjs"
 import express from 'express'
 import { readFileSync } from 'fs'
 import { createServer } from 'https'
@@ -56,6 +56,13 @@ io.on('connection', (socket) => {
         console.log('init game')
         // TODO generate random keywords
         initGame(['Auto', 'Haus', 'Schiff', 'Fenster'], ['Baum', 'Fluss', 'Wolke', 'Bank'])
+        // on phase change send game state to all clients
+        data.team1.encoding.addListener(new PhaseListener(() => {
+            io.emit('initGame', data)
+        }))
+        data.team2.encoding.addListener(new PhaseListener(() => {
+            io.emit('initGame', data)
+        }))
         // TODO remove keywords of opposing team for each player to prevent cheating
         io.emit('initGame', data)
     })

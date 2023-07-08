@@ -76,16 +76,19 @@ export function initGame(keywords1, keywords2) {
 
 export function receiveHints(player, hints) {
     const encoding1 = data.team1.encoding
-    if (encoding1.phase == GamePhase.ConstructCode && encoding1.state.encoder === player) {
+    if (encoding1.state.phase == GamePhase.ConstructCode && encoding1.state.encoder == player) {
         console.log(`received new hints ${hints} from player ${player.playerName} for team1`)
         encoding1.state.hints = hints
         encoding1.nextPhase()
-    }
-    const encoding2 = data.team2.encoding
-    if (encoding2.phase == GamePhase.ConstructCode && encoding2.state.encoder === player) {
-        console.log(`received new hints ${hints} from player ${player.playerName} for team2`)
-        encoding2.state.hints = hints
-        encoding2.nextPhase()
+    } else {
+        const encoding2 = data.team2.encoding
+        if (encoding2.state.phase == GamePhase.ConstructCode && encoding2.state.encoder == player) {
+            console.log(`received new hints ${hints} from player ${player.playerName} for team2`)
+            encoding2.state.hints = hints
+            encoding2.nextPhase()
+        } else {
+            console.log(`received hints ${hints} but current player is not encoder or wrong phase`)
+        }
     }
 }
 

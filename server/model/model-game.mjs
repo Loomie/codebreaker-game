@@ -55,23 +55,24 @@ export class EncodingGame {
 
     /** Switches from the current to the next phase and setups this state accordingly. */
     nextPhase() {
-        switch (this.state.phase) {
+        const currentPhase = this.state.phase
+        switch (currentPhase) {
             case GamePhase.Init:
             case GamePhase.Results:
-                console.debug(`switching phase from ${this.phase} to ConstructCode for ${this._team.name}`)
+                console.debug(`switching phase from ${currentPhase} to ConstructCode for ${this._team.name}`)
                 this.state.phase = GamePhase.ConstructCode
                 this._startRound()
                 break
             case GamePhase.ConstructCode:
-                console.debug(`switching phase from ${this.phase} to BreakCode for ${this._team.name}`)
+                console.debug(`switching phase from ${currentPhase} to BreakCode for ${this._team.name}`)
                 this.state.phase = GamePhase.BreakCode
                 break
             case GamePhase.BreakCode:
-                console.debug(`switching phase from ${this.phase} to Results for ${this._team.name}`)
+                console.debug(`switching phase from ${currentPhase} to Results for ${this._team.name}`)
                 this.state.phase = GamePhase.Results
                 break
             default:
-                throw `unkown game phase $this.state.phase`
+                throw `unkown game phase $currentPhase`
         }
         this._notifyListeners()
     }
@@ -79,6 +80,7 @@ export class EncodingGame {
     /** Start the encoding of keywords according to a new random code. Resets previous values. */
     _startRound() {
         this.state.encoder = this._nextEncoder()
+        console.log(`encoder of round is ${this.state.encoder.playerName} for ${this._team.name}`)
         this.state.hints = []
         this.state.code = new Code()
         this.state.guess = null

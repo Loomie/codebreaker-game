@@ -56,7 +56,7 @@ export class EncodingState {
         if (newHints instanceof Array && newHints.length === codeLength) {
             this.hints = newHints
         }
-        throw "guess must be a Code!"
+        throw `hints must have ${codeLength} values!`
     }
 
     /**

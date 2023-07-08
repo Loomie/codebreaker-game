@@ -108,7 +108,7 @@ export function nextRound(player) {
 }
 
 function copyHints(encoding, dataTeam) {
-    for (let index = 0; index < encoding.state.code.value; index++) {
+    for (let index = 0; index < encoding.state.code.value.length; index++) {
         const codeDigit = encoding.state.code.value[index]
         const hint = encoding.state.hints[index]
         let hints

@@ -298,10 +298,8 @@ createApp({
         },
 
         updateState(gameData) {
-            const encodingState1 = gameData.team1.encoding.state
-            const encodingState2 = gameData.team2.encoding.state
-            copyState(this.team1, encodingState1)
-            copyState(this.team2, encodingState2)
+            copyState(this.team1, gameData.team1)
+            copyState(this.team2, gameData.team2)
             console.info('Game initialized')
         }
     },
@@ -342,7 +340,7 @@ createApp({
             data.visibleTeamId = data.myTeamId
         })
         socket.on('initGame', (gameData) => {
-            //console.info(`received game data ${JSON.stringify(gameData)}`)
+            console.info(`received game data ${JSON.stringify(gameData)}`)
             data.updateState(gameData)
         })
 
@@ -353,10 +351,16 @@ createApp({
 }).mount('#app')
 
 function copyState(localTeam, remoteTeam) {
-    localTeam.phase = remoteTeam.phase
-    localTeam.current_hints = (remoteTeam.hints) ?? []
-    localTeam.code = remoteTeam.code
-    localTeam.keywords = remoteTeam.keyWords
-    localTeam.encoder = remoteTeam.encoder
-    localTeam.guess = remoteTeam.guess ?? []
+    localTeam.word1.hints = remoteTeam.word1.hints
+    localTeam.word2.hints = remoteTeam.word2.hints
+    localTeam.word3.hints = remoteTeam.word3.hints
+    localTeam.word4.hints = remoteTeam.word4.hints
+
+    const remoteEncoding = remoteTeam.encoding.state
+    localTeam.phase = remoteEncoding.phase
+    localTeam.current_hints = (remoteEncoding.hints) ?? []
+    localTeam.code = remoteEncoding.code
+    localTeam.keywords = remoteEncoding.keyWords
+    localTeam.encoder = remoteEncoding.encoder
+    localTeam.guess = remoteEncoding.guess ?? []
 }

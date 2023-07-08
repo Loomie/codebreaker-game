@@ -112,6 +112,22 @@ export function receiveGuess(player, guess) {
     }
 }
 
+export function nextRound(player) {
+    const encoding1 = data.team1.encoding
+    if (encoding1.state.phase == GamePhase.Results && data.team1.team.hasPlayer(player)) {
+        console.log(`next round from player ${player.playerName} for team1`)
+        encoding1.nextPhase()
+    } else {
+        const encoding2 = data.team2.encoding
+        if (encoding2.state.phase == GamePhase.Results && data.team2.team.hasPlayer(player)) {
+            console.log(`next round from player ${player.playerName} for team2`)
+            encoding2.nextPhase()
+        } else {
+            console.log(`next round but wrong phase`)
+        }
+    }
+}
+
 export function getTeamWithLessPlayers() {
     const team1 = data.team1.team
     const team2 = data.team2.team

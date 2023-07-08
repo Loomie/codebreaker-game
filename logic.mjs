@@ -110,8 +110,8 @@ createApp({
         },
 
         visibleCode() {
-            if (this.isEncoder && this.isOwnTeam) {
-                return (this.myTeam.code) ? this.myTeam.code.value : ['E', 'R', 'R']
+            if ((this.isEncoder && this.isOwnTeam) || this.visibleTeam.phase == GamePhase.Results) {
+                return (this.visibleTeam.code) ? this.visibleTeam.code.value : ['E', 'R', 'R']
             }
             return ["?", "?", "?"]
         },
@@ -167,13 +167,14 @@ createApp({
 
         submit_text() {
             switch (this.visibleTeam.phase) {
+                case GamePhase.Init:
+                    return this.anyTeamNeedsPlayer ? 'Wait for Players' : 'Start'
                 case GamePhase.BreakCode:
                     return 'Guess Code'
                 case GamePhase.ConstructCode:
-                    return 'Give Hints'
+                    return this.isEncoder ? 'Give Hints' : 'Wait for Hints'
                 case GamePhase.Results:
                     return 'Confirm Result'
-                case GamePhase.Init:
                 default:
                     return 'Wait'
             }
@@ -182,13 +183,14 @@ createApp({
         /** @returns true if the submit button is disabled */
         is_submit_disabled() {
             switch (this.visibleTeam.phase) {
+                case GamePhase.Init:
+                    return this.anyTeamNeedsPlayer
                 case GamePhase.BreakCode:
                     return this.isEncoder
                 case GamePhase.ConstructCode:
                     return !this.isEncoder
                 case GamePhase.Results:
                     return false
-                case GamePhase.Init:
                 default:
                     return true
             }
@@ -253,19 +255,25 @@ createApp({
             return randomWords
         },
 
-        initGame() {
-            this.sendGameEvent('initGame')
-        },
-
         submit() {
             switch (this.visibleTeam.phase) {
+                case GamePhase.Init:
+                    this.initGame()
+                    break
                 case GamePhase.BreakCode:
                     this.submit_guess()
                     break
                 case GamePhase.ConstructCode:
                     this.submit_hints()
                     break
+                case GamePhase.Results:
+                    this.submit_results()
+                    break
             }
+        },
+
+        initGame() {
+            this.sendGameEvent('initGame')
         },
 
         submit_guess() {
@@ -277,6 +285,11 @@ createApp({
         submit_hints() {
             this.sendGameEvent('hints', this.myTeam.current_hints)
             console.log(`submitted hints: ${this.myTeam.current_hints}`)
+        },
+
+        submit_results() {
+            this.sendGameEvent('confirmResult')
+            console.log(`confirmed result`)
         },
 
         sendGameEvent(eventName, data) {

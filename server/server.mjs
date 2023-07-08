@@ -1,4 +1,4 @@
-import { data, getTeamWithLessPlayers, initGame, receiveGuess, receiveHints } from "./game.mjs"
+import { data, getTeamWithLessPlayers, initGame, nextRound, receiveGuess, receiveHints } from "./game.mjs"
 import { PhaseListener, Player } from "./model.mjs"
 import express from 'express'
 import { readFileSync } from 'fs'
@@ -78,6 +78,10 @@ io.on('connection', (socket) => {
 
     socket.on('guess', (newGuess) => {
         receiveGuess(player, newGuess)
+    })
+
+    socket.on('confirmResult', (newGuess) => {
+        nextRound(player)
     })
 })
 

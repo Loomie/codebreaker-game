@@ -25,67 +25,18 @@ export class Code {
  * This state holds all values about the encoding. These fields are visible for each player and used in the server (not necesseraly the same object). It is solely a data class without logic.
  */
 export class EncodingState {
-    // private fields
-    #phaseValue
-    #hintsValue
-    #guessValue
-
     constructor(keyWords) {
         if (!keyWords || !(keyWords instanceof Array) || keyWords.length != 4) {
             throw "exactly four keywords must be given!"
         }
         this.keyWords = keyWords
 
-        this.#phaseValue = GamePhase.Init
+        this.phase = GamePhase.Init
         this.encoder = null
-        this.#hintsValue = []
+        this.hints = []
         this.code = null
-        this.#guessValue = null
+        this.guess = null
     }
-
-    get phase() {
-        return this.#phaseValue
-    }
-
-    get hints() {
-        return this.#hintsValue
-    }
-
-    get guess() {
-        return this.#guessValue
-    }
-
-    // setters to verify new values
-    /**
-     * @param {number} newPhase a GamePhase to set (must not be null)
-     */
-    set phase(newPhase) {
-        if (typeof newPhase === "number") {
-            this.phaseValue = newPhase
-        }
-        throw "game phase must be a GamePhase!"
-    }
-
-    /**
-     * @param {string[]} newHints for the code
-     */
-    set hints(newHints) {
-        if (newHints instanceof Array && newHints.length === codeLength) {
-            this.#hintsValue = newHints
-        }
-        throw `hints must have ${codeLength} values!`
-    }
-
-    /**
-     * @param {Code} newGuess for the hints
-     */
-    set guess(newGuess) {
-        if (newGuess instanceof Code) {
-            this.#guessValue = newGuess
-        }
-        throw "guess must be a Code!"
-    }
-
 }
 
 /**
@@ -104,18 +55,23 @@ export class EncodingGame {
 
     /** Switches from the current to the next phase and setups this state accordingly. */
     nextPhase() {
-        switch (this.phase) {
+        switch (this.state.phase) {
             case GamePhase.Init:
             case GamePhase.Results:
+                console.debug(`switching phase from ${this.phase} to ConstructCode for ${this._team.name}`)
                 this.state.phase = GamePhase.ConstructCode
                 this._startRound()
                 break
             case GamePhase.ConstructCode:
+                console.debug(`switching phase from ${this.phase} to BreakCode for ${this._team.name}`)
                 this.state.phase = GamePhase.BreakCode
                 break
             case GamePhase.BreakCode:
+                console.debug(`switching phase from ${this.phase} to Results for ${this._team.name}`)
                 this.state.phase = GamePhase.Results
                 break
+            default:
+                throw `unkown game phase $this.state.phase`
         }
         this._notifyListeners()
     }
@@ -142,7 +98,7 @@ export class EncodingGame {
     }
 
     _notifyListener(listener) {
-        listener.onPhase(this.phase)
+        listener.onPhase(this.state.phase)
     }
 
     /**
@@ -167,7 +123,7 @@ export class EncodingGame {
     }
 }
 
-class PhaseListener {
+export class PhaseListener {
     constructor(callback) {
         if (typeof callback === "function") {
             this.callback = callback

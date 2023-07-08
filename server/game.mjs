@@ -1,4 +1,4 @@
-import { TeamId, Team, EncodingGame } from "./model.mjs"
+import { TeamId, Team, EncodingGame, GamePhase, PhaseListener } from "./model.mjs"
 
 /** game state */
 export const data = {
@@ -62,8 +62,31 @@ export const data = {
 }
 
 export function initGame(keywords1, keywords2) {
-    data.team1.encoding = new EncodingGame(keywords1, data.team1.team)
-    data.team2.encoding = new EncodingGame(keywords2, data.team2.team)
+    const encoding1 = new EncodingGame(keywords1, data.team1.team)
+    const encoding2 = new EncodingGame(keywords2, data.team2.team)
+    data.team1.encoding = encoding1
+    data.team2.encoding = encoding2
+    // TODO add listeners for network
+    encoding1.addListener(new PhaseListener((phase) => console.debug(`encoding 1 phase is ${phase}`)))
+    encoding2.addListener(new PhaseListener((phase) => console.debug(`encoding 2 phase is ${phase}`)))
+
+    encoding1.nextPhase()
+    encoding2.nextPhase()
+}
+
+export function receiveHints(player, hints) {
+    const encoding1 = data.team1.encoding
+    if (encoding1.phase == GamePhase.ConstructCode && encoding1.state.encoder === player) {
+        console.log(`received new hints ${hints} from player ${player.playerName} for team1`)
+        encoding1.state.hints = hints
+        encoding1.nextPhase()
+    }
+    const encoding2 = data.team2.encoding
+    if (encoding2.phase == GamePhase.ConstructCode && encoding2.state.encoder === player) {
+        console.log(`received new hints ${hints} from player ${player.playerName} for team2`)
+        encoding2.state.hints = hints
+        encoding2.nextPhase()
+    }
 }
 
 export function getTeamWithLessPlayers() {

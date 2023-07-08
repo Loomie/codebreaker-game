@@ -1,4 +1,4 @@
-import { data, getTeamWithLessPlayers, initGame } from "./game.mjs"
+import { data, getTeamWithLessPlayers, initGame, receiveHints } from "./game.mjs"
 import { Player } from "./model.mjs"
 import express from 'express'
 import { readFileSync } from 'fs'
@@ -50,14 +50,19 @@ io.on('connection', (socket) => {
             player = null
         }
     })
-})
 
-// Networking for game
-io.on('initGame', (socket) => {
-    // TODO generate random keywords
-    initGame(['Auto', 'Haus', 'Schiff', 'Fenster'], ['Baum', 'Fluss', 'Wolke', 'Bank'])
-    // TODO remove keywords of opposing team for each player to prevent cheating
-    io.emit('initGame', data)
+    // Networking for game
+    socket.on('initGame', () => {
+        console.log('init game')
+        // TODO generate random keywords
+        initGame(['Auto', 'Haus', 'Schiff', 'Fenster'], ['Baum', 'Fluss', 'Wolke', 'Bank'])
+        // TODO remove keywords of opposing team for each player to prevent cheating
+        io.emit('initGame', data)
+    })
+
+    socket.on('hints', (newHints) => {
+        receiveHints(player, newHints)
+    })
 })
 
 // start server

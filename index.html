@@ -33,6 +33,7 @@
                 <br>
                 <h1 class="title">Status</h1>
                 <p class="menu-label">Round: {{ round }}</p>
+                <button @click="initGame" :disabled="anyTeamNeedsPlayer">Start</button>
             </aside>
             <!-- Middle section containing the code words -->
             <main class="column-66" style="border-left: 1px solid #36363640; border-right: 1px solid #36363640;">

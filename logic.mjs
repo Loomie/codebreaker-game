@@ -10,11 +10,11 @@ createApp({
         return {
             player: null,
             round: 1,
-            phase: GamePhase.ConstructCode,
             myTeamId: TeamId.FirstTeam,
             visibleTeamId: this.myTeamId,
             team1: {
                 team: new Team(TeamId.FirstTeam, "Blue"),
+                phase: GamePhase.ConstructCode,
                 keywords: [
                 ],
                 code: null,
@@ -54,6 +54,7 @@ createApp({
             },
             team2: {
                 team: new Team(TeamId.SecondTeam, "Red"),
+                phase: GamePhase.ConstructCode,
                 keywords: [],
                 code: null,
                 current_hints: [
@@ -75,7 +76,8 @@ createApp({
                 word4: {
                     hints: []
                 }
-            }
+            },
+            _socket: null
         }
     },
 
@@ -92,6 +94,10 @@ createApp({
             return this.visibleTeamId === this.myTeamId
         },
 
+        anyTeamNeedsPlayer() {
+            return this.team1.team.members.length === 0 || this.team2.team.members.length === 0
+        },
+
         visibleTeam() {
             if (this.visibleTeamId == TeamId.SecondTeam) {
                 return this.team2
@@ -101,7 +107,7 @@ createApp({
 
         visibleCode() {
             if (this.isOwnTeam) {
-                return this.visibleTeam.code.value
+                return (this.visibleTeam.code) ? this.visibleTeam.code.value : ['', '', '']
             }
             return ["?", "?", "?"]
         },
@@ -180,9 +186,26 @@ createApp({
             return randomWords
         },
 
+        initGame() {
+            this.sendGameEvent('initGame')
+        },
+
         submit_hints() {
-            console.log(`submitted hints: ${this.visibleHints}`)
-            // TODO send to server
+            // TODO send visible team hints for guessing other teams code
+            this.sendGameEvent('hints', this.myTeam.current_hints)
+            console.log(`submitted hints: ${this.myTeam.current_hints}`)
+        },
+
+        sendGameEvent(eventName, data) {
+            this._socket.emit(eventName, data)
+        },
+
+        updateState(gameData) {
+            const encodingState1 = gameData.team1.encoding.state
+            const encodingState2 = gameData.team2.encoding.state
+            copyState(this.team1, encodingState1)
+            copyState(this.team2, encodingState2)
+            console.info('Game initialized')
         }
     },
 
@@ -204,6 +227,7 @@ createApp({
     mounted() {
         // init networking
         const socket = io()
+        this._socket = socket
         const data = this
         const team1 = this.team1
         const team2 = this.team2
@@ -220,9 +244,20 @@ createApp({
             data.myTeamId = myTeam.id
             data.visibleTeamId = data.myTeamId
         })
+        socket.on('initGame', (gameData) => {
+            //console.info(`received game data ${JSON.stringify(gameData)}`)
+            data.updateState(gameData)
+        })
 
         // init data
         const playerName = prompt("What's your name?", "your name")
         socket.emit("player join", playerName)
     }
 }).mount('#app')
+
+function copyState(localTeam, remoteTeam) {
+    localTeam.phase = remoteTeam.phase
+    localTeam.current_hints = (remoteTeam.hints) ? remoteTeam.hints : []
+    localTeam.code = remoteTeam.code
+    localTeam.keywords = remoteTeam.keyWords
+}

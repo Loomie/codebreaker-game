@@ -99,7 +99,8 @@ createApp({
         },
 
         anyTeamNeedsPlayer() {
-            return this.team1.team.members.length === 0 || this.team2.team.members.length === 0
+            // each team needs at least one encoder and one guesser
+            return this.team1.team.members.length < 2 || this.team2.team.members.length < 2
         },
 
         visibleTeam() {

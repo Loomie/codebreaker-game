@@ -1,12 +1,11 @@
-import { GamePhase, TeamId, Team, EncodingGame } from "./model.mjs"
+import { TeamId, Team, EncodingGame } from "./model.mjs"
 
 /** game state */
 export const data = {
     round: 1,
-    phase: GamePhase.ConstructCode,
     team1: {
         team: new Team(TeamId.FirstTeam, "A very Blue Team name"),
-        encoding: new EncodingGame(['Auto', 'Haus', 'Schiff', 'Fenster'], this.team),
+        encoding: null,
         word1: {
             hints: [
                 "Code 1",
@@ -40,7 +39,7 @@ export const data = {
     },
     team2: {
         team: new Team(TeamId.SecondTeam, "Red"),
-        encoding: new EncodingGame(['Baum', 'Fluss', 'Wolke', 'Bank'], this.team),
+        encoding: null,
         word1: {
             hints: [
                 "Dummy"
@@ -58,5 +57,21 @@ export const data = {
         word4: {
             hints: []
         }
+    },
+
+}
+
+export function initGame(keywords1, keywords2) {
+    data.team1.encoding = new EncodingGame(keywords1, data.team1.team)
+    data.team2.encoding = new EncodingGame(keywords2, data.team2.team)
+}
+
+export function getTeamWithLessPlayers() {
+    const team1 = data.team1.team
+    const team2 = data.team2.team
+    if (team1.members.length <= team2.members.length) {
+        return team1
+    } else {
+        return team2
     }
 }

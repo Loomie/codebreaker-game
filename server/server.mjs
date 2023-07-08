@@ -1,4 +1,4 @@
-import { data } from "./game.mjs"
+import { data, getTeamWithLessPlayers, initGame } from "./game.mjs"
 import { Player } from "./model.mjs"
 import express from 'express'
 import { readFileSync } from 'fs'
@@ -52,17 +52,16 @@ io.on('connection', (socket) => {
     })
 })
 
+// Networking for game
+io.on('initGame', (socket) => {
+    // TODO generate random keywords
+    initGame(['Auto', 'Haus', 'Schiff', 'Fenster'], ['Baum', 'Fluss', 'Wolke', 'Bank'])
+    // TODO remove keywords of opposing team for each player to prevent cheating
+    io.emit('initGame', data)
+})
+
+// start server
 const port = process.env.CODEBREAKER_PORT || DEFAULT_PORT
 server.listen(port, () => {
     console.log(`listening on *:${port}`)
 })
-
-function getTeamWithLessPlayers() {
-    const team1 = data.team1.team
-    const team2 = data.team2.team
-    if (team1.members.length <= team2.members.length) {
-        return team1
-    } else {
-        return team2
-    }
-}

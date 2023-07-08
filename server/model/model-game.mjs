@@ -25,17 +25,34 @@ export class Code {
  * This state holds all values about the encoding. These fields are visible for each player and used in the server (not necesseraly the same object). It is solely a data class without logic.
  */
 export class EncodingState {
+    // private fields
+    #phaseValue
+    #hintsValue
+    #guessValue
+
     constructor(keyWords) {
         if (!keyWords || !(keyWords instanceof Array) || keyWords.length != 4) {
             throw "exactly four keywords must be given!"
         }
         this.keyWords = keyWords
 
-        this.phase = GamePhase.Init
+        this.#phaseValue = GamePhase.Init
         this.encoder = null
-        this.hints = []
+        this.#hintsValue = []
         this.code = null
-        this.guess = null
+        this.#guessValue = null
+    }
+
+    get phase() {
+        return this.#phaseValue
+    }
+
+    get hints() {
+        return this.#hintsValue
+    }
+
+    get guess() {
+        return this.#guessValue
     }
 
     // setters to verify new values
@@ -44,7 +61,7 @@ export class EncodingState {
      */
     set phase(newPhase) {
         if (typeof newPhase === "number") {
-            this.phase = newPhase
+            this.phaseValue = newPhase
         }
         throw "game phase must be a GamePhase!"
     }
@@ -54,7 +71,7 @@ export class EncodingState {
      */
     set hints(newHints) {
         if (newHints instanceof Array && newHints.length === codeLength) {
-            this.hints = newHints
+            this.#hintsValue = newHints
         }
         throw `hints must have ${codeLength} values!`
     }
@@ -64,7 +81,7 @@ export class EncodingState {
      */
     set guess(newGuess) {
         if (newGuess instanceof Code) {
-            this.guess = newGuess
+            this.#guessValue = newGuess
         }
         throw "guess must be a Code!"
     }
@@ -113,9 +130,9 @@ export class EncodingGame {
 
     /** Set the encoder to the next player. If the last player in the list was the encoder the first player has the next turn. */
     _nextEncoder() {
-        // initially encoder is null which results in index -1 which is ok to increment
         const players = this._team.members
-        const encoderIndex = players.indexOf(this.encoder)
+        // initially encoder is null which results in index -1 which is ok to increment
+        const encoderIndex = players.indexOf(this.state.encoder)
         const nextIndex = (encoderIndex + 1) % players.length
         return players[nextIndex]
     }

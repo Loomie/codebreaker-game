@@ -66,6 +66,25 @@ body {
     border: 2px solid lightcyan;
 }
 
+.self {
+    font-style: italic;
+}
+
+.encoder::after {
+    content: ' 🔑';
+}
+
+/* tooltip for key */
+.encoder:hover::after {
+    content: 'current encoder';
+    transition: opacity 0.5s;
+    padding: 0.5em;
+    margin-left: 0.5em;
+    background-color: #e0dbc5;
+    border: solid 1px black;
+    border-radius: 5px;
+}
+
 /* Text alignment */
 .left {
     text-align: start;

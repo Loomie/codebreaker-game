@@ -24,13 +24,15 @@
                 <h1 class="title">Teams</h1>
                 <p class="menu-label">{{ team1.team.name }}:</p>
                 <ul class="menu-list">
-                    <li v-for="player in team1.team.members">{{ player.avatar }}&nbsp;{{ player.playerName }}{{
-                        (player.id == team1.encoder?.id ? ' 🔑' : '') }}</li>
+                    <li v-for="player in team1.team.members">
+                        <span :class="playerCss(player)">{{ player.avatar }}&nbsp;{{ player.playerName }}</span>
+                    </li>
                 </ul>
                 <p class="menu-label">{{ team2.team.name }}:</p>
                 <ul class="menu-list">
-                    <li v-for="player in team2.team.members">{{ player.avatar }}&nbsp;{{ player.playerName }}{{
-                        (player.id == team2.encoder?.id ? ' 🔑' : '') }}</li>
+                    <li v-for="player in team2.team.members">
+                        <span :class=" playerCss(player)">{{ player.avatar }}&nbsp;{{ player.playerName }}</span>
+                    </li>
                 </ul>
                 <br>
                 <h1 class="title">Status</h1>

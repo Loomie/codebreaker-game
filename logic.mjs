@@ -231,6 +231,24 @@ createApp({
             this.visibleTeamId = TeamId.SecondTeam
         },
 
+        /** @returns all CSS classes for a player in the player list depending on the game state */
+        playerCss(aPlayer) {
+            let classNames = ''
+            if (aPlayer.id === this.player?.id) {
+                classNames = classNames.concat('self')
+            }
+            if (this.team1.team.members.indexOf(aPlayer) !== -1) {
+                if (this.team1.encoder?.id === aPlayer.id) {
+                    classNames = classNames.concat(' encoder')
+                }
+            } else if (this.team2.team.members.indexOf(aPlayer) !== -1) {
+                if (this.team2.encoder?.id === aPlayer.id) {
+                    classNames = classNames.concat(' encoder')
+                }
+            }
+            return classNames
+        },
+
         /** @return a random word from the wordlist */
         random_word() {
             return this.random_item(wordlist)

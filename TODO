@@ -1,4 +1,3 @@
-- mark self in player list
 - sync guess on change to whole team
 - calculate results and remember black/white marks
 - read-only hint input fields when not encoder

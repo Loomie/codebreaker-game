@@ -95,7 +95,16 @@ io.on('connection', (socket) => {
         }
     })
 
-    socket.on('guess', (newGuess) => {
+    socket.on('guess changed', (team1Guess, team2Guess) => {
+        try {
+            console.debug(`broadcasting guess changed to all clients: ${team1Guess}, ${team2Guess}`)
+            socket.broadcast.emit('guess changed', team1Guess, team2Guess)
+        } catch (err) {
+            console.error(`Failed handling 'guess changed': ${err}`)
+        }
+    })
+
+    socket.on('submit guess', (newGuess) => {
         try {
             receiveGuess(player, newGuess)
         } catch (err) {
@@ -103,7 +112,7 @@ io.on('connection', (socket) => {
         }
     })
 
-    socket.on('confirmResult', (newGuess) => {
+    socket.on('confirm result', (newGuess) => {
         try {
             nextRound(player)
         } catch (err) {

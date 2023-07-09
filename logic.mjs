@@ -274,6 +274,11 @@ createApp({
             return randomWords
         },
 
+        guessChanged() {
+            console.debug('broadcasting guess to all clients')
+            this._socket.volatile.emit('guess changed', this.team1.guess, this.team2.guess)
+        },
+
         submit() {
             switch (this.visibleTeam.phase) {
                 case GamePhase.Init:
@@ -297,7 +302,7 @@ createApp({
 
         submit_guess() {
             // TODO send visible team guess for guessing other teams code
-            this.sendGameEvent('guess', this.myTeam.guess)
+            this.sendGameEvent('submit guess', this.myTeam.guess)
             console.log(`submitted guess: ${this.myTeam.guess}`)
         },
 
@@ -307,7 +312,7 @@ createApp({
         },
 
         submit_results() {
-            this.sendGameEvent('confirmResult')
+            this.sendGameEvent('confirm result')
             console.log(`confirmed result`)
         },
 
@@ -360,6 +365,11 @@ createApp({
         socket.on('initGame', (gameData) => {
             console.info(`received game data ${JSON.stringify(gameData)}`)
             data.updateState(gameData)
+        })
+        socket.on('guess changed', (team1Guess, team2Guess) => {
+            console.debug('received current guesses')
+            this.team1.guess = team1Guess
+            this.team2.guess = team2Guess
         })
 
         // init data

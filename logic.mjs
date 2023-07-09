@@ -390,5 +390,5 @@ function copyState(localTeam, remoteTeam) {
     localTeam.code = remoteEncoding.code
     localTeam.keywords = remoteEncoding.keyWords
     localTeam.encoder = remoteEncoding.encoder
-    localTeam.guess = remoteEncoding.guess ?? []
+    localTeam.guess = remoteEncoding.guess?.value ?? []
 }

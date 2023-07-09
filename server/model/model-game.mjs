@@ -1,3 +1,4 @@
+import { sameArrayContents } from "../utils.mjs"
 import { Team } from "./model-team.mjs"
 
 /** define sets of fixed values to have defined options from which to choose instead of "any number" */
@@ -5,7 +6,8 @@ export const GamePhase = {
     Init: 0,
     ConstructCode: 1,
     BreakCode: 2,
-    Results: 3
+    Results: 3,
+    End: 4
 }
 
 const codeLength = 3
@@ -59,6 +61,8 @@ export class EncodingGame {
             throw "At least one player must play the game!"
         }
         this._team = team
+        this._team.correctOtherEncodings = 0
+        this._team.failedOwnDecodings = 0
 
         this._phaseListeners = []
     }
@@ -80,6 +84,11 @@ export class EncodingGame {
             case GamePhase.BreakCode:
                 console.debug(`switching phase from ${currentPhase} to Results for ${this._team.name}`)
                 this.state.phase = GamePhase.Results
+                this._endRound()
+                break
+            case GamePhase.End:
+                console.debug(`switching from ${currentPhase} to Init for ${this._team.name}`)
+                this.state.phase = GamePhase.Init
                 break
             default:
                 throw `unkown game phase $currentPhase`
@@ -103,6 +112,21 @@ export class EncodingGame {
         const encoderIndex = players.indexOf(this.state.encoder)
         const nextIndex = (encoderIndex + 1) % players.length
         return players[nextIndex]
+    }
+
+    /** calculate black and white marks and note them for the team */
+    _endRound() {
+        const isWrongGuess = !sameArrayContents(this.state.guess.value, this.state.code.value)
+        if (isWrongGuess) {
+            console.info(`failed guessing own code for ${this._team.name}`)
+            this._team.failedOwnDecodings++
+            if (this._team.failedOwnDecodings >= 2) {
+                console.info(`too many failed decoding for ${this._team.name}. Switching to End`)
+                this.state.phase = GamePhase.End
+            }
+        }
+        // TODO count correct guesses for enemy code
+        //this.team.correctOtherEncodings++
     }
 
     _notifyListeners() {

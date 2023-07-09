@@ -384,6 +384,9 @@ function copyState(localTeam, remoteTeam) {
     localTeam.word3.hints = remoteTeam.word3.hints
     localTeam.word4.hints = remoteTeam.word4.hints
 
+    localTeam.team.failedOwnDecodings = remoteTeam.team.failedOwnDecodings
+    localTeam.team.correctOtherEncodings = remoteTeam.team.correctOtherEncodings
+
     const remoteEncoding = remoteTeam.encoding.state
     localTeam.phase = remoteEncoding.phase
     localTeam.current_hints = (remoteEncoding.hints) ?? []

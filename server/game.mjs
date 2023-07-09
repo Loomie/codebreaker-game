@@ -1,4 +1,5 @@
 import { TeamId, Team, Code, EncodingGame, GamePhase, PhaseListener } from "./model.mjs"
+import { wordlist } from "./wordlist.mjs"
 
 /** game state */
 export const data = {
@@ -38,7 +39,11 @@ export const data = {
 
 }
 
-export function initGame(keywords1, keywords2) {
+export function initGame() {
+    const randomKeywords = unique_random_words(8)
+    const keywords1 = randomKeywords.slice(0, 4)
+    const keywords2 = randomKeywords.slice(4, 8)
+
     const encoding1 = new EncodingGame(keywords1, data.team1.team)
     const encoding2 = new EncodingGame(keywords2, data.team2.team)
     data.team1.encoding = encoding1
@@ -140,4 +145,30 @@ export function getTeamWithLessPlayers() {
     } else {
         return team2
     }
+}
+
+
+/** @return a random word from the wordlist */
+function random_word() {
+    return random_item(wordlist)
+}
+
+/** @return a random item from the given array */
+function random_item(items) {
+    return items[Math.floor(Math.random() * items.length)]
+}
+
+/** @return a list with given count unique random words from the wordlist */
+function unique_random_words(count) {
+    const randomWords = []
+    let nextword
+    for (let i = 0; i < count; i++) {
+        let maxTries = 10
+        do {
+            nextword = random_word()
+            maxTries--
+        } while (randomWords.includes(nextword) && maxTries > 0)
+        randomWords[i] = nextword
+    }
+    return randomWords
 }

@@ -59,8 +59,7 @@ io.on('connection', (socket) => {
     // Networking for game
     socket.on('initGame', () => {
         console.log('init game')
-        // TODO generate random keywords
-        initGame(['Auto', 'Haus', 'Schiff', 'Fenster'], ['Baum', 'Fluss', 'Wolke', 'Bank'])
+        initGame()
         // on phase change send game state to all clients
         data.team1.encoding.addListener(new PhaseListener(() => {
             io.emit('initGame', data)

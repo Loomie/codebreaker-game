@@ -20,67 +20,95 @@ const io = new Server(server, {
 
 // Networking for players
 io.on('connection', (socket) => {
-    var player = null
-    console.log('a user connected')
-    socket.emit('teamChanged', data.team1.team)
-    socket.emit('teamChanged', data.team2.team)
+    try {
+        var player = null
+        console.log('a user connected')
+        socket.emit('teamChanged', data.team1.team)
+        socket.emit('teamChanged', data.team2.team)
+    } catch (err) {
+        console.error(`Failed handling 'connection': ${err}`)
+    }
 
     socket.on('player join', (playerName) => {
-        console.log(`joined: ${playerName}`)
-        player = new Player(playerName)
+        try {
+            console.log(`joined: ${playerName}`)
+            player = new Player(playerName)
 
-        const teamForPlayer = getTeamWithLessPlayers()
-        teamForPlayer.addPlayer(player)
-        // tell all players that a new player joined
-        io.emit("teamChanged", teamForPlayer)
-        // tell player who she is and what team he joined
-        socket.emit('updateSelf', player, teamForPlayer)
+            const teamForPlayer = getTeamWithLessPlayers()
+            teamForPlayer.addPlayer(player)
+            // tell all players that a new player joined
+            io.emit("teamChanged", teamForPlayer)
+            // tell player who she is and what team he joined
+            socket.emit('updateSelf', player, teamForPlayer)
 
-        if (data.team1.encoding !== null) {
-            // late join receives current game state if already running
-            socket.emit('initGame', data)
+            if (data.team1.encoding !== null) {
+                // late join receives current game state if already running
+                socket.emit('initGame', data)
+            }
+        } catch (err) {
+            console.error(`Failed handling 'player join': ${err}`)
         }
     })
 
     socket.on('disconnect', () => {
-        console.log(`disconnected: ${player ? player.playerName : 'user'}`)
-        if (player) {
-            if (data.team1.team.removePlayer(player)) {
-                io.emit("teamChanged", data.team1.team)
+        try {
+            console.log(`disconnected: ${player ? player.playerName : 'user'}`)
+            if (player) {
+                if (data.team1.team.removePlayer(player)) {
+                    io.emit("teamChanged", data.team1.team)
+                }
+                if (data.team2.team.removePlayer(player)) {
+                    io.emit("teamChanged", data.team2.team)
+                }
+                player.destroy()
+                player = null
             }
-            if (data.team2.team.removePlayer(player)) {
-                io.emit("teamChanged", data.team2.team)
-            }
-            player.destroy()
-            player = null
+        } catch (err) {
+            console.error(`Failed handling 'disconnect': ${err}`)
         }
     })
 
     // Networking for game
     socket.on('initGame', () => {
-        console.log('init game')
-        initGame()
-        // on phase change send game state to all clients
-        data.team1.encoding.addListener(new PhaseListener(() => {
+        try {
+            console.log('init game')
+            initGame()
+            // on phase change send game state to all clients
+            data.team1.encoding.addListener(new PhaseListener(() => {
+                io.emit('initGame', data)
+            }))
+            data.team2.encoding.addListener(new PhaseListener(() => {
+                io.emit('initGame', data)
+            }))
+            // TODO remove keywords of opposing team for each player to prevent cheating
             io.emit('initGame', data)
-        }))
-        data.team2.encoding.addListener(new PhaseListener(() => {
-            io.emit('initGame', data)
-        }))
-        // TODO remove keywords of opposing team for each player to prevent cheating
-        io.emit('initGame', data)
+        } catch (err) {
+            console.error(`Failed handling 'initGame': ${err}`)
+        }
     })
 
     socket.on('hints', (newHints) => {
-        receiveHints(player, newHints)
+        try {
+            receiveHints(player, newHints)
+        } catch (err) {
+            console.error(`Failed handling 'hints': ${err}`)
+        }
     })
 
     socket.on('guess', (newGuess) => {
-        receiveGuess(player, newGuess)
+        try {
+            receiveGuess(player, newGuess)
+        } catch (err) {
+            console.error(`Failed handling 'guess': ${err}`)
+        }
     })
 
     socket.on('confirmResult', (newGuess) => {
-        nextRound(player)
+        try {
+            nextRound(player)
+        } catch (err) {
+            console.error(`Failed handling 'confirmResult': ${err}`)
+        }
     })
 })
 

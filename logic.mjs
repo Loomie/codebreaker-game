@@ -163,7 +163,7 @@ createApp({
         },
 
         isEncoder() {
-            return this.myTeam.encoder?.id == this.player?.id
+            return this.visibleTeam.encoder?.id == this.player?.id
         },
 
         submit_text() {

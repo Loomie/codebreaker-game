@@ -106,10 +106,10 @@
                             <!-- 1st line of the 3-digit code -->
                             <div class="panel-block">
                                 <input type="text" v-model.trim="visibleHints[0]" :class="teamBorderClass" id="hint1"
-                                    :placeholder="hintPlaceholder[0]">
+                                    :placeholder="hintPlaceholder[0]" :disabled="!isEncoder">
                                 <!-- Dropdown for guess of own team -->
                                 <select id="guess1" v-model="visibleGuess1" @change="guessChanged"
-                                    :class="teamFillActionClass">
+                                    :class="teamFillActionClass" :disabled="isEncoder">
                                     <option value="">&#9660</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
@@ -128,10 +128,10 @@
                             <!-- 2nd line of the 3-digit code -->
                             <div class="panel-block">
                                 <input type="text" v-model.trim="visibleHints[1]" :class="teamBorderClass" id="hint2"
-                                    :placeholder="hintPlaceholder[1]">
+                                    :placeholder="hintPlaceholder[1]" :disabled="!isEncoder">
                                 <!-- Dropdown for guess of own team -->
                                 <select id="guess2" v-model="visibleGuess2" @change="guessChanged"
-                                    :class="teamFillActionClass">
+                                    :class="teamFillActionClass" :disabled="isEncoder">
                                     <option value="">&#9660</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
@@ -150,10 +150,10 @@
                             <!-- 3rd line of the 3-digit code -->
                             <div class="panel-block">
                                 <input type="text" v-model.trim="visibleHints[2]" :class="teamBorderClass" id="hint3"
-                                    :placeholder="hintPlaceholder[2]">
+                                    :placeholder="hintPlaceholder[2]" :disabled="!isEncoder">
                                 <!-- Dropdown for guess of own team -->
                                 <select id="guess3" v-model="visibleGuess3" @change="guessChanged"
-                                    :class="teamFillActionClass">
+                                    :class="teamFillActionClass" :disabled="isEncoder">
                                     <option value="">&#9660</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>

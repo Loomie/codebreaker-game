@@ -148,9 +148,9 @@ export function getTeamWithLessPlayers() {
 }
 
 
-/** @return a random word from the wordlist */
-function random_word() {
-    return random_item(wordlist)
+/** @return a random word from the given list of words */
+function random_word(words) {
+    return random_item(words)
 }
 
 /** @return a random item from the given array */
@@ -160,13 +160,15 @@ function random_item(items) {
 
 /** @return a list with given count unique random words from the wordlist */
 function unique_random_words(count) {
+    const availableWords = wordlist()
     const randomWords = []
     let nextword
     for (let i = 0; i < count; i++) {
         let maxTries = 10
         do {
-            nextword = random_word()
+            nextword = random_word(availableWords)
             maxTries--
+            // prevent duplicate keywords
         } while (randomWords.includes(nextword) && maxTries > 0)
         randomWords[i] = nextword
     }

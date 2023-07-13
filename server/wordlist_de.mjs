@@ -1,0 +1,21 @@
+export const wordlist_de = [
+    "Arbeit",
+    "Auge",
+    "Fakt",
+    "Gruppe",
+    "Hand",
+    "Jahr",
+    "Kind",
+    "Leben",
+    "Person",
+    "Platz",
+    "Punkt",
+    "Regierung",
+    "Tag",
+    "Weg",
+    "Welt",
+    "Woche",
+    "Zahl",
+    "Zeit",
+    "company"
+]

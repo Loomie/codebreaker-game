@@ -1,0 +1,21 @@
+export const wordlist_en = [
+    "child",
+    "company",
+    "day",
+    "eye",
+    "fact",
+    "government",
+    "group",
+    "hand",
+    "life",
+    "number",
+    "person",
+    "place",
+    "point",
+    "time",
+    "way",
+    "week",
+    "work",
+    "world",
+    "year"
+]

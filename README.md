@@ -28,6 +28,24 @@ Keyword
 Round
 : The game is played in multiple _rounds_. Each _round_ consists of multiple steps that are went through: A _code_ is generated for each team, _Encoder_ gives _hints_ for that _code_ to her team, each team _guesses_ the _code_ based on the _hints_ for both teams, the original _code_ is revealed and compared to the _guesses_ and finally the result is checked if the game ends or continues with the next _round_.
 
+# Configuration
+
+## Language of keywords
+
+To determine which language will be used for the keywords, the environment variable `LANG` must be set when starting the server. The first two letters are used for choosing a word list.
+
+    # Linux/macOS
+    export LANG="de_DE.UTF-8"
+    ; Windows PowerShell
+    $env:LANG="de_DE.UTF-8"
+
+The following languages are currently available:
+
+ - `de`
+ - `en` (default)
+
+To customize the wordlist look at the files `server/wordlist_*.mjs`.
+
 # Installation
 
 To run the game a central server is needed. It hosts the web pages and connects the players.

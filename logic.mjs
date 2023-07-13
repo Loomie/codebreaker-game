@@ -250,8 +250,8 @@ createApp({
         },
 
         /** @return a random word from the wordlist */
-        random_word() {
-            return this.random_item(wordlist)
+        random_word(words) {
+            return this.random_item(words)
         },
 
         /** @return a random item from the given array */
@@ -261,12 +261,13 @@ createApp({
 
         /** @return a list with given count unique random words from the wordlist */
         unique_random_words(count) {
+            const availableWords = wordlist()
             const randomWords = []
             let nextword
             for (let i = 0; i < count; i++) {
                 let maxTries = 10
                 do {
-                    nextword = this.random_word()
+                    nextword = this.random_word(availableWords)
                     maxTries--
                 } while (randomWords.includes(nextword) && maxTries > 0)
                 randomWords[i] = nextword

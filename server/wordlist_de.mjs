@@ -12,10 +12,10 @@ export const wordlist_de = [
     "Punkt",
     "Regierung",
     "Tag",
+    "Unternehmen",
     "Weg",
     "Welt",
     "Woche",
     "Zahl",
-    "Zeit",
-    "company"
+    "Zeit"
 ]

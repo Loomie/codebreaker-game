@@ -1,0 +1,5 @@
+- guess other teams code
+- lobbies to enter player name and join teams
+    - let users edit team name
+- parallel games (rooms) with codes to join
+- sync guess for own team only

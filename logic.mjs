@@ -198,7 +198,7 @@ createApp({
         },
 
         hintPlaceholder() {
-            if (this.isOwnTeam) {
+            if (this.isOwnTeam && this.isEncoder) {
                 const placeholders = []
                 for (let index = 0; index < this.myTeam.code.value.length; index++) {
                     const codePart = this.myTeam.code.value[index]

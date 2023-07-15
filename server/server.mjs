@@ -26,7 +26,7 @@ io.on('connection', (socket) => {
         socket.emit('teamChanged', data.team1.team)
         socket.emit('teamChanged', data.team2.team)
     } catch (err) {
-        console.error(`Failed handling 'connection': ${err}`)
+        console.error(`Failed handling 'connection': ${err}\n${err.stack}`)
     }
 
     socket.on('player join', (playerName) => {
@@ -46,7 +46,7 @@ io.on('connection', (socket) => {
                 socket.emit('initGame', data)
             }
         } catch (err) {
-            console.error(`Failed handling 'player join': ${err}`)
+            console.error(`Failed handling 'player join': ${err}\n${err.stack}`)
         }
     })
 
@@ -64,7 +64,7 @@ io.on('connection', (socket) => {
                 player = null
             }
         } catch (err) {
-            console.error(`Failed handling 'disconnect': ${err}`)
+            console.error(`Failed handling 'disconnect': ${err}\n${err.stack}`)
         }
     })
 
@@ -83,7 +83,7 @@ io.on('connection', (socket) => {
             // TODO remove keywords of opposing team for each player to prevent cheating
             io.emit('initGame', data)
         } catch (err) {
-            console.error(`Failed handling 'initGame': ${err}`)
+            console.error(`Failed handling 'initGame': ${err}\n${err.stack}`)
         }
     })
 
@@ -91,7 +91,7 @@ io.on('connection', (socket) => {
         try {
             receiveHints(player, newHints)
         } catch (err) {
-            console.error(`Failed handling 'hints': ${err}`)
+            console.error(`Failed handling 'hints': ${err}\n${err.stack}`)
         }
     })
 
@@ -100,15 +100,15 @@ io.on('connection', (socket) => {
             console.debug(`broadcasting guess changed to all clients: ${team1Guess}, ${team2Guess}`)
             socket.broadcast.emit('guess changed', team1Guess, team2Guess)
         } catch (err) {
-            console.error(`Failed handling 'guess changed': ${err}`)
+            console.error(`Failed handling 'guess changed': ${err}\n${err.stack}`)
         }
     })
 
-    socket.on('submit guess', (newGuess) => {
+    socket.on('submit guess', (forTeamId, newGuess) => {
         try {
-            receiveGuess(player, newGuess)
+            receiveGuess(player, forTeamId, newGuess)
         } catch (err) {
-            console.error(`Failed handling 'guess': ${err}`)
+            console.error(`Failed handling 'guess' for team ${forTeamId}: ${err}\n${err.stack}`)
         }
     })
 
@@ -116,7 +116,7 @@ io.on('connection', (socket) => {
         try {
             nextRound(player)
         } catch (err) {
-            console.error(`Failed handling 'confirmResult': ${err}`)
+            console.error(`Failed handling 'confirmResult': ${err}\n${err.stack}`)
         }
     })
 })

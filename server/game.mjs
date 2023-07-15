@@ -44,8 +44,8 @@ export function initGame() {
     const keywords1 = randomKeywords.slice(0, 4)
     const keywords2 = randomKeywords.slice(4, 8)
 
-    const encoding1 = new EncodingGame(keywords1, data.team1.team)
-    const encoding2 = new EncodingGame(keywords2, data.team2.team)
+    const encoding1 = new EncodingGame(keywords1, data.team1.team, data.team2.team)
+    const encoding2 = new EncodingGame(keywords2, data.team2.team, data.team1.team)
     data.team1.encoding = encoding1
     data.team2.encoding = encoding2
     // TODO add listeners for network
@@ -74,28 +74,40 @@ export function receiveHints(player, hints) {
     }
 }
 
-export function receiveGuess(player, guess) {
+export function receiveGuess(player, forTeamId, guess) {
     const guessNumbers = guess.map((value) => parseInt(value))
     const guessCode = new Code(guessNumbers)
-    const encoding1 = data.team1.encoding
-    if (encoding1.state.phase == GamePhase.BreakCode && data.team1.team.hasPlayer(player)) {
-        console.log(`received new guess ${guess} from player ${player.playerName} for team1`)
-        encoding1.state.guess = guessCode
-        encoding1.nextPhase()
-    } else {
+    const guessFromTeam = data.team1.team.hasPlayer(player) ? data.team1.team.id : data.team2.team.id
+
+    if (TeamId.FirstTeam === forTeamId) {
+        const encoding1 = data.team1.encoding
+        processGuess(encoding1, guess, player.playerName, guessFromTeam, guessCode, forTeamId)
+    } else if (TeamId.SecondTeam === forTeamId) {
         const encoding2 = data.team2.encoding
-        if (encoding2.state.phase == GamePhase.BreakCode && data.team2.team.hasPlayer(player)) {
-            console.log(`received new guess ${guess} from player ${player.playerName} for team2`)
-            encoding2.state.guess = guessCode
-            encoding2.nextPhase()
+        processGuess(encoding2, guess, player.playerName, guessFromTeam, guessCode, forTeamId)
+    } else {
+        console.warn(`received guess for invalid team id: ${forTeamId}`)
+    }
+}
+
+function processGuess(encodingGame, guess, playerName, guessFromTeam, guessCode, forTeamId) {
+    if (encodingGame.state.phase == GamePhase.BreakCode) {
+        console.log(`received new guess ${guess} from player ${playerName} in team ${guessFromTeam} for team${forTeamId}`)
+        encodingGame.state.guess[guessFromTeam] = guessCode
+        const otherTeamId = TeamId.other(guessFromTeam)
+        if (encodingGame.state.guess[otherTeamId]) {
+            encodingGame.nextPhase()
         } else {
-            console.log(`received guess ${guess} but wrong phase`)
+            console.debug(`waiting for guess of other team before proceeding`)
         }
+    } else {
+        console.log(`received guess ${guess} but wrong phase: ${encodingGame.state.phase}`)
     }
 }
 
 // remembers which team has finished which round and wants to proceed to the next round
 const readyRound = { team1: 0, team2: 0 }
+
 export function nextRound(player) {
     const encoding1 = data.team1.encoding
     const encoding2 = data.team2.encoding
@@ -139,7 +151,7 @@ function copyHints(encoding, dataTeam) {
                 hints = dataTeam.word4.hints
                 break
             default:
-                throw `unexpected part of code: ${codeDigit}`
+                throw new Error(`unexpected part of code: ${codeDigit}`)
         }
         hints.push(hint)
     }

@@ -3,7 +3,11 @@ import { avatars } from "../avatars.mjs"
 /** define sets of fixed values to have defined options from which to choose instead of "any number" */
 export const TeamId = {
     FirstTeam: 1,
-    SecondTeam: 2
+    SecondTeam: 2,
+
+    other(aTeamId) {
+        return this.FirstTeam === aTeamId ? this.SecondTeam : this.FirstTeam
+    }
 }
 
 export class Team {
@@ -19,7 +23,7 @@ export class Team {
         if (player instanceof Player) {
             this.members.push(player)
         } else {
-            throw "team members must be Players!"
+            throw new Error("team members must be Players!")
         }
     }
 
@@ -33,7 +37,7 @@ export class Team {
             }
             return false
         } else {
-            throw "team members must be Players!"
+            throw new Error("team members must be Players!")
         }
     }
 

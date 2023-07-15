@@ -1,4 +1,3 @@
-- guess other teams code
 - sync guess for own team only
 - Submit button should not clear tips/guesses of other team
 - free text input for key words of other team to collect own hints

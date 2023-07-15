@@ -1,5 +1,5 @@
 import { sameArrayContents } from "../utils.mjs"
-import { Team } from "./model-team.mjs"
+import { Team, TeamId } from "./model-team.mjs"
 
 /** define sets of fixed values to have defined options from which to choose instead of "any number" */
 export const GamePhase = {
@@ -22,7 +22,7 @@ export class Code {
             this.value = [...userCode] // create new array as clone/copy
         } else {
             // called with any other value as parameter
-            throw `Invalid value for a Code: ${userCode}`
+            throw new Error(`Invalid value for a Code: ${userCode}`)
         }
     }
 
@@ -39,7 +39,7 @@ export class Code {
 export class EncodingState {
     constructor(keyWords) {
         if (!keyWords || !(keyWords instanceof Array) || keyWords.length != 4) {
-            throw "exactly four keywords must be given!"
+            throw new Error("exactly four keywords must be given!")
         }
         this.keyWords = keyWords
 
@@ -47,7 +47,8 @@ export class EncodingState {
         this.encoder = null
         this.hints = []
         this.code = null
-        this.guess = null
+        // map from team id to guessed code
+        this.guess = {}
     }
 }
 
@@ -55,14 +56,16 @@ export class EncodingState {
  * An EncodingGame holds a EncodingState and logic about encoding and decoding of key words for a single team. It manages the keywords, code, hints and guessed code. An EncodingGame cycles through GamePhases and has listeners to notify about changes.
  */
 export class EncodingGame {
-    constructor(keyWords, team) {
+    constructor(keyWords, team, otherTeam) {
         this.state = new EncodingState(keyWords)
         if (!team || !(team instanceof Team) || team.members.length === 0) {
-            throw "At least one player must play the game!"
+            throw new Error("At least one player must play the game!")
         }
-        this._team = team
-        this._team.correctOtherEncodings = 0
-        this._team.failedOwnDecodings = 0
+        this._teamOfHint = team
+        this._otherTeam = otherTeam
+
+        this._teamOfHint.failedOwnDecodings = 0
+        this._otherTeam.correctOtherEncodings = 0
 
         this._phaseListeners = []
     }
@@ -73,25 +76,25 @@ export class EncodingGame {
         switch (currentPhase) {
             case GamePhase.Init:
             case GamePhase.Results:
-                console.debug(`switching phase from ${currentPhase} to ConstructCode for ${this._team.name}`)
+                console.debug(`switching phase from ${currentPhase} to ConstructCode for ${this._teamOfHint.name}`)
                 this.state.phase = GamePhase.ConstructCode
                 this._startRound()
                 break
             case GamePhase.ConstructCode:
-                console.debug(`switching phase from ${currentPhase} to BreakCode for ${this._team.name}`)
+                console.debug(`switching phase from ${currentPhase} to BreakCode for ${this._teamOfHint.name}`)
                 this.state.phase = GamePhase.BreakCode
                 break
             case GamePhase.BreakCode:
-                console.debug(`switching phase from ${currentPhase} to Results for ${this._team.name}`)
+                console.debug(`switching phase from ${currentPhase} to Results for ${this._teamOfHint.name}`)
                 this.state.phase = GamePhase.Results
                 this._endRound()
                 break
             case GamePhase.End:
-                console.debug(`switching from ${currentPhase} to Init for ${this._team.name}`)
+                console.debug(`switching from ${currentPhase} to Init for ${this._teamOfHint.name}`)
                 this.state.phase = GamePhase.Init
                 break
             default:
-                throw `unkown game phase $currentPhase`
+                throw new Error(`unkown game phase $currentPhase`)
         }
         this._notifyListeners()
     }
@@ -99,34 +102,41 @@ export class EncodingGame {
     /** Start the encoding of keywords according to a new random code. Resets previous values. */
     _startRound() {
         this.state.encoder = this._nextEncoder()
-        console.log(`encoder of round is ${this.state.encoder.playerName} for ${this._team.name}`)
+        console.log(`encoder of round is ${this.state.encoder.playerName} for ${this._teamOfHint.name}`)
         this.state.hints = []
         this.state.code = new Code()
-        this.state.guess = null
+        this.state.guess = {}
     }
 
     /** Set the encoder to the next player. If the last player in the list was the encoder the first player has the next turn. */
     _nextEncoder() {
-        const players = this._team.members
+        const players = this._teamOfHint.members
         // initially encoder is null which results in index -1 which is ok to increment
         const encoderIndex = players.indexOf(this.state.encoder)
         const nextIndex = (encoderIndex + 1) % players.length
         return players[nextIndex]
     }
 
-    /** calculate black and white marks and note them for the team */
+    /** calculate black and white marks and note them for the corresponding team */
     _endRound() {
-        const isWrongGuess = !sameArrayContents(this.state.guess.value, this.state.code.value)
+        const isWrongGuess = !sameArrayContents(this.state.guess[this._teamOfHint.id].value, this.state.code.value)
         if (isWrongGuess) {
-            console.info(`failed guessing own code for ${this._team.name}`)
-            this._team.failedOwnDecodings++
-            if (this._team.failedOwnDecodings >= 2) {
-                console.info(`too many failed decoding for ${this._team.name}. Switching to End`)
+            console.info(`failed guessing own code for ${this._teamOfHint.name}`)
+            this._teamOfHint.failedOwnDecodings++
+            if (this._teamOfHint.failedOwnDecodings >= 2) {
+                console.info(`too many failed decoding for ${this._teamOfHint.name}. Switching to End`)
                 this.state.phase = GamePhase.End
             }
         }
-        // TODO count correct guesses for enemy code
-        //this.team.correctOtherEncodings++
+        const isOtherGuessCorrect = sameArrayContents(this.state.guess[this._otherTeam.id].value, this.state.code.value)
+        if (isOtherGuessCorrect) {
+            console.info(`guessed correct code for ${this._otherTeam.name}`)
+            this._otherTeam.correctOtherEncodings++
+            if (this._otherTeam.correctOtherEncodings >= 2) {
+                console.info(`too many intercepted codes by ${this._otherTeam.name}. Switching to End`)
+                this.state.phase = GamePhase.End
+            }
+        }
     }
 
     _notifyListeners() {
@@ -164,7 +174,7 @@ export class PhaseListener {
         if (typeof callback === "function") {
             this.callback = callback
         } else {
-            throw "callback must be a function that accepts a GamePhase"
+            throw new Error("callback must be a function that accepts a GamePhase")
         }
     }
 

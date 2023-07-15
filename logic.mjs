@@ -302,9 +302,8 @@ createApp({
         },
 
         submit_guess() {
-            // TODO send visible team guess for guessing other teams code
-            this.sendGameEvent('submit guess', this.myTeam.guess)
-            console.log(`submitted guess: ${this.myTeam.guess}`)
+            this.sendGameEvent('submit guess', this.visibleTeamId, this.visibleTeam.guess)
+            console.log(`submitted guess: ${this.visibleTeam.guess}`)
         },
 
         submit_hints() {
@@ -317,8 +316,8 @@ createApp({
             console.log(`confirmed result`)
         },
 
-        sendGameEvent(eventName, data) {
-            this._socket.emit(eventName, data)
+        sendGameEvent(eventName, ...eventArguments) {
+            this._socket.emit(eventName, ...eventArguments)
         },
 
         updateState(gameData) {

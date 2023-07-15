@@ -322,6 +322,7 @@ createApp({
         },
 
         updateState(gameData) {
+            this.round = gameData.round
             copyState(this.team1, gameData.team1)
             copyState(this.team2, gameData.team2)
             console.info('Game initialized')

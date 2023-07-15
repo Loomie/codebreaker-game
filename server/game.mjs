@@ -114,6 +114,7 @@ export function nextRound(player) {
     }
     // check if both teams are ready
     if (readyRound.team1 === data.round && readyRound.team2 === data.round) {
+        data.round += 1
         encoding1.nextPhase()
         encoding2.nextPhase()
     }

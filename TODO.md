@@ -3,7 +3,6 @@
     - let users edit team name
 - parallel games (rooms) with codes to join
 - sync guess for own team only
-- Platzhalter nur für Encoder
 - Submit darf nicht Encoder Tips/Guess des anderen Teams löschen
 - Freitexteingabe für Gegnerteam um Ideen für Schlüsselwörter zu sammlen
 - Runden-Counter

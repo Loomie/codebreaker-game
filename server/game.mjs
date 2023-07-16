@@ -43,6 +43,14 @@ export function initGame() {
     const randomKeywords = unique_random_words(8)
     const keywords1 = randomKeywords.slice(0, 4)
     const keywords2 = randomKeywords.slice(4, 8)
+    data.team1.word1.hints = []
+    data.team1.word2.hints = []
+    data.team1.word3.hints = []
+    data.team1.word4.hints = []
+    data.team2.word1.hints = []
+    data.team2.word2.hints = []
+    data.team2.word3.hints = []
+    data.team2.word4.hints = []
 
     const encoding1 = new EncodingGame(keywords1, data.team1.team, data.team2.team)
     const encoding2 = new EncodingGame(keywords2, data.team2.team, data.team1.team)

@@ -328,9 +328,32 @@ createApp({
 
         updateState(gameData) {
             this.round = gameData.round
-            copyState(this.team1, gameData.team1)
-            copyState(this.team2, gameData.team2)
-            console.info('Game initialized')
+            this.copyState(this.team1, gameData.team1)
+            this.copyState(this.team2, gameData.team2)
+            console.info('Game state synced')
+        },
+
+        copyState(localTeam, remoteTeam) {
+            localTeam.word1.hints = remoteTeam.word1.hints
+            localTeam.word2.hints = remoteTeam.word2.hints
+            localTeam.word3.hints = remoteTeam.word3.hints
+            localTeam.word4.hints = remoteTeam.word4.hints
+
+            localTeam.team.failedOwnDecodings = remoteTeam.team.failedOwnDecodings
+            localTeam.team.correctOtherEncodings = remoteTeam.team.correctOtherEncodings
+
+            const remoteEncoding = remoteTeam.encoding.state
+            if (GamePhase.AwaitRemainingCode === remoteEncoding.phase && !remoteEncoding.guess[this.myTeamId]) {
+                // if awaiting own guess say player that she has to break the code
+                localTeam.phase = GamePhase.BreakCode
+            } else {
+                localTeam.phase = remoteEncoding.phase
+            }
+            localTeam.current_hints = (remoteEncoding.hints?.length !== 0) ? remoteEncoding.hints : localTeam.current_hints
+            localTeam.code = remoteEncoding.code
+            localTeam.keywords = remoteEncoding.keyWords
+            localTeam.encoder = remoteEncoding.encoder
+            localTeam.guess = remoteEncoding.guess[this.myTeamId]?.value ?? localTeam.guess
         }
     },
 
@@ -386,21 +409,3 @@ createApp({
         socket.emit("player join", playerName)
     }
 }).mount('#app')
-
-function copyState(localTeam, remoteTeam) {
-    localTeam.word1.hints = remoteTeam.word1.hints
-    localTeam.word2.hints = remoteTeam.word2.hints
-    localTeam.word3.hints = remoteTeam.word3.hints
-    localTeam.word4.hints = remoteTeam.word4.hints
-
-    localTeam.team.failedOwnDecodings = remoteTeam.team.failedOwnDecodings
-    localTeam.team.correctOtherEncodings = remoteTeam.team.correctOtherEncodings
-
-    const remoteEncoding = remoteTeam.encoding.state
-    localTeam.phase = remoteEncoding.phase
-    localTeam.current_hints = (remoteEncoding.hints) ?? []
-    localTeam.code = remoteEncoding.code
-    localTeam.keywords = remoteEncoding.keyWords
-    localTeam.encoder = remoteEncoding.encoder
-    localTeam.guess = remoteEncoding.guess?.value ?? []
-}

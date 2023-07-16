@@ -1,4 +1,3 @@
-- Submit button should not clear tips/guesses of other team
 - free text input for key words of other team to collect own hints
 - lobbies to enter player name and join teams
     - let users edit team name

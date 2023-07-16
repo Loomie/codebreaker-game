@@ -348,13 +348,18 @@ createApp({
             localTeam.team.correctOtherEncodings = remoteTeam.team.correctOtherEncodings
 
             const remoteEncoding = remoteTeam.encoding.state
+            const isSamePhase = localTeam.phase === remoteEncoding.phase
             if (GamePhase.AwaitRemainingCode === remoteEncoding.phase && !remoteEncoding.guess[this.myTeamId]) {
                 // if awaiting own guess say player that she has to break the code
                 localTeam.phase = GamePhase.BreakCode
             } else {
                 localTeam.phase = remoteEncoding.phase
             }
-            localTeam.current_hints = (remoteEncoding.hints?.length !== 0) ? remoteEncoding.hints : localTeam.current_hints
+            if (remoteEncoding.hints.length === 0 && isSamePhase) {
+                // keep local hints if encoder is still encoding and no hints are known by the server yet
+            } else {
+                localTeam.current_hints = remoteEncoding.hints
+            }
             localTeam.code = remoteEncoding.code
             localTeam.keywords = remoteEncoding.keyWords
             localTeam.encoder = remoteEncoding.encoder

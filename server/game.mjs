@@ -101,27 +101,25 @@ function processGuess(encodingGame, guess, playerName, guessFromTeam, guessCode,
     }
 }
 
-// remembers which team has finished which round and wants to proceed to the next round
-const readyRound = { team1: 0, team2: 0 }
-
 export function nextRound(player) {
     const encoding1 = data.team1.encoding
     const encoding2 = data.team2.encoding
     if (encoding1.state.phase == GamePhase.Results && data.team1.team.hasPlayer(player)) {
         console.log(`next round from player ${player.playerName} for team1`)
-        readyRound.team1 = data.round
         copyHints(encoding1, data.team1)
+        encoding1.nextPhase()
     } else {
         if (encoding2.state.phase == GamePhase.Results && data.team2.team.hasPlayer(player)) {
             console.log(`next round from player ${player.playerName} for team2`)
-            readyRound.team2 = data.round
             copyHints(encoding2, data.team2)
+            encoding2.nextPhase()
         } else {
             console.log(`next round but wrong phase`)
         }
     }
+
     // check if both teams are ready
-    if (readyRound.team1 === data.round && readyRound.team2 === data.round) {
+    if (GamePhase.AwaitOtherConfirmation === encoding1.state.phase && GamePhase.AwaitOtherConfirmation === encoding2.state.phase) {
         data.round += 1
         encoding1.nextPhase()
         encoding2.nextPhase()

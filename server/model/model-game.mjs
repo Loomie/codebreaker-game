@@ -6,8 +6,9 @@ export const GamePhase = {
     Init: 0,
     ConstructCode: 10,
     BreakCode: 20,
-    AwaitRemainingCode: 30,
-    Results: 40,
+    AwaitRemainingCode: 25,
+    Results: 30,
+    AwaitOtherConfirmation: 35,
     End: 100
 }
 
@@ -76,7 +77,7 @@ export class EncodingGame {
         const currentPhase = this.state.phase
         switch (currentPhase) {
             case GamePhase.Init:
-            case GamePhase.Results:
+            case GamePhase.AwaitOtherConfirmation:
                 console.debug(`switching phase from ${currentPhase} to ConstructCode for ${this._teamOfHint.name}`)
                 this.state.phase = GamePhase.ConstructCode
                 this._startRound()
@@ -95,6 +96,10 @@ export class EncodingGame {
                 console.debug(`switching phase from ${currentPhase} to Results for ${this._teamOfHint.name}`)
                 this.state.phase = GamePhase.Results
                 this._endRound()
+                break
+            case GamePhase.Results:
+                console.debug(`switching phase from ${currentPhase} to AwaitOtherConfirmation for ${this._teamOfHint.name}`)
+                this.state.phase = GamePhase.AwaitOtherConfirmation
                 break
             case GamePhase.End:
                 console.debug(`switching from ${currentPhase} to Init for ${this._teamOfHint.name}`)

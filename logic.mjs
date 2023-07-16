@@ -111,7 +111,7 @@ createApp({
         },
 
         visibleCode() {
-            if ((this.isEncoder && this.isOwnTeam) || this.visibleTeam.phase == GamePhase.Results) {
+            if ((this.isEncoder && this.isOwnTeam) || this.visibleTeam.phase >= GamePhase.Results) {
                 return (this.visibleTeam.code) ? this.visibleTeam.code.value : ['E', 'R', 'R']
             }
             return ["?", "?", "?"]
@@ -178,6 +178,9 @@ createApp({
                     return this.isEncoder ? 'Give Hints' : 'Wait for Hints'
                 case GamePhase.Results:
                     return 'Confirm Result'
+                case GamePhase.End:
+                    return 'End'
+                case GamePhase.AwaitOtherConfirmation:
                 default:
                     return 'Wait'
             }
@@ -196,6 +199,8 @@ createApp({
                     return !this.isEncoder
                 case GamePhase.Results:
                     return false
+                case GamePhase.AwaitOtherConfirmation:
+                case GamePhase.End:
                 default:
                     return true
             }

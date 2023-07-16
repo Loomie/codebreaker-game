@@ -172,6 +172,8 @@ createApp({
                     return this.anyTeamNeedsPlayer ? 'Wait for Players' : 'Start'
                 case GamePhase.BreakCode:
                     return 'Guess Code'
+                case GamePhase.AwaitRemainingCode:
+                    return 'Wait'
                 case GamePhase.ConstructCode:
                     return this.isEncoder ? 'Give Hints' : 'Wait for Hints'
                 case GamePhase.Results:
@@ -188,6 +190,8 @@ createApp({
                     return this.anyTeamNeedsPlayer
                 case GamePhase.BreakCode:
                     return this.isEncoder
+                case GamePhase.AwaitRemainingCode:
+                    return true
                 case GamePhase.ConstructCode:
                     return !this.isEncoder
                 case GamePhase.Results:
@@ -277,7 +281,7 @@ createApp({
 
         guessChanged() {
             console.debug('broadcasting guess to all clients')
-            this._socket.volatile.emit('guess changed', this.team1.guess, this.team2.guess)
+            this._socket.volatile.emit('guess changed', this.myTeamId, this.team1.guess, this.team2.guess)
         },
 
         submit() {
@@ -294,6 +298,8 @@ createApp({
                 case GamePhase.Results:
                     this.submit_results()
                     break
+                default:
+                    console.warn(`no submit expected in phase ${this.visibleTeam.phase}`)
             }
         },
 
@@ -367,10 +373,12 @@ createApp({
             console.info(`received game data ${JSON.stringify(gameData)}`)
             data.updateState(gameData)
         })
-        socket.on('guess changed', (team1Guess, team2Guess) => {
-            console.debug('received current guesses')
-            this.team1.guess = team1Guess
-            this.team2.guess = team2Guess
+        socket.on('guess changed', (forTeamId, team1Guess, team2Guess) => {
+            if (this.myTeamId === forTeamId) {
+                console.debug('received current guesses')
+                this.team1.guess = team1Guess
+                this.team2.guess = team2Guess
+            }
         })
 
         // init data

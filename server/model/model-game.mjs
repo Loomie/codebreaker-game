@@ -4,10 +4,11 @@ import { Team, TeamId } from "./model-team.mjs"
 /** define sets of fixed values to have defined options from which to choose instead of "any number" */
 export const GamePhase = {
     Init: 0,
-    ConstructCode: 1,
-    BreakCode: 2,
-    Results: 3,
-    End: 4
+    ConstructCode: 10,
+    BreakCode: 20,
+    AwaitRemainingCode: 30,
+    Results: 40,
+    End: 100
 }
 
 const codeLength = 3
@@ -85,6 +86,12 @@ export class EncodingGame {
                 this.state.phase = GamePhase.BreakCode
                 break
             case GamePhase.BreakCode:
+                console.debug(`switching phase from ${currentPhase} to AwaitOtherCode for ${this._teamOfHint.name}`)
+                this.state.phase = GamePhase.AwaitRemainingCode
+                if (!this.state.guess[this._teamOfHint.id] || !this.state.guess[this._otherTeam.id]) {
+                    break
+                } // else fall through to next phase if both teams provided a guess for the code
+            case GamePhase.AwaitRemainingCode:
                 console.debug(`switching phase from ${currentPhase} to Results for ${this._teamOfHint.name}`)
                 this.state.phase = GamePhase.Results
                 this._endRound()

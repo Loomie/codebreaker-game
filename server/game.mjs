@@ -91,15 +91,11 @@ export function receiveGuess(player, forTeamId, guess) {
 }
 
 function processGuess(encodingGame, guess, playerName, guessFromTeam, guessCode, forTeamId) {
-    if (encodingGame.state.phase == GamePhase.BreakCode) {
+    if (encodingGame.state.phase == GamePhase.BreakCode || encodingGame.state.phase == GamePhase.AwaitRemainingCode) {
         console.log(`received new guess ${guess} from player ${playerName} in team ${guessFromTeam} for team${forTeamId}`)
         encodingGame.state.guess[guessFromTeam] = guessCode
         const otherTeamId = TeamId.other(guessFromTeam)
-        if (encodingGame.state.guess[otherTeamId]) {
-            encodingGame.nextPhase()
-        } else {
-            console.debug(`waiting for guess of other team before proceeding`)
-        }
+        encodingGame.nextPhase()
     } else {
         console.log(`received guess ${guess} but wrong phase: ${encodingGame.state.phase}`)
     }

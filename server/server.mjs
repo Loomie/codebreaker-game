@@ -95,12 +95,12 @@ io.on('connection', (socket) => {
         }
     })
 
-    socket.on('guess changed', (team1Guess, team2Guess) => {
+    socket.on('guess changed', (forTeamId, team1Guess, team2Guess) => {
         try {
-            console.debug(`broadcasting guess changed to all clients: ${team1Guess}, ${team2Guess}`)
-            socket.broadcast.emit('guess changed', team1Guess, team2Guess)
+            console.debug(`broadcasting guess changed to all clients of team ${forTeamId}: ${team1Guess}, ${team2Guess}`)
+            socket.broadcast.emit('guess changed', forTeamId, team1Guess, team2Guess)
         } catch (err) {
-            console.error(`Failed handling 'guess changed': ${err}\n${err.stack}`)
+            console.error(`Failed handling 'guess changed' of team ${forTeamId}: ${err}\n${err.stack}`)
         }
     })
 

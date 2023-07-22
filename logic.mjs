@@ -119,7 +119,7 @@ createApp({
 
         visibleGuess1: {
             get() {
-                return this.visibleTeam.guess[0]
+                return (this.visibleTeam.guess[0]) ? this.visibleTeam.guess[0] : ''
             },
 
             set(newValue) {
@@ -129,7 +129,7 @@ createApp({
 
         visibleGuess2: {
             get() {
-                return this.visibleTeam.guess[1]
+                return (this.visibleTeam.guess[1]) ? this.visibleTeam.guess[1] : ''
             },
 
             set(newValue) {
@@ -139,7 +139,7 @@ createApp({
 
         visibleGuess3: {
             get() {
-                return this.visibleTeam.guess[2]
+                return (this.visibleTeam.guess[2]) ? this.visibleTeam.guess[2] : ''
             },
 
             set(newValue) {

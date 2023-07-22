@@ -158,6 +158,27 @@ createApp({
             return ["****", "****", "****", "****"]
         },
 
+        visiblePhaseName() {
+            switch (this.visibleTeam.phase) {
+                case GamePhase.AwaitOtherConfirmation:
+                    return "Await Confirmation"
+                case GamePhase.AwaitRemainingCode:
+                    return "Await Code"
+                case GamePhase.BreakCode:
+                    return "Guess Code"
+                case GamePhase.ConstructCode:
+                    return "Encode Keywords"
+                case GamePhase.End:
+                    return "End"
+                case GamePhase.Init:
+                    return "Initialization"
+                case GamePhase.Results:
+                    return "Results"
+                default:
+                    return "Unknown"
+            }
+        },
+
         visibleTeamName() {
             return this.visibleTeam.team.name
         },

@@ -37,6 +37,7 @@
                 <br>
                 <h1 class="title">Status</h1>
                 <p class="menu-label">Round: {{ round }}</p>
+                <p class="menu-label">Phase: {{visiblePhaseName}}</p>
                 <button @click="initGame" :disabled="anyTeamNeedsPlayer">Restart</button>
             </aside>
             <!-- Middle section containing the code words -->

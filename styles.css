@@ -128,10 +128,7 @@ body {
 
 /* Input field for text */
 input[type=text] {
-    /* Padding and border are within the size */
-    box-sizing: border-box;
     min-width: 9em;
-    height: 3em;
     padding: 10px;
     margin-left: 0px;
     margin-top: 5px;
@@ -202,8 +199,8 @@ section.columns {
     border-radius: 5px;
     box-shadow: 5px 5px 10px grey;
     margin: 1em;
-    margin: 1em;
     padding: 0em;
+    padding-bottom: 16px;
     /* Colouring background */
     background: white;
     /* Grey: gainsboro */

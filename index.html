@@ -117,14 +117,6 @@
                                     <option value="3">3</option>
                                     <option value="4">4</option>
                                 </select>
-                                <!-- Dropdown for guess of enemy team -->
-                                <select id="guessOthers1" :class="teamFillActionClass" disabled>
-                                    <option value="">?</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                </select>
                             </div>
                             <!-- 2nd line of the 3-digit code -->
                             <div class="panel-block">
@@ -139,14 +131,6 @@
                                     <option value="3">3</option>
                                     <option value="4">4</option>
                                 </select>
-                                <!-- Dropdown for guess of enemy team -->
-                                <select id="guessOthers2" :class="teamFillActionClass" disabled>
-                                    <option value="">?</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                </select>
                             </div>
                             <!-- 3rd line of the 3-digit code -->
                             <div class="panel-block">
@@ -156,14 +140,6 @@
                                 <select id="guess3" v-model="visibleGuess3" @change="guessChanged"
                                     :class="teamFillActionClass" :disabled="isEncoder">
                                     <option value="">&#9660</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                </select>
-                                <!-- Dropdown for guess of enemy team -->
-                                <select id="guessOthers3" :class="teamFillActionClass" disabled>
-                                    <option value="">?</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>

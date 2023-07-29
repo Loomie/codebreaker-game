@@ -8,6 +8,7 @@ createApp({
     /** data which holds the state of the game */
     data() {
         return {
+            version: '0.0.0',
             player: null,
             round: 1,
             myTeamId: TeamId.FirstTeam,
@@ -407,9 +408,15 @@ createApp({
         // init networking
         const socket = io()
         this._socket = socket
+        // variables to use in network handlers
         const data = this
         const team1 = this.team1
         const team2 = this.team2
+
+        socket.on('version', function (gameVersion) {
+            console.info(`game version ${gameVersion}`)
+            data.version = gameVersion
+        })
         socket.on('teamChanged', function (changedTeam) {
             if (changedTeam.id === TeamId.FirstTeam) {
                 team1.team = changedTeam
@@ -428,14 +435,14 @@ createApp({
             data.updateState(gameData)
         })
         socket.on('guess changed', (forTeamId, team1Guess, team2Guess) => {
-            if (this.myTeamId === forTeamId) {
+            if (data.myTeamId === forTeamId) {
                 console.debug('received current guesses')
-                this.team1.guess = team1Guess
-                this.team2.guess = team2Guess
+                team1.guess = team1Guess
+                team2.guess = team2Guess
             }
         })
 
-        // init data
+        // connect player to server
         const playerName = prompt("What's your name?", "your name")
         socket.emit("player join", playerName)
     }

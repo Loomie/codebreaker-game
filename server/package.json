@@ -4,7 +4,7 @@
   "description": "Server part of the multiplayer game Codebreaker",
   "main": "server.mjs",
   "scripts": {
-    "start": "node server.mjs",
+    "start": "node --trace-uncaught server.mjs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

@@ -4,8 +4,11 @@ import express from 'express'
 import { readFileSync } from 'fs'
 import { createServer } from 'https'
 import { Server } from "socket.io"
+import packageJson from './package.json' assert { type: "json" }
 
 const DEFAULT_PORT = 12034
+
+console.log(`Starting ${packageJson.name} version ${packageJson.version}`)
 
 const app = express()
 app.use(express.static('..', { index: 'index.html' }))
@@ -23,6 +26,7 @@ io.on('connection', (socket) => {
     try {
         var player = null
         console.log('a user connected')
+        socket.emit('version', packageJson.version)
         socket.emit('teamChanged', data.team1.team)
         socket.emit('teamChanged', data.team2.team)
     } catch (err) {
@@ -119,6 +123,7 @@ io.on('connection', (socket) => {
             console.error(`Failed handling 'confirmResult': ${err}\n${err.stack}`)
         }
     })
+
 })
 
 // start server

@@ -431,7 +431,7 @@ createApp({
             data.visibleTeamId = data.myTeamId
         })
         socket.on('initGame', (gameData) => {
-            console.info(`received game data ${JSON.stringify(gameData)}`)
+            //console.info(`received game data ${JSON.stringify(gameData)}`)
             data.updateState(gameData)
         })
         socket.on('guess changed', (forTeamId, team1Guess, team2Guess) => {

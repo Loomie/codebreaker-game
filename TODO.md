@@ -1,7 +1,6 @@
 Bugs
 ====
 
-- don't log state in (client) console
 - first round should not be guessable for other team
 - reset code on round start (empty ui dropdowns)
 - end game for both encryption games/teams
@@ -17,7 +16,6 @@ Features
 ========
 
 - display name of team instead of "enemy team"
-- Version number
 - limit rounds, "sudden death"
 - display numbers 1 to 4 for the keywords
 - free text input for key words of other team to collect own hints

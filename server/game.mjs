@@ -61,6 +61,17 @@ export function initGame() {
     data.team2.encoding = encoding2
     encoding1.addListener(new PhaseListener((phase) => console.debug(`encoding 1 phase is ${phase}`)))
     encoding2.addListener(new PhaseListener((phase) => console.debug(`encoding 2 phase is ${phase}`)))
+    // sync end to both teams
+    encoding1.addListener(new PhaseListener((phase) => {
+        if (GamePhase.End === phase && GamePhase.End !== encoding2.state.phase) {
+            encoding2.forceEnd()
+        }
+    }))
+    encoding2.addListener(new PhaseListener((phase) => {
+        if (GamePhase.End === phase && GamePhase.End !== encoding1.state.phase) {
+            encoding1.forceEnd()
+        }
+    }))
 
     // start by initializing first round
     data.round = 1

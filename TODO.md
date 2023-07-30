@@ -1,7 +1,6 @@
 Bugs
 ====
 
-- end game for both encryption games/teams
 - fixed height of marks so team switcher is at fixed position
     - larger marks (4em)
 - layout for smaller screens

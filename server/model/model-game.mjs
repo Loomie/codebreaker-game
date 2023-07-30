@@ -132,6 +132,12 @@ export class EncodingGame {
         this._notifyListeners()
     }
 
+    forceEnd() {
+        console.info(`forcing end for ${this._teamOfHint.name}`)
+        this.state.phase = GamePhase.End
+        this._notifyListeners()
+    }
+
     /** Start the encoding of keywords according to a new random code. Resets previous values. */
     _startRound() {
         this.state.encoder = this._nextEncoder()

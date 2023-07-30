@@ -11,6 +11,7 @@ Bugs
 Features
 ========
 
+- unit tests!
 - display name of team instead of "enemy team"
 - limit rounds, "sudden death"
 - display numbers 1 to 4 for the keywords

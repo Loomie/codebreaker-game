@@ -89,7 +89,7 @@ createApp({
     /** computed values based on data */
     computed: {
         myTeam() {
-            if (this.myTeamId == TeamId.SecondTeam) {
+            if (this.myTeamId === TeamId.SecondTeam) {
                 return this.team2
             }
             return this.team1
@@ -105,7 +105,7 @@ createApp({
         },
 
         visibleTeam() {
-            if (this.visibleTeamId == TeamId.SecondTeam) {
+            if (this.visibleTeamId === TeamId.SecondTeam) {
                 return this.team2
             }
             return this.team1
@@ -193,16 +193,16 @@ createApp({
         },
 
         isCodeGuessDisabled() {
-            return !(GamePhase.BreakCode == this.visiblePhase && this.isCodeBreaker)
+            return !(GamePhase.BreakCode === this.visiblePhase && this.isCodeBreaker)
         },
 
         isEncoder() {
-            return this.visibleTeam.encoder?.id == this.player?.id
+            return this.visibleTeam.encoder?.id === this.player?.id
         },
 
         isCodeBreaker() {
             // in phase BreakCode everybody but the encoder is a code breaker. But in the first round only the own code can be guessed
-            return GamePhase.BreakCode == this.visiblePhase && !this.isEncoder && (this.myTeamId === this.visibleTeamId || this.visibleTeam.round > 1)
+            return GamePhase.BreakCode === this.visiblePhase && !this.isEncoder && (this.isOwnTeam || this.visibleTeam.round > 1)
         },
 
         submit_text() {
@@ -237,7 +237,7 @@ createApp({
                 case GamePhase.ConstructCode:
                     return !this.isEncoder
                 case GamePhase.Results:
-                    return this.myTeamId !== this.visibleTeamId
+                    return !this.isOwnTeam
                 case GamePhase.AwaitOtherConfirmation:
                 case GamePhase.End:
                 default:
@@ -260,13 +260,13 @@ createApp({
 
         /** name of a CSS class for current team */
         teamFillClass() {
-            return (this.visibleTeamId == TeamId.FirstTeam) ? "team1-fill" : "team2-fill"
+            return (this.visibleTeamId === TeamId.FirstTeam) ? "team1-fill" : "team2-fill"
         },
         teamFillActionClass() {
-            return (this.visibleTeamId == TeamId.FirstTeam) ? "team1-fill-action" : "team2-fill-action"
+            return (this.visibleTeamId === TeamId.FirstTeam) ? "team1-fill-action" : "team2-fill-action"
         },
         teamBorderClass() {
-            return (this.visibleTeamId == TeamId.FirstTeam) ? "team1-border" : "team2-border"
+            return (this.visibleTeamId === TeamId.FirstTeam) ? "team1-border" : "team2-border"
         }
     },
 
@@ -374,7 +374,7 @@ createApp({
             this.round = gameData.round
             this.copyState(this.team1, gameData.team1)
             this.copyState(this.team2, gameData.team2)
-            console.info('Game state synced')
+            console.info(`Game state synced. Round ${this.round}, own phase ${this.myTeam.phase}`)
         },
 
         copyState(localTeam, remoteTeam) {
@@ -448,7 +448,7 @@ createApp({
             data.visibleTeamId = data.myTeamId
         })
         socket.on('initGame', (gameData) => {
-            //console.info(`received game data ${JSON.stringify(gameData)}`)
+            console.debug(`received game data ${JSON.stringify(gameData)}`)
             data.updateState(gameData)
         })
         socket.on('guess changed', (forTeamId, team1Guess, team2Guess) => {

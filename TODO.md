@@ -1,7 +1,6 @@
 Bugs
 ====
 
-- reset code on round start (empty ui dropdowns)
 - end game for both encryption games/teams
 - fixed height of marks so team switcher is at fixed position
     - larger marks (4em)

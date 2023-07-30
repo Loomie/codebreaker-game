@@ -164,24 +164,7 @@ createApp({
         },
 
         visiblePhaseName() {
-            switch (this.visiblePhase) {
-                case GamePhase.AwaitOtherConfirmation:
-                    return "Await Confirmation"
-                case GamePhase.AwaitRemainingCode:
-                    return "Await Code"
-                case GamePhase.BreakCode:
-                    return "Guess Code"
-                case GamePhase.ConstructCode:
-                    return "Encode Keywords"
-                case GamePhase.End:
-                    return "End"
-                case GamePhase.Init:
-                    return "Initialization"
-                case GamePhase.Results:
-                    return "Results"
-                default:
-                    return "Unknown"
-            }
+            return GamePhase.getName(this.visiblePhase)
         },
 
         visibleTeamName() {
@@ -202,7 +185,7 @@ createApp({
 
         isCodeBreaker() {
             // in phase BreakCode everybody but the encoder is a code breaker. But in the first round only the own code can be guessed
-            return GamePhase.BreakCode === this.visiblePhase && !this.isEncoder && (this.isOwnTeam || this.visibleTeam.round > 1)
+            return GamePhase.BreakCode === this.visiblePhase && !this.isEncoder && (this.isOwnTeam || this.round > 1)
         },
 
         submit_text() {
@@ -353,17 +336,17 @@ createApp({
 
         submit_guess() {
             this.sendGameEvent('submit guess', this.visibleTeamId, this.visibleTeam.guess)
-            console.log(`submitted guess: ${this.visibleTeam.guess}`)
+            console.info(`submitted guess: ${this.visibleTeam.guess}`)
         },
 
         submit_hints() {
             this.sendGameEvent('hints', this.myTeam.current_hints)
-            console.log(`submitted hints: ${this.myTeam.current_hints}`)
+            console.info(`submitted hints: ${this.myTeam.current_hints}`)
         },
 
         submit_results() {
             this.sendGameEvent('confirm result')
-            console.log(`confirmed result`)
+            console.info(`confirmed result`)
         },
 
         sendGameEvent(eventName, ...eventArguments) {
@@ -374,7 +357,7 @@ createApp({
             this.round = gameData.round
             this.copyState(this.team1, gameData.team1)
             this.copyState(this.team2, gameData.team2)
-            console.info(`Game state synced. Round ${this.round}, own phase ${this.myTeam.phase}`)
+            console.debug(`Game state synced. Round ${this.round}, phase for team1 is '${GamePhase.getName(this.team1.phase)}', phase for team2 is '${GamePhase.getName(this.team2.phase)}'`)
         },
 
         copyState(localTeam, remoteTeam) {
@@ -402,7 +385,8 @@ createApp({
             localTeam.code = remoteEncoding.code
             localTeam.keywords = remoteEncoding.keyWords
             localTeam.encoder = remoteEncoding.encoder
-            localTeam.guess = remoteEncoding.guess[this.myTeamId]?.value ?? localTeam.guess
+            // keep local guesses if other team changes state because server does not yet know about the guesses in progress
+            localTeam.guess = remoteEncoding.guess[this.myTeamId]?.value ?? (localTeam.phase === GamePhase.BreakCode ? localTeam.guess : [])
         }
     },
 
@@ -448,7 +432,7 @@ createApp({
             data.visibleTeamId = data.myTeamId
         })
         socket.on('initGame', (gameData) => {
-            console.debug(`received game data ${JSON.stringify(gameData)}`)
+            //console.debug(`received game data ${JSON.stringify(gameData)}`)
             data.updateState(gameData)
         })
         socket.on('guess changed', (forTeamId, team1Guess, team2Guess) => {

@@ -9,7 +9,28 @@ export const GamePhase = {
     AwaitRemainingCode: 25,
     Results: 30,
     AwaitOtherConfirmation: 35,
-    End: 100
+    End: 100,
+
+    getName(phaseValue) {
+        switch (phaseValue) {
+            case this.AwaitOtherConfirmation:
+                return "Await Confirmation"
+            case this.AwaitRemainingCode:
+                return "Await Code"
+            case this.BreakCode:
+                return "Guess Code"
+            case this.ConstructCode:
+                return "Encode Keywords"
+            case this.End:
+                return "End"
+            case this.Init:
+                return "Initialization"
+            case this.Results:
+                return "Results"
+            default:
+                return "Unknown"
+        }
+    }
 }
 
 const codeLength = 3

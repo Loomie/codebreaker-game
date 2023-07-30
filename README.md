@@ -90,9 +90,9 @@ Afterwards you can start and stop the service with
 To run the process in the foreground:
 
     cd codebreaker-game/server
-    node server.mjs
+    npm start
 
-### Background one shot
+### Background one shot (Linux)
 
 To run the process in the background just append an ampersand. To read the output redirect it into a log file:
 

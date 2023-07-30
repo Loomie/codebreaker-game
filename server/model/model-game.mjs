@@ -140,7 +140,7 @@ export class EncodingGame {
                 this.state.phase = GamePhase.End
             }
         }
-        const isOtherGuessCorrect = sameArrayContents(this.state.guess[this._otherTeam.id].value, this.state.code.value)
+        const isOtherGuessCorrect = sameArrayContents(this.state.guess[this._otherTeam.id]?.value, this.state.code.value)
         if (isOtherGuessCorrect) {
             console.info(`guessed correct code for ${this._otherTeam.name}`)
             this._otherTeam.correctOtherEncodings++

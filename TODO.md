@@ -1,7 +1,6 @@
 Bugs
 ====
 
-- first round should not be guessable for other team
 - reset code on round start (empty ui dropdowns)
 - end game for both encryption games/teams
 - fixed height of marks so team switcher is at fixed position
@@ -10,7 +9,6 @@ Bugs
     - maybe use smaller font and scale everything down?
     - see https://stackoverflow.com/a/21981672
 - allow submit only if all fields are set (hints and guesses)
-- code read-only if phase is not BREAK_CODE
 
 Features
 ========

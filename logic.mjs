@@ -112,7 +112,7 @@ createApp({
         },
 
         visibleCode() {
-            if ((this.isEncoder && this.isOwnTeam) || this.visibleTeam.phase >= GamePhase.Results) {
+            if ((this.isEncoder && this.isOwnTeam) || this.visiblePhase >= GamePhase.Results) {
                 return (this.visibleTeam.code) ? this.visibleTeam.code.value : ['E', 'R', 'R']
             }
             return ["?", "?", "?"]
@@ -159,8 +159,12 @@ createApp({
             return ["****", "****", "****", "****"]
         },
 
+        visiblePhase() {
+            return this.visibleTeam.phase
+        },
+
         visiblePhaseName() {
-            switch (this.visibleTeam.phase) {
+            switch (this.visiblePhase) {
                 case GamePhase.AwaitOtherConfirmation:
                     return "Await Confirmation"
                 case GamePhase.AwaitRemainingCode:
@@ -184,16 +188,29 @@ createApp({
             return this.visibleTeam.team.name
         },
 
+        isHintInputDisabled() {
+            return !(GamePhase.ConstructCode === this.visiblePhase && this.isEncoder)
+        },
+
+        isCodeGuessDisabled() {
+            return !(GamePhase.BreakCode == this.visiblePhase && this.isCodeBreaker)
+        },
+
         isEncoder() {
             return this.visibleTeam.encoder?.id == this.player?.id
         },
 
+        isCodeBreaker() {
+            // in phase BreakCode everybody but the encoder is a code breaker. But in the first round only the own code can be guessed
+            return GamePhase.BreakCode == this.visiblePhase && !this.isEncoder && (this.myTeamId === this.visibleTeamId || this.visibleTeam.round > 1)
+        },
+
         submit_text() {
-            switch (this.visibleTeam.phase) {
+            switch (this.visiblePhase) {
                 case GamePhase.Init:
                     return this.anyTeamNeedsPlayer ? 'Wait for Players' : 'Start'
                 case GamePhase.BreakCode:
-                    return 'Guess Code'
+                    return this.isCodeBreaker ? 'Guess Code' : 'Wait'
                 case GamePhase.AwaitRemainingCode:
                     return 'Wait'
                 case GamePhase.ConstructCode:
@@ -210,17 +227,17 @@ createApp({
 
         /** @returns true if the submit button is disabled */
         is_submit_disabled() {
-            switch (this.visibleTeam.phase) {
+            switch (this.visiblePhase) {
                 case GamePhase.Init:
                     return this.anyTeamNeedsPlayer
                 case GamePhase.BreakCode:
-                    return this.isEncoder
+                    return !this.isCodeBreaker
                 case GamePhase.AwaitRemainingCode:
                     return true
                 case GamePhase.ConstructCode:
                     return !this.isEncoder
                 case GamePhase.Results:
-                    return false
+                    return this.myTeamId !== this.visibleTeamId
                 case GamePhase.AwaitOtherConfirmation:
                 case GamePhase.End:
                 default:
@@ -312,7 +329,7 @@ createApp({
         },
 
         submit() {
-            switch (this.visibleTeam.phase) {
+            switch (this.visiblePhase) {
                 case GamePhase.Init:
                     this.initGame()
                     break
@@ -326,7 +343,7 @@ createApp({
                     this.submit_results()
                     break
                 default:
-                    console.warn(`no submit expected in phase ${this.visibleTeam.phase}`)
+                    console.warn(`no submit expected in phase ${this.visiblePhase}`)
             }
         },
 

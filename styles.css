@@ -116,7 +116,9 @@ body {
     cursor: pointer;
 }
 
-.button-submit:disabled {
+button:disabled,
+input:disabled,
+select:disabled {
     cursor: not-allowed;
 }
 

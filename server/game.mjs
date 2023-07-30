@@ -104,6 +104,10 @@ function processGuess(encodingGame, guess, playerName, guessFromTeam, guessCode,
         encodingGame.state.guess[guessFromTeam] = guessCode
         const otherTeamId = TeamId.other(guessFromTeam)
         encodingGame.nextPhase()
+        if (data.round === 1 && GamePhase.AwaitRemainingCode === encodingGame.state.phase) {
+            // for the first round the other team must not guess a code
+            encodingGame.nextPhase()
+        }
     } else {
         console.log(`received guess ${guess} but wrong phase: ${encodingGame.state.phase}`)
     }

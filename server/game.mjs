@@ -40,9 +40,7 @@ export const data = {
 }
 
 export function initGame() {
-    const randomKeywords = unique_random_words(8)
-    const keywords1 = randomKeywords.slice(0, 4)
-    const keywords2 = randomKeywords.slice(4, 8)
+    // clear hint history
     data.team1.word1.hints = []
     data.team1.word2.hints = []
     data.team1.word3.hints = []
@@ -52,14 +50,20 @@ export function initGame() {
     data.team2.word3.hints = []
     data.team2.word4.hints = []
 
+    // choose random keywords
+    const randomKeywords = unique_random_words(8)
+    const keywords1 = randomKeywords.slice(0, 4)
+    const keywords2 = randomKeywords.slice(4, 8)
+    // prepare encoding game
     const encoding1 = new EncodingGame(keywords1, data.team1.team, data.team2.team)
     const encoding2 = new EncodingGame(keywords2, data.team2.team, data.team1.team)
     data.team1.encoding = encoding1
     data.team2.encoding = encoding2
-    // TODO add listeners for network
     encoding1.addListener(new PhaseListener((phase) => console.debug(`encoding 1 phase is ${phase}`)))
     encoding2.addListener(new PhaseListener((phase) => console.debug(`encoding 2 phase is ${phase}`)))
 
+    // start by initializing first round
+    data.round = 1
     encoding1.nextPhase()
     encoding2.nextPhase()
 }

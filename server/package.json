@@ -17,8 +17,12 @@
     "codebreaker"
   ],
   "contributors": [
-    {"name": "Loomie"},
-    {"name": "ManquQhapaq"}
+    {
+      "name": "Loomie"
+    },
+    {
+      "name": "ManquQhapaq"
+    }
   ],
   "license": "MIT",
   "bugs": {
@@ -31,5 +35,11 @@
   "dependencies": {
     "express": "^5.2.1",
     "socket.io": "^4.8.3"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@eslint/json": "^1.2.0",
+    "eslint": "^10.4.0",
+    "globals": "^17.6.0"
   }
 }

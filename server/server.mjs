@@ -4,7 +4,7 @@ import express from 'express'
 import { readFileSync } from 'fs'
 import { createServer } from 'https'
 import { Server } from "socket.io"
-import packageJson from './package.json' assert { type: "json" }
+import packageJson from './package.json' with { type: "json" }
 
 const DEFAULT_PORT = 12034
 

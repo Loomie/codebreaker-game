@@ -1,5 +1,5 @@
 import { sameArrayContents } from "../utils.mjs"
-import { Team, TeamId } from "./model-team.mjs"
+import { Team } from "./model-team.mjs"
 
 /** define sets of fixed values to have defined options from which to choose instead of "any number" */
 export const GamePhase = {

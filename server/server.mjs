@@ -116,7 +116,7 @@ io.on('connection', (socket) => {
         }
     })
 
-    socket.on('confirm result', (newGuess) => {
+    socket.on('confirm result', () => {
         try {
             nextRound(player)
         } catch (err) {

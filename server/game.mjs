@@ -117,7 +117,6 @@ function processGuess(encodingGame, guess, playerName, guessFromTeam, guessCode,
     if (encodingGame.state.phase == GamePhase.BreakCode || encodingGame.state.phase == GamePhase.AwaitRemainingCode) {
         console.log(`received new guess ${guess} from player ${playerName} in team ${guessFromTeam} for team${forTeamId}`)
         encodingGame.state.guess[guessFromTeam] = guessCode
-        const otherTeamId = TeamId.other(guessFromTeam)
         encodingGame.nextPhase()
         if (data.round === 1 && GamePhase.AwaitRemainingCode === encodingGame.state.phase) {
             // for the first round the other team must not guess a code

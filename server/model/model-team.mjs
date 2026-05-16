@@ -73,7 +73,7 @@ export class Player {
     destroy() {
         const idIndex = _playerIds.indexOf(this.id)
         if (0 <= idIndex && idIndex < _playerIds.length) {
-            const removed = _playerIds.splice(idIndex, 1)
+            /*const removed =*/ _playerIds.splice(idIndex, 1)
             // console.debug(`removed player id ${removed}`)
         }
         this.id = undefined

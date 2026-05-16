@@ -60,7 +60,7 @@ To setup the server just clone the git repository. Change to the folder `server`
 
     npm install
 
-You need a TLS (SSL) certificate for HTTP/2 (HTTPS). Put a link to your certificate chain and key file as `cert.pem` and `key.pem` in the folder `server/`.
+You need a TLS (SSL) certificate for HTTP/2 (HTTPS). Put a link to your certificate chain and key file as `cert.pem` and `privkey.pem` in the folder `server/`.
 
 You can configure on which port the server runs with the environment variable `CODEBREAKER_PORT` (default: 12034).
 

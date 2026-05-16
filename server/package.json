@@ -16,7 +16,10 @@
     "game",
     "codebreaker"
   ],
-  "author": "Loomie, ManquQhapaq",
+  "contributors": [
+    {"name": "Loomie"},
+    {"name": "ManquQhapaq"}
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Loomie/codebreaker-game/issues"
